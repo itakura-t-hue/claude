@@ -1362,7 +1362,7 @@ body.writer-mode .btn-primary:hover { background: #059669; }
           <span class="mode-dot"></span>
           <span id="modeLabel">社内モード</span>
         </button>
-        <div class="header-avatar" id="headerAvatar">板</div>
+        <div class="header-avatar" id="headerAvatar">T</div>
       </div>
     </header>
     <main class="main-content" id="mainContent"></main>
@@ -1527,14 +1527,14 @@ function renderSidebar() {
         <span class="nav-icon">📊</span> ダッシュボード
       </div>
       <div class="nav-client-header">クライアント</div>
-      ${renderClientNav(1, 'ケアリッツ&P 様')}
-      ${renderClientNav(2, 'フォーティネット 様')}
-      ${renderClientNav(3, 'K-GOLD 様')}
-      ${renderClientNav(4, 'さつき株式会社 様')}
-      ${renderClientNav(5, 'メディカルセンターJP 様')}
-      ${renderClientNav(6, 'DYM 様')}
-      ${renderClientNav(7, 'コピキヤサン 様')}
-      ${renderClientNav(8, 'ABC商事 様')}
+      ${renderClientNav(1, 'クライアントA 様')}
+      ${renderClientNav(2, 'クライアントB社 様')}
+      ${renderClientNav(3, 'クライアントC社 様')}
+      ${renderClientNav(4, 'クライアントD社 様')}
+      ${renderClientNav(5, 'クライアントE社 様')}
+      ${renderClientNav(6, 'クライアントF社 様')}
+      ${renderClientNav(7, 'クライアントG社 様')}
+      ${renderClientNav(8, 'クライアントH社 様')}
     `;
   } else if (currentMode === 'writer') {
     nav.innerHTML = `
@@ -1618,7 +1618,7 @@ function renderClientNav(id, name) {
 function renderBreadcrumbs() {
   const bc = $('#breadcrumbs');
   const parts = [];
-  const clientNames = { 1: 'ケアリッツ&P 様', 2: 'フォーティネット 様', 3: 'K-GOLD 様', 4: 'さつき株式会社 様', 5: 'メディカルセンターJP 様', 6: 'DYM 様', 7: 'コピキヤサン 様', 8: 'ABC商事 様' };
+  const clientNames = { 1: 'クライアントA 様', 2: 'クライアントB社 様', 3: 'クライアントC社 様', 4: 'クライアントD社 様', 5: 'クライアントE社 様', 6: 'クライアントF社 様', 7: 'クライアントG社 様', 8: 'クライアントH社 様' };
   const subNames = {
     keywords: 'キーワード管理', contents: 'コンテンツ管理', technical: '技術SEO',
     chat: 'チャット', reports: 'レポート'
@@ -1676,24 +1676,24 @@ function setDashFilter(f) {
 
 function renderDashboard() {
   const clients = [
-    { id:1, name:'ケアリッツ&パートナーズ', person:'板倉', hs:92, plan:'フル', ss:'40,600', cv:157, renewal:'2026-09-15', unread:3, flag:'none' },
-    { id:2, name:'フォーティネット', person:'田中', hs:77, plan:'フル', ss:'18,200', cv:42, renewal:'2026-08-20', unread:0, flag:'none' },
-    { id:3, name:'K-GOLD', person:'板倉', hs:51, plan:'フル', ss:'5,830', cv:23, renewal:'2026-04-30', unread:1, flag:'critical' },
-    { id:4, name:'さつき株式会社', person:'佐藤', hs:88, plan:'フル', ss:'32,100', cv:98, renewal:'2026-11-01', unread:0, flag:'none' },
-    { id:5, name:'メディカルセンターJP', person:'山田', hs:84, plan:'フル', ss:'25,400', cv:76, renewal:'2026-07-15', unread:2, flag:'none' },
-    { id:6, name:'DYM', person:'鈴木', hs:79, plan:'フル', ss:'21,300', cv:55, renewal:'2026-06-30', unread:0, flag:'none' },
-    { id:7, name:'コピキヤサン', person:'田中', hs:73, plan:'保守', ss:'8,900', cv:18, renewal:'2026-12-01', unread:0, flag:'none' },
-    { id:8, name:'ABC商事', person:'高橋', hs:69, plan:'保守', ss:'6,200', cv:14, renewal:'2026-10-15', unread:0, flag:'warning' },
-    { id:1, name:'グローバルケア株式会社', person:'佐藤', hs:67, plan:'フル', ss:'15,800', cv:38, renewal:'2026-05-10', unread:0, flag:'none' },
-    { id:1, name:'テクノロジーズ合同会社', person:'鈴木', hs:64, plan:'保守', ss:'4,500', cv:11, renewal:'2026-04-18', unread:4, flag:'critical' },
-    { id:1, name:'ライフサポート株式会社', person:'山田', hs:61, plan:'フル', ss:'12,300', cv:29, renewal:'2027-01-20', unread:0, flag:'none' },
-    { id:1, name:'株式会社メディアプロ', person:'板倉', hs:58, plan:'保守', ss:'3,800', cv:8, renewal:'2026-06-05', unread:0, flag:'warning' },
-    { id:1, name:'サンライズ工業', person:'高橋', hs:55, plan:'保守', ss:'7,100', cv:15, renewal:'2026-08-30', unread:0, flag:'none' },
-    { id:1, name:'ネクストビジョン株式会社', person:'田中', hs:48, plan:'フル', ss:'9,600', cv:20, renewal:'2026-04-12', unread:0, flag:'critical' },
-    { id:1, name:'ヘルスケアジャパン', person:'佐藤', hs:45, plan:'保守', ss:'2,900', cv:6, renewal:'2026-09-25', unread:0, flag:'none' },
-    { id:1, name:'デジタルマーケティングPro', person:'鈴木', hs:42, plan:'保守', ss:'5,100', cv:12, renewal:'2026-07-01', unread:0, flag:'warning' },
-    { id:1, name:'フューチャーリンク', person:'山田', hs:38, plan:'保守', ss:'3,200', cv:5, renewal:'2026-11-15', unread:0, flag:'none' },
-    { id:1, name:'アドバンスト・ソリューションズ', person:'板倉', hs:35, plan:'保守', ss:'1,800', cv:3, renewal:'2026-05-20', unread:0, flag:'critical' },
+    { id:1, name:'クライアントA社', person:'担当T', hs:92, plan:'フル', ss:'40,600', cv:157, renewal:'2026-09-15', unread:3, flag:'none' },
+    { id:2, name:'クライアントB社', person:'担当U', hs:77, plan:'フル', ss:'18,200', cv:42, renewal:'2026-08-20', unread:0, flag:'none' },
+    { id:3, name:'クライアントC社', person:'担当T', hs:51, plan:'フル', ss:'5,830', cv:23, renewal:'2026-04-30', unread:1, flag:'critical' },
+    { id:4, name:'クライアントD社', person:'担当V', hs:88, plan:'フル', ss:'32,100', cv:98, renewal:'2026-11-01', unread:0, flag:'none' },
+    { id:5, name:'クライアントE社', person:'担当W', hs:84, plan:'フル', ss:'25,400', cv:76, renewal:'2026-07-15', unread:2, flag:'none' },
+    { id:6, name:'クライアントF社', person:'担当X', hs:79, plan:'フル', ss:'21,300', cv:55, renewal:'2026-06-30', unread:0, flag:'none' },
+    { id:7, name:'クライアントG社', person:'担当U', hs:73, plan:'保守', ss:'8,900', cv:18, renewal:'2026-12-01', unread:0, flag:'none' },
+    { id:8, name:'クライアントH社', person:'担当Y', hs:69, plan:'保守', ss:'6,200', cv:14, renewal:'2026-10-15', unread:0, flag:'warning' },
+    { id:1, name:'グローバルケア株式会社', person:'担当V', hs:67, plan:'フル', ss:'15,800', cv:38, renewal:'2026-05-10', unread:0, flag:'none' },
+    { id:1, name:'テクノロジーズ合同会社', person:'担当X', hs:64, plan:'保守', ss:'4,500', cv:11, renewal:'2026-04-18', unread:4, flag:'critical' },
+    { id:1, name:'ライフサポート株式会社', person:'担当W', hs:61, plan:'フル', ss:'12,300', cv:29, renewal:'2027-01-20', unread:0, flag:'none' },
+    { id:1, name:'株式会社メディアプロ', person:'担当T', hs:58, plan:'保守', ss:'3,800', cv:8, renewal:'2026-06-05', unread:0, flag:'warning' },
+    { id:1, name:'サンライズ工業', person:'担当Y', hs:55, plan:'保守', ss:'7,100', cv:15, renewal:'2026-08-30', unread:0, flag:'none' },
+    { id:1, name:'ネクストビジョン株式会社', person:'担当U', hs:48, plan:'フル', ss:'9,600', cv:20, renewal:'2026-04-12', unread:0, flag:'critical' },
+    { id:1, name:'ヘルスケアジャパン', person:'担当V', hs:45, plan:'保守', ss:'2,900', cv:6, renewal:'2026-09-25', unread:0, flag:'none' },
+    { id:1, name:'デジタルマーケティングPro', person:'担当X', hs:42, plan:'保守', ss:'5,100', cv:12, renewal:'2026-07-01', unread:0, flag:'warning' },
+    { id:1, name:'フューチャーリンク', person:'担当W', hs:38, plan:'保守', ss:'3,200', cv:5, renewal:'2026-11-15', unread:0, flag:'none' },
+    { id:1, name:'アドバンスト・ソリューションズ', person:'担当T', hs:35, plan:'保守', ss:'1,800', cv:3, renewal:'2026-05-20', unread:0, flag:'critical' },
   ];
 
   // Sort: flag critical first, then warning, then none; within same flag, by hs desc
@@ -1781,17 +1781,17 @@ function renderDashboard() {
       </div>
       <div class="alert-item">
         <span class="alert-dot red">&#x1F534;</span>
-        <span class="alert-text"><strong>K-GOLD様</strong>: 「結婚指輪 買取」が <strong>8位→16位</strong> に急落</span>
+        <span class="alert-text"><strong>クライアントC社様</strong>: 「サンプルKW_P」が <strong>8位→16位</strong> に急落</span>
         <span class="alert-time">2時間前</span>
       </div>
       <div class="alert-item">
         <span class="alert-dot yellow">&#x1F7E1;</span>
-        <span class="alert-text"><strong>K-GOLD様</strong>: 契約更新日まで残り<strong>38日</strong></span>
+        <span class="alert-text"><strong>クライアントC社様</strong>: 契約更新日まで残り<strong>38日</strong></span>
         <span class="alert-time">今日</span>
       </div>
       <div class="alert-item">
         <span class="alert-dot blue">&#x1F535;</span>
-        <span class="alert-text"><strong>ケアリッツ様</strong>: 2月次レポートのドラフトが生成完了</span>
+        <span class="alert-text"><strong>クライアントA社様</strong>: 2月次レポートのドラフトが生成完了</span>
         <span class="alert-time">6時間前</span>
       </div>
     </div>
@@ -1861,7 +1861,7 @@ let currentMetric = 'ss';
 let currentPeriod = '12m';
 
 function renderClientDetail(id) {
-  const clientNames = { 1: 'ケアリッツ&パートナーズ', 2: 'フォーティネット', 3: 'K-GOLD', 4: 'さつき株式会社', 5: 'メディカルセンターJP', 6: 'DYM', 7: 'コピキヤサン', 8: 'ABC商事' };
+  const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社', 4: 'クライアントD社', 5: 'クライアントE社', 6: 'クライアントF社', 7: 'クライアントG社', 8: 'クライアントH社' };
   const clientPlans = { 1: 'フル', 2: 'フル', 3: 'フル', 4: 'フル', 5: 'フル', 6: 'フル', 7: '保守', 8: '保守' };
   const name = clientNames[id] || 'Client';
   const plan = clientPlans[id] || 'フル';
@@ -1978,101 +1978,101 @@ function updateChart(clientId) {
 }
 
 function renderKeywords(id) {
-  const clientNames = { 1: 'ケアリッツ&パートナーズ', 2: 'フォーティネット', 3: 'K-GOLD' };
+  const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社' };
   const kwData = {
     1: [
-      { kw: 'スピーチロックとは', rank: 2, badge: 'green', change: '▲1', changeCls: 'up', vol: '12,100', clicks: '812', ctr: '4.4%',
+      { kw: 'サンプル記事タイトルA', rank: 2, badge: 'green', change: '▲1', changeCls: 'up', vol: '12,100', clicks: '812', ctr: '4.4%',
         pages: [
-          { url: '/magazine/speech-lock/', title: 'スピーチロックとは？具体例や3つのロックとの違い、対策方法を解説', clicks: 780 },
-          { url: '/magazine/three-locks/', title: '介護現場の3つのロック（スリーロック）とは？種類と対策', clicks: 22 },
-          { url: '/service/training/', title: '介護職員研修プログラム｜ケアリッツ&パートナーズ', clicks: 10 },
+          { url: '/column/sample-article-a/', title: 'サンプル記事タイトルA？具体例や3つのロックとの違い、対策方法を解説', clicks: 780 },
+          { url: '/column/three-locks/', title: '介護現場の3つのロック（スリーロック）とは？種類と対策', clicks: 22 },
+          { url: '/service/training/', title: '介護職員研修プログラム｜クライアントA社', clicks: 10 },
         ]},
-      { kw: '腰椎圧迫骨折 高齢者', rank: 1, badge: 'green', change: '▲2', changeCls: 'up', vol: '4,400', clicks: '749', ctr: '7.6%',
+      { kw: 'サンプルKW_B', rank: 1, badge: 'green', change: '▲2', changeCls: 'up', vol: '4,400', clicks: '749', ctr: '7.6%',
         pages: [
-          { url: '/magazine/lumbar-fracture/', title: '高齢者の腰椎圧迫骨折｜入院期間・治療法・リハビリまで解説', clicks: 732 },
-          { url: '/magazine/elderly-bone/', title: '高齢者に多い骨折の種類と予防法', clicks: 12 },
-          { url: '/magazine/rehabilitation/', title: '介護リハビリテーションの基礎知識', clicks: 5 },
+          { url: '/column/sample-article-b/', title: '高齢者のサンプルKW_B｜入院期間・治療法・リハビリまで解説', clicks: 732 },
+          { url: '/column/elderly-bone/', title: '高齢者に多い骨折の種類と予防法', clicks: 12 },
+          { url: '/column/rehabilitation/', title: '介護リハビリテーションの基礎知識', clicks: 5 },
         ]},
-      { kw: 'ケアリッツ', rank: 1, badge: 'green', change: '→', changeCls: 'flat', vol: '2,900', clicks: '1,845', ctr: '35.4%',
+      { kw: 'クライアントA社', rank: 1, badge: 'green', change: '→', changeCls: 'flat', vol: '2,900', clicks: '1,845', ctr: '35.4%',
         pages: [
-          { url: '/', title: '株式会社ケアリッツ&パートナーズ｜訪問介護・介護事業', clicks: 1520 },
-          { url: '/company/', title: '企業情報｜ケアリッツ&パートナーズ', clicks: 210 },
-          { url: '/recruit/', title: '採用情報｜ケアリッツ&パートナーズ', clicks: 115 },
+          { url: '/', title: '株式会社クライアントA社｜サンプルKW_J・介護事業', clicks: 1520 },
+          { url: '/company/', title: '企業情報｜クライアントA社', clicks: 210 },
+          { url: '/recruit/', title: '採用情報｜クライアントA社', clicks: 115 },
         ]},
-      { kw: '介護タクシー 料金', rank: 7, badge: 'blue', change: '▼3', changeCls: 'down', vol: '6,600', clicks: '234', ctr: '2.3%',
+      { kw: 'サンプルKW_C', rank: 7, badge: 'blue', change: '▼3', changeCls: 'down', vol: '6,600', clicks: '234', ctr: '2.3%',
         pages: [
-          { url: '/magazine/care-taxi/', title: '介護タクシーの料金相場｜利用方法と費用を安くする方法', clicks: 218 },
-          { url: '/magazine/care-taxi-compare/', title: '介護タクシーと福祉タクシーの違い', clicks: 11 },
-          { url: '/service/transport/', title: '移動支援サービス｜ケアリッツ&パートナーズ', clicks: 5 },
+          { url: '/column/sample-article-c/', title: 'サンプルKW_Cの料金相場｜利用方法と費用を安くする方法', clicks: 218 },
+          { url: '/column/care-taxi-compare/', title: 'サンプルKW_Cと福祉タクシーの違い', clicks: 11 },
+          { url: '/service/transport/', title: '移動支援サービス｜クライアントA社', clicks: 5 },
         ]},
-      { kw: '傾眠とは', rank: 5, badge: 'blue', change: '▲2', changeCls: 'up', vol: '3,600', clicks: '189', ctr: '3.9%',
+      { kw: 'サンプルKW_D', rank: 5, badge: 'blue', change: '▲2', changeCls: 'up', vol: '3,600', clicks: '189', ctr: '3.9%',
         pages: [
-          { url: '/magazine/keimin/', title: '傾眠とは？高齢者の傾眠傾向の原因と対処法', clicks: 178 },
-          { url: '/magazine/sleep-disorder/', title: '高齢者の睡眠障害｜原因と改善方法', clicks: 8 },
-          { url: '/magazine/dementia-symptoms/', title: '認知症の初期症状チェックリスト', clicks: 3 },
+          { url: '/column/sample-article-d/', title: 'サンプルKW_D？高齢者のサンプルKW_D傾向の原因と対処法', clicks: 178 },
+          { url: '/column/sleep-disorder/', title: '高齢者の睡眠障害｜原因と改善方法', clicks: 8 },
+          { url: '/column/dementia-symptoms/', title: '認知症の初期症状チェックリスト', clicks: 3 },
         ]},
-      { kw: '負担限度額認定証', rank: 14, badge: 'orange', change: '▲3', changeCls: 'up', vol: '8,100', clicks: '87', ctr: '1.3%',
+      { kw: 'サンプルKW_E', rank: 14, badge: 'orange', change: '▲3', changeCls: 'up', vol: '8,100', clicks: '87', ctr: '1.3%',
         pages: [
-          { url: '/magazine/limit-certificate/', title: '負担限度額認定証とは？介護費用を軽減する制度を解説', clicks: 79 },
-          { url: '/magazine/care-cost/', title: '介護にかかる費用の全体像｜自己負担額の目安', clicks: 5 },
-          { url: '/magazine/insurance-guide/', title: '介護保険制度の仕組み完全ガイド', clicks: 3 },
+          { url: '/column/limit-certificate/', title: 'サンプルKW_Eとは？介護費用を軽減する制度を解説', clicks: 79 },
+          { url: '/column/care-cost/', title: '介護にかかる費用の全体像｜自己負担額の目安', clicks: 5 },
+          { url: '/column/insurance-guide/', title: '介護保険制度の仕組み完全ガイド', clicks: 3 },
         ]},
-      { kw: '高齢者 座ってできる レク', rank: 11, badge: 'orange', change: '▲4', changeCls: 'up', vol: '5,400', clicks: '156', ctr: '2.0%',
+      { kw: 'サンプルKW_F', rank: 11, badge: 'orange', change: '▲4', changeCls: 'up', vol: '5,400', clicks: '156', ctr: '2.0%',
         pages: [
-          { url: '/magazine/seated-recreation/', title: '高齢者が座ってできるレクリエーション15選', clicks: 142 },
-          { url: '/magazine/recreation-ideas/', title: '介護施設のレクリエーションアイデア集', clicks: 9 },
-          { url: '/service/day-service/', title: 'デイサービス｜ケアリッツ&パートナーズ', clicks: 5 },
+          { url: '/column/seated-recreation/', title: '高齢者が座ってできるレクリエーション15選', clicks: 142 },
+          { url: '/column/recreation-ideas/', title: '介護施設のレクリエーションアイデア集', clicks: 9 },
+          { url: '/service/day-service/', title: 'デイサービス｜クライアントA社', clicks: 5 },
         ]},
     ],
     2: [
-      { kw: 'ファイアウォール とは', rank: 3, badge: 'green', change: '▲1', changeCls: 'up', vol: '9,900', clicks: '520', ctr: '3.8%',
+      { kw: 'サンプルKW_L とは', rank: 3, badge: 'green', change: '▲1', changeCls: 'up', vol: '9,900', clicks: '520', ctr: '3.8%',
         pages: [
-          { url: '/resources/cyberglossary/firewall/', title: 'ファイアウォールとは？仕組みと種類をわかりやすく解説', clicks: 495 },
-          { url: '/products/next-generation-firewall/', title: '次世代ファイアウォール(NGFW)｜FortiGate', clicks: 18 },
+          { url: '/resources/cyberglossary/firewall/', title: 'サンプルKW_Lとは？仕組みと種類をわかりやすく解説', clicks: 495 },
+          { url: '/products/next-generation-firewall/', title: '次世代サンプルKW_L(NGFW)｜製品X', clicks: 18 },
           { url: '/resources/cyberglossary/network-security/', title: 'ネットワークセキュリティの基礎', clicks: 7 },
         ]},
-      { kw: 'UTM セキュリティ', rank: 5, badge: 'blue', change: '▲2', changeCls: 'up', vol: '3,200', clicks: '180', ctr: '4.2%',
+      { kw: 'サンプルKW_M セキュリティ', rank: 5, badge: 'blue', change: '▲2', changeCls: 'up', vol: '3,200', clicks: '180', ctr: '4.2%',
         pages: [
-          { url: '/resources/cyberglossary/utm/', title: 'UTM（統合脅威管理）とは？機能・メリットを解説', clicks: 168 },
-          { url: '/products/fortigate/', title: 'FortiGate｜UTMアプライアンス', clicks: 8 },
-          { url: '/resources/cyberglossary/firewall/', title: 'ファイアウォールとは？', clicks: 4 },
+          { url: '/resources/cyberglossary/utm/', title: 'サンプルKW_M（統合脅威管理）とは？機能・メリットを解説', clicks: 168 },
+          { url: '/products/fortigate/', title: '製品X｜サンプルKW_Mアプライアンス', clicks: 8 },
+          { url: '/resources/cyberglossary/firewall/', title: 'サンプルKW_Lとは？', clicks: 4 },
         ]},
-      { kw: 'FortiGate 設定', rank: 2, badge: 'green', change: '→', changeCls: 'flat', vol: '2,400', clicks: '890', ctr: '22.1%',
+      { kw: '製品X 設定', rank: 2, badge: 'green', change: '→', changeCls: 'flat', vol: '2,400', clicks: '890', ctr: '22.1%',
         pages: [
-          { url: '/resources/fortigate-setup/', title: 'FortiGate初期設定ガイド｜ステップバイステップ', clicks: 845 },
-          { url: '/resources/fortigate-faq/', title: 'FortiGateよくある質問と設定Tips', clicks: 32 },
-          { url: '/products/fortigate/', title: 'FortiGate製品ページ', clicks: 13 },
+          { url: '/resources/fortigate-setup/', title: '製品X初期設定ガイド｜ステップバイステップ', clicks: 845 },
+          { url: '/resources/fortigate-faq/', title: '製品Xよくある質問と設定Tips', clicks: 32 },
+          { url: '/products/fortigate/', title: '製品X製品ページ', clicks: 13 },
         ]},
-      { kw: 'ゼロトラスト 導入', rank: 12, badge: 'orange', change: '▲5', changeCls: 'up', vol: '5,600', clicks: '98', ctr: '1.4%',
+      { kw: 'サンプルKW_N 導入', rank: 12, badge: 'orange', change: '▲5', changeCls: 'up', vol: '5,600', clicks: '98', ctr: '1.4%',
         pages: [
-          { url: '/resources/cyberglossary/zero-trust/', title: 'ゼロトラストとは？導入ステップと事例', clicks: 88 },
-          { url: '/solutions/zero-trust-network/', title: 'ゼロトラストネットワークソリューション', clicks: 7 },
-          { url: '/resources/webinar/zt-2026/', title: 'ウェビナー: ゼロトラスト導入の実践', clicks: 3 },
+          { url: '/resources/cyberglossary/zero-trust/', title: 'サンプルKW_Nとは？導入ステップと事例', clicks: 88 },
+          { url: '/solutions/zero-trust-network/', title: 'サンプルKW_Nネットワークソリューション', clicks: 7 },
+          { url: '/resources/webinar/zt-2026/', title: 'ウェビナー: サンプルKW_N導入の実践', clicks: 3 },
         ]},
     ],
     3: [
-      { kw: '結婚指輪 買取', rank: 16, badge: 'red', change: '▼8', changeCls: 'down', vol: '8,800', clicks: '45', ctr: '0.6%',
+      { kw: 'サンプルKW_P', rank: 16, badge: 'red', change: '▼8', changeCls: 'down', vol: '8,800', clicks: '45', ctr: '0.6%',
         pages: [
-          { url: '/column/wedding-ring-sell/', title: '結婚指輪は売れる？買取相場と手放す方法', clicks: 38 },
+          { url: '/column/wedding-ring-sell/', title: 'サンプルKW_Pの記事タイトル', clicks: 38 },
           { url: '/column/ring-appraisal/', title: '指輪の査定ポイント｜高く売るコツ', clicks: 5 },
-          { url: '/service/ring/', title: '指輪買取｜K-GOLDインターナショナル', clicks: 2 },
+          { url: '/service/ring/', title: '指輪買取｜クライアントC社', clicks: 2 },
         ]},
-      { kw: 'ダイヤモンド 買取 相場', rank: 6, badge: 'blue', change: '▲1', changeCls: 'up', vol: '6,200', clicks: '210', ctr: '2.5%',
+      { kw: 'サンプルKW_Q', rank: 6, badge: 'blue', change: '▲1', changeCls: 'up', vol: '6,200', clicks: '210', ctr: '2.5%',
         pages: [
-          { url: '/column/diamond-market/', title: 'ダイヤモンド買取相場｜最新の価格動向と高く売るコツ', clicks: 195 },
-          { url: '/column/diamond-cert/', title: 'ダイヤモンドは鑑定書なしでも買取できる？', clicks: 10 },
-          { url: '/service/diamond/', title: 'ダイヤモンド買取｜K-GOLD', clicks: 5 },
+          { url: '/column/diamond-market/', title: 'サンプルKW_Q相場｜最新の価格動向と高く売るコツ', clicks: 195 },
+          { url: '/column/diamond-cert/', title: 'サンプルKW_Qの記事タイトル', clicks: 10 },
+          { url: '/service/diamond/', title: 'サンプルKW_Q｜クライアントC社', clicks: 5 },
         ]},
-      { kw: '金 買取 おすすめ', rank: 9, badge: 'blue', change: '▼2', changeCls: 'down', vol: '12,400', clicks: '156', ctr: '1.2%',
+      { kw: 'サンプルKW_R', rank: 9, badge: 'blue', change: '▼2', changeCls: 'down', vol: '12,400', clicks: '156', ctr: '1.2%',
         pages: [
           { url: '/column/gold-buy-recommend/', title: '金買取おすすめ業者比較｜高価買取のポイント', clicks: 140 },
-          { url: '/', title: 'K-GOLDインターナショナル｜金・プラチナ・ダイヤモンド買取', clicks: 10 },
-          { url: '/service/gold/', title: '金買取サービス｜K-GOLD', clicks: 6 },
+          { url: '/', title: 'クライアントC社｜金・プラチナ・サンプルKW_Q', clicks: 10 },
+          { url: '/service/gold/', title: '金買取サービス｜クライアントC社', clicks: 6 },
         ]},
-      { kw: 'プラチナ 買取', rank: 4, badge: 'green', change: '▲3', changeCls: 'up', vol: '4,100', clicks: '320', ctr: '5.1%',
+      { kw: 'サンプルKW_S', rank: 4, badge: 'green', change: '▲3', changeCls: 'up', vol: '4,100', clicks: '320', ctr: '5.1%',
         pages: [
           { url: '/column/platinum-guide/', title: 'プラチナ買取完全ガイド｜相場と高く売る方法', clicks: 298 },
-          { url: '/service/platinum/', title: 'プラチナ買取｜K-GOLD', clicks: 15 },
+          { url: '/service/platinum/', title: 'プラチナ買取｜クライアントC社', clicks: 15 },
           { url: '/column/precious-metals/', title: '貴金属買取の基礎知識', clicks: 7 },
         ]},
     ]
@@ -2164,46 +2164,57 @@ function renderKeywords(id) {
 // Content detail data (shared between kanban and detail page)
 const CONTENT_DB = {
   1: [
-    { id:'c1', title:'介護保険 申請方法', kw:'介護保険 申請', vol:9900, status:'planning', statusLabel:'企画作成中', statusCls:'draft',
-      writer:'板倉', targetMonth:'2026-04', deadline:'2026-04-15',
-      planDoc:{ title:'【企画案】介護保険 申請方法 完全ガイド', sections:['介護保険とは？制度の基本','申請の流れ（7ステップ）','必要書類チェックリスト','申請時の注意点','よくある質問（FAQ）'], note:'ターゲット: 要介護認定をこれから申請する家族。検索意図: 手続きの全体像と必要書類を知りたい' },
+    { id:'c1', title:'サンプルKW_H', kw:'サンプルKW_H', vol:9900, status:'planning', statusLabel:'企画作成中', statusCls:'draft',
+      writer:'担当T', targetMonth:'2026-04', deadline:'2026-04-15',
+      planDoc:{ title:'【企画案】サンプルKW_H 完全ガイド', sections:['介護保険とは？制度の基本','申請の流れ（7ステップ）','必要書類チェックリスト','申請時の注意点','よくある質問（FAQ）'], note:'ターゲット: サンプルKW_Kをこれから申請する家族。検索意図: 手続きの全体像と必要書類を知りたい' },
       draftUrl: null, rank: null, ss: null },
-    { id:'c2', title:'デイサービス 選び方', kw:'デイサービス 選び方', vol:3600, status:'planning', statusLabel:'企画作成中', statusCls:'draft',
-      writer:'板倉', targetMonth:'2026-04', deadline:'2026-04-20',
+    { id:'c2', title:'サンプルKW_I', kw:'サンプルKW_I', vol:3600, status:'planning', statusLabel:'企画作成中', statusCls:'draft',
+      writer:'担当T', targetMonth:'2026-04', deadline:'2026-04-20',
       planDoc:{ title:'【企画案】失敗しないデイサービスの選び方', sections:['デイサービスの種類と特徴','選ぶ際の5つのチェックポイント','見学時に確認すべきこと','費用の目安と負担軽減制度','体験談インタビュー'], note:'クライアント要望: 自社サービス名も言及してほしい' },
       draftUrl: null, rank: null, ss: null },
-    { id:'c3', title:'訪問介護 サービス内容', kw:'訪問介護 内容', vol:5400, status:'writing', statusLabel:'執筆中', statusCls:'draft',
-      writer:'田中', targetMonth:'2026-03', deadline:'2026-03-28',
-      planDoc:{ title:'【企画案】訪問介護のサービス内容を徹底解説', sections:['訪問介護とは','身体介護と生活援助の違い','利用条件と費用','サービス利用の流れ','事業所選びのポイント'], note:'' },
+    { id:'c10', title:'サンプルKW_L', kw:'サンプルKW_L', vol:2900, status:'kw_selected', statusLabel:'KW選定済', statusCls:'draft',
+      writer:null, targetMonth:'2026-04', deadline:'2026-04-25',
+      planDoc:null, draftUrl: null, rank: null, ss: null },
+    { id:'c11', title:'サンプルKW_M', kw:'サンプルKW_M', vol:8100, status:'writing_requested', statusLabel:'執筆依頼中', statusCls:'draft',
+      writer:'担当W（外部）', targetMonth:'2026-04', deadline:'2026-04-10',
+      planDoc:{ title:'【企画案】サンプルKW_M 基礎知識', sections:['制度の概要','対象者と条件','申請方法','費用負担','注意点'], note:'' },
+      draftUrl: null, rank: null, ss: null },
+    { id:'c3', title:'サンプルKW_J', kw:'サンプルKW_J', vol:5400, status:'writing', statusLabel:'執筆中', statusCls:'draft',
+      writer:'担当U', targetMonth:'2026-03', deadline:'2026-03-28',
+      planDoc:{ title:'【企画案】サンプルKW_Jのサービス内容を徹底解説', sections:['サンプルKW_Jとは','身体介護と生活援助の違い','利用条件と費用','サービス利用の流れ','事業所選びのポイント'], note:'' },
       draftUrl:'https://docs.google.com/document/d/xxxxx', rank: null, ss: null,
-      draftContent:{ title:'訪問介護のサービス内容を徹底解説｜身体介護・生活援助の違いから利用方法まで', body:'<h2>訪問介護とは</h2><p>訪問介護とは、ホームヘルパー（訪問介護員）が利用者の自宅を訪問し、<span class="highlight-yellow">身体介護や生活援助</span>などのサービスを提供する介護保険サービスです。要介護1〜5の認定を受けた方が利用できます。</p><h2>身体介護と生活援助の違い</h2><p>訪問介護のサービスは大きく「身体介護」と「生活援助」に分けられます。</p><p><strong>身体介護：</strong>入浴介助、排泄介助、食事介助、着替え、<span class="highlight-comment">体位変換</span>、移動介助など、利用者の身体に直接触れて行うサービスです。</p><p><strong>生活援助：</strong>掃除、洗濯、調理、買い物代行など、日常生活の援助を行うサービスです。</p><h2>利用条件と費用</h2><p>訪問介護を利用するためには、まず要介護認定を受ける必要があります。認定の申請は...</p>' } },
-    { id:'c4', title:'要介護認定 流れ', kw:'要介護認定', vol:6600, status:'writing', statusLabel:'執筆中', statusCls:'draft',
-      writer:'山田（外部）', targetMonth:'2026-03', deadline:'2026-03-31',
-      planDoc:{ title:'【企画案】要介護認定の流れと申請方法', sections:['要介護認定とは','申請手続きの流れ','認定調査の内容','判定結果の見方','不服申立ての方法'], note:'' },
+      draftContent:{ title:'サンプルKW_Jのサービス内容を徹底解説｜身体介護・生活援助の違いから利用方法まで', body:'<h2>サンプルKW_Jとは</h2><p>サンプルKW_Jとは、ホームヘルパー（サンプルKW_J員）が利用者の自宅を訪問し、<span class="highlight-yellow">身体介護や生活援助</span>などのサービスを提供する介護保険サービスです。要介護1〜5の認定を受けた方が利用できます。</p><h2>身体介護と生活援助の違い</h2><p>サンプルKW_Jのサービスは大きく「身体介護」と「生活援助」に分けられます。</p><p><strong>身体介護：</strong>入浴介助、排泄介助、食事介助、着替え、<span class="highlight-comment">体位変換</span>、移動介助など、利用者の身体に直接触れて行うサービスです。</p><p><strong>生活援助：</strong>掃除、洗濯、調理、買い物代行など、日常生活の援助を行うサービスです。</p><h2>利用条件と費用</h2><p>サンプルKW_Jを利用するためには、まずサンプルKW_Kを受ける必要があります。認定の申請は...</p>' } },
+    { id:'c4', title:'サンプルKW_K', kw:'サンプルKW_K', vol:6600, status:'writing', statusLabel:'執筆中', statusCls:'draft',
+      writer:'担当W（外部）', targetMonth:'2026-03', deadline:'2026-03-31',
+      planDoc:{ title:'【企画案】サンプルKW_Kの流れと申請方法', sections:['サンプルKW_Kとは','申請手続きの流れ','認定調査の内容','判定結果の見方','不服申立ての方法'], note:'' },
       draftUrl:'https://docs.google.com/document/d/yyyyy', rank: null, ss: null,
-      draftContent:{ title:'要介護認定の流れ｜申請から結果通知まで', body:'<h2>要介護認定とは</h2><p>要介護認定とは、介護保険サービスを利用するために必要な手続きで、市区町村が申請者の心身の状態を調査し、介護の必要度を判定する制度です。</p><h2>申請手続きの流れ</h2><p>1. 市区町村の窓口に申請書を提出<br>2. 認定調査員による訪問調査<br>3. 主治医意見書の作成...<span class="highlight-comment">ここの説明をもう少し詳しく</span></p>' } },
-    { id:'c5', title:'介護休暇 取り方', kw:'介護休暇', vol:4400, status:'reviewing', statusLabel:'校正中', statusCls:'review',
-      writer:'田中', targetMonth:'2026-03', deadline:'2026-03-25',
-      planDoc:{ title:'【企画案】介護休暇の取り方ガイド', sections:['介護休暇制度の概要','取得条件と対象者','申請手順','給付金制度','企業の対応事例'], note:'' },
+      draftContent:{ title:'サンプルKW_Kの流れ｜申請から結果通知まで', body:'<h2>サンプルKW_Kとは</h2><p>サンプルKW_Kとは、介護保険サービスを利用するために必要な手続きで、市区町村が申請者の心身の状態を調査し、介護の必要度を判定する制度です。</p><h2>申請手続きの流れ</h2><p>1. 市区町村の窓口に申請書を提出<br>2. 認定調査員による訪問調査<br>3. 主治医意見書の作成...<span class="highlight-comment">ここの説明をもう少し詳しく</span></p>' } },
+    { id:'c5', title:'サンプルKW_G', kw:'サンプルKW_G', vol:4400, status:'reviewing', statusLabel:'校正中', statusCls:'review',
+      writer:'担当U', targetMonth:'2026-03', deadline:'2026-03-25',
+      planDoc:{ title:'【企画案】サンプルKW_Gの取り方ガイド', sections:['サンプルKW_G制度の概要','取得条件と対象者','申請手順','給付金制度','企業の対応事例'], note:'' },
       draftUrl:'https://docs.google.com/document/d/zzzzz', rank: null, ss: null,
-      draftContent:{ title:'介護休暇の取り方｜制度の基本から申請手順まで', body:'<h2>介護休暇制度の概要</h2><p>介護休暇とは、要介護状態にある家族の介護や世話を行う労働者が取得できる休暇制度です。育児・介護休業法により、<span class="highlight-yellow">対象家族1人につき年5日</span>（2人以上の場合は年10日）まで取得可能です。</p><h2>取得条件と対象者</h2><p>介護休暇を取得できるのは、要介護状態にある家族を介護する全ての労働者です。日雇い労働者は除かれますが、パートタイマーやアルバイトも対象となります。</p>' } },
-    { id:'c6', title:'スピーチロックとは', kw:'スピーチロックとは', vol:12100, status:'published', statusLabel:'公開済み', statusCls:'',
-      writer:'田中', targetMonth:'2024-11', deadline:null, publishedAt:'2024/11/15', lastUpdate:'2025/08/22', url:'/magazine/speech-lock/',
-      planDoc:{ title:'【企画案】スピーチロックとは？具体例と対策', sections:['スピーチロックの定義','3つのロックの違い','具体的なNG例','現場での対策','チェックリスト'], note:'' },
+      draftContent:{ title:'サンプルKW_Gの取り方｜制度の基本から申請手順まで', body:'<h2>サンプルKW_G制度の概要</h2><p>サンプルKW_Gとは、要介護状態にある家族の介護や世話を行う労働者が取得できる休暇制度です。育児・介護休業法により、<span class="highlight-yellow">対象家族1人につき年5日</span>（2人以上の場合は年10日）まで取得可能です。</p><h2>取得条件と対象者</h2><p>サンプルKW_Gを取得できるのは、要介護状態にある家族を介護する全ての労働者です。日雇い労働者は除かれますが、パートタイマーやアルバイトも対象となります。</p>' } },
+    { id:'c12', title:'サンプルKW_N', kw:'サンプルKW_N', vol:7200, status:'ready_to_publish', statusLabel:'公開待ち', statusCls:'',
+      writer:'担当U', targetMonth:'2026-03', deadline:'2026-03-26', publishedAt:null, url:null,
+      planDoc:{ title:'【企画案】サンプルKW_N まとめ', sections:['概要','種類と選び方','費用相場','利用の流れ','FAQ'], note:'' },
+      draftUrl:'https://docs.google.com/document/d/wwwww', rank: null, ss: null, draftContent:null },
+    { id:'c6', title:'サンプル記事タイトルA', kw:'サンプル記事タイトルA', vol:12100, status:'published', statusLabel:'公開済み', statusCls:'',
+      writer:'担当U', targetMonth:'2024-11', deadline:null, publishedAt:'2024/11/15', lastUpdate:'2025/08/22', url:'/column/sample-article-a/',
+      planDoc:{ title:'【企画案】サンプル記事タイトルA？具体例と対策', sections:['サンプルKW_Aの定義','3つのロックの違い','具体的なNG例','現場での対策','チェックリスト'], note:'' },
       draftUrl:null, rank: 2, rankChange:1, ss: 812, ssChange:-58, cv: 3, wordCount:4820,
       ssHistory:[120,280,520,650,780,820,790,850,870,810,870,812], rankHistory:[15,8,5,4,3,3,2,3,2,3,3,2],
-      draftContent:{ title:'スピーチロックとは？具体例や3つのロックとの違い、対策方法を解説', body:'<h2>スピーチロックとは</h2><p>スピーチロックとは、言葉による行動制限のことで、介護現場における「3つのロック（スリーロック）」の一つです。身体拘束のように物理的に行動を制限するのではなく、<span class="highlight-yellow">言葉や態度で相手の行動を制限・抑制すること</span>を指します。</p><h2>3つのロック（スリーロック）</h2><p><strong>フィジカルロック：</strong>身体的拘束（ベッド柵、ミトンなど）<br><strong>ドラッグロック：</strong>薬物による行動抑制<br><strong>スピーチロック：</strong>言葉による行動制限</p>' } },
-    { id:'c7', title:'腰椎圧迫骨折 高齢者', kw:'腰椎圧迫骨折 高齢者 入院期間', vol:4400, status:'published', statusLabel:'公開済み', statusCls:'',
-      writer:'田中', targetMonth:'2024-12', deadline:null, publishedAt:'2024/12/01', lastUpdate:'2025/06/15', url:'/magazine/lumbar-fracture/',
+      draftContent:{ title:'サンプル記事タイトルA？具体例や3つのロックとの違い、対策方法を解説', body:'<h2>サンプル記事タイトルA</h2><p>サンプル記事タイトルA、言葉による行動制限のことで、介護現場における「3つのロック（スリーロック）」の一つです。身体拘束のように物理的に行動を制限するのではなく、<span class="highlight-yellow">言葉や態度で相手の行動を制限・抑制すること</span>を指します。</p><h2>3つのロック（スリーロック）</h2><p><strong>フィジカルロック：</strong>身体的拘束（ベッド柵、ミトンなど）<br><strong>ドラッグロック：</strong>薬物による行動抑制<br><strong>サンプルKW_A：</strong>言葉による行動制限</p>' } },
+    { id:'c7', title:'サンプルKW_B', kw:'サンプルKW_B（ロングテール）', vol:4400, status:'published', statusLabel:'公開済み', statusCls:'',
+      writer:'担当U', targetMonth:'2024-12', deadline:null, publishedAt:'2024/12/01', lastUpdate:'2025/06/15', url:'/column/sample-article-b/',
       planDoc:null, draftUrl:null, rank: 1, rankChange:2, ss: 749, ssChange:12, cv: 2, wordCount:5200, draftContent:null,
       ssHistory:[80,220,410,520,610,680,710,720,730,737,740,749], rankHistory:[18,10,6,4,3,2,2,1,2,3,3,1] },
-    { id:'c8', title:'介護タクシー 料金', kw:'介護タクシー 料金', vol:6600, status:'rewrite', statusLabel:'リライト候補', statusCls:'rewrite',
-      writer:null, targetMonth:null, deadline:null, publishedAt:'2024/07/10', lastUpdate:'2024/07/10', url:'/magazine/care-taxi/',
+    { id:'c8', title:'サンプルKW_C', kw:'サンプルKW_C', vol:6600, status:'rewrite', statusLabel:'リライト候補', statusCls:'rewrite',
+      writer:null, targetMonth:null, deadline:null, publishedAt:'2024/07/10', lastUpdate:'2024/07/10', url:'/column/sample-article-c/',
       planDoc:null, draftUrl:null, rank: 7, rankChange:-3, ss: 234, ssChange:-35, cv: 0, rewriteScore:92, wordCount:3800,
       ssHistory:[380,420,450,410,390,360,340,310,290,270,250,234], rankHistory:[3,3,4,4,4,5,5,6,5,6,7,7],
-      draftContent:{ title:'介護タクシーの料金相場｜利用方法と費用を安くする方法', body:'<h2>介護タクシーとは</h2><p>介護タクシーとは、要介護者や身体に障がいのある方の移動を支援するためのタクシーサービスです。通常のタクシーとは異なり、乗降介助や車椅子対応が可能です。</p><h2>料金の仕組み</h2><p>介護タクシーの料金は以下の要素で構成されます...</p>' } },
-    { id:'c9', title:'傾眠とは', kw:'傾眠とは', vol:3600, status:'rewrite', statusLabel:'リライト候補', statusCls:'rewrite',
-      writer:null, targetMonth:null, deadline:null, publishedAt:'2024/08/20', lastUpdate:'2024/08/20', url:'/magazine/keimin/',
+      draftContent:{ title:'サンプルKW_Cの料金相場｜利用方法と費用を安くする方法', body:'<h2>サンプルKW_Cとは</h2><p>サンプルKW_Cとは、要介護者や身体に障がいのある方の移動を支援するためのタクシーサービスです。通常のタクシーとは異なり、乗降介助や車椅子対応が可能です。</p><h2>料金の仕組み</h2><p>サンプルKW_Cの料金は以下の要素で構成されます...</p>' } },
+    { id:'c9', title:'サンプルKW_D', kw:'サンプルKW_D', vol:3600, status:'rewrite', statusLabel:'リライト候補', statusCls:'rewrite',
+      writer:null, targetMonth:null, deadline:null, publishedAt:'2024/08/20', lastUpdate:'2024/08/20', url:'/column/sample-article-d/',
       planDoc:null, draftUrl:null, rank: 5, rankChange:2, ss: 189, ssChange:-48, cv: 0, rewriteScore:85, wordCount:3200, draftContent:null,
       ssHistory:[310,340,320,300,280,260,250,240,230,220,200,189], rankHistory:[8,7,7,6,6,6,7,6,5,5,5,5] },
   ],
@@ -2212,53 +2223,56 @@ const CONTENT_DB = {
 // Feedback data per content
 const FEEDBACK_DB = {
   c1: [
-    { sender:'山田様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'3/20 14:30',
+    { sender:'担当W様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'3/20 14:30',
       text:'企画内容を確認しました。「よくある質問」のセクションに<strong>「申請にかかる期間はどれくらいか」</strong>も追加していただけますか？問い合わせで多い質問です。',
       resolved: false },
-    { sender:'板倉', type:'internal', avatar:'blue', initial:'板', time:'3/20 15:10',
+    { sender:'担当T', type:'internal', avatar:'blue', initial:'板', time:'3/20 15:10',
       text:'承知しました。FAQ項目に追加いたします。',
       resolved: false },
   ],
   c2: [
-    { sender:'山田様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'3/18 10:00',
-      text:'方向性は良いと思います。タイトルに<strong>「ケアリッツ」</strong>のサービス名を含めていただけますか？',
+    { sender:'担当W様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'3/18 10:00',
+      text:'方向性は良いと思います。タイトルに<strong>「クライアントA社」</strong>のサービス名を含めていただけますか？',
       resolved: false },
   ],
   c3: [
-    { sender:'板倉', type:'internal', avatar:'blue', initial:'板', time:'3/22 09:00',
-      text:'初稿確認しました。全体的に良い仕上がりです。2点修正をお願いします。', ref:'📄 訪問介護 初稿', resolved: false },
-    { sender:'板倉', type:'internal', avatar:'blue', initial:'板', time:'3/22 09:02',
+    { sender:'担当T', type:'internal', avatar:'blue', initial:'板', time:'3/22 09:00',
+      text:'初稿確認しました。全体的に良い仕上がりです。2点修正をお願いします。', ref:'📄 サンプルKW_J 初稿', resolved: false },
+    { sender:'担当T', type:'internal', avatar:'blue', initial:'板', time:'3/22 09:02',
       text:'① 「体位変換」の箇所にもう少し具体的な説明を追加してください。<br>② 費用セクションの数値を最新データに更新してください。', resolved: false },
-    { sender:'田中', type:'internal', avatar:'green', initial:'田', time:'3/22 11:30',
+    { sender:'担当U', type:'internal', avatar:'green', initial:'田', time:'3/22 11:30',
       text:'承知しました！本日中に修正いたします。', resolved: false },
   ],
   c5: [
-    { sender:'板倉', type:'internal', avatar:'blue', initial:'板', time:'3/18 14:00',
+    { sender:'担当T', type:'internal', avatar:'blue', initial:'板', time:'3/18 14:00',
       text:'校正完了しました。細かい表記修正のみです。公開して問題ないレベルです。', resolved: true },
-    { sender:'山田様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'3/19 10:20',
+    { sender:'担当W様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'3/19 10:20',
       text:'内容確認しました。問題ありません。公開お願いします。', resolved: true },
   ],
   c6: [
-    { sender:'山田様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'2/15 11:00',
+    { sender:'担当W様（クライアント）', type:'client', avatar:'purple', initial:'客', time:'2/15 11:00',
       text:'非常にわかりやすい記事です。社内研修の参考資料としても使わせていただいています。', resolved: true },
-    { sender:'板倉', type:'internal', avatar:'blue', initial:'板', time:'2/15 11:30',
+    { sender:'担当T', type:'internal', avatar:'blue', initial:'板', time:'2/15 11:30',
       text:'ありがとうございます！引き続き順位維持・向上に努めます。', resolved: true },
-    { sender:'板倉', type:'internal', avatar:'blue', initial:'板', time:'3/15 09:00',
+    { sender:'担当T', type:'internal', avatar:'blue', initial:'板', time:'3/15 09:00',
       text:'先月の月次レポートでCTR低下が見られたため、タイトルとディスクリプションの改善を検討しています。', ref:'📊 2月レポート スライド20', resolved: false },
   ],
   c8: [
-    { sender:'板倉', type:'internal', avatar:'blue', initial:'板', time:'3/10 10:00',
-      text:'リライト優先度スコア92。順位7位（▼3）、CTRが同順位帯平均の56%と低い。タイトル改善＋最新料金データ更新が必要です。', ref:'📋 タスク: 介護タクシー記事リライト', resolved: false },
+    { sender:'担当T', type:'internal', avatar:'blue', initial:'板', time:'3/10 10:00',
+      text:'リライト優先度スコア92。順位7位（▼3）、CTRが同順位帯平均の56%と低い。タイトル改善＋最新料金データ更新が必要です。', ref:'📋 タスク: サンプルKW_C記事リライト', resolved: false },
   ],
 };
 
 function renderContents(id) {
-  const clientNames = { 1: 'ケアリッツ&パートナーズ', 2: 'フォーティネット', 3: 'K-GOLD' };
+  const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社' };
   const contents = CONTENT_DB[id] || [];
   const statusGroups = [
     { key:'planning', title:'企画作成中' },
+    { key:'kw_selected', title:'KW選定済' },
+    { key:'writing_requested', title:'執筆依頼中' },
     { key:'writing', title:'執筆中' },
     { key:'reviewing', title:'校正中' },
+    { key:'ready_to_publish', title:'公開待ち' },
     { key:'published', title:'公開済み' },
     { key:'rewrite', title:'リライト候補' },
   ];
@@ -2341,9 +2355,9 @@ function renderContentDetail(clientId, contentId) {
   const c = contents.find(x => x.id === contentId);
   if (!c) return `<h1 class="page-title">コンテンツが見つかりません</h1>`;
   const feedback = FEEDBACK_DB[contentId] || [];
-  const clientNames = { 1: 'ケアリッツ&パートナーズ', 2: 'フォーティネット', 3: 'K-GOLD' };
+  const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社' };
 
-  const statusMap = { planning:'企画作成中', writing:'執筆中', reviewing:'校正中', published:'公開済み', rewrite:'リライト候補' };
+  const statusMap = { planning:'企画作成中', kw_selected:'KW選定済', writing_requested:'執筆依頼中', writing:'執筆中', reviewing:'校正中', ready_to_publish:'公開待ち', published:'公開済み', rewrite:'リライト候補' };
   const statusClsMap = { planning:'draft', writing:'draft', reviewing:'review', published:'', rewrite:'rewrite' };
 
   // Timeline events
@@ -2572,7 +2586,7 @@ function renderContentDetail(clientId, contentId) {
 }
 
 function renderTechnical(id) {
-  const clientNames = { 1: 'ケアリッツ&パートナーズ', 2: 'フォーティネット', 3: 'K-GOLD' };
+  const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社' };
 
   // Site Audit data (Ahrefs Site Audit API structure)
   const auditData = {
@@ -2850,29 +2864,29 @@ function renderChat(id, isPortal) {
 
   const messages = {
     general: isPortal ? [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'お世話になっております。来月のコンテンツ企画について共有させていただきます。' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 介護タクシー料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'お世話になっております。来月のコンテンツ企画について共有させていただきます。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 サンプルKW_C料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
       { sender: 'あなた', avatar: 'purple', initial: '客', self: true, text: '承知しました。確認いたします。<span class="approved-tag">✅ 承認済み</span>' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'ありがとうございます！次回のミーティングで詳細をお話しさせてください。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'ありがとうございます！次回のミーティングで詳細をお話しさせてください。' },
     ] : [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 介護タクシー料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
-      { sender: '田中', avatar: 'green', initial: '田', text: '承知しました！一点確認ですが、CTAの配置は現状のままでよいでしょうか？' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '2月次レポートのP.5を参照してください。<span class="mention">📊 レポート: 2月次報告 スライド5</span>' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 サンプルKW_C料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
+      { sender: '担当U', avatar: 'green', initial: '田', text: '承知しました！一点確認ですが、CTAの配置は現状のままでよいでしょうか？' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '2月次レポートのP.5を参照してください。<span class="mention">📊 レポート: 2月次報告 スライド5</span>' },
       { sender: 'クライアント', avatar: 'purple', initial: '客', text: '内容を確認しました。方向性に問題ありません。<span class="approved-tag">✅ 承認済み</span>' },
     ],
     content: [
-      { sender: '田中', avatar: 'green', initial: '田', text: '「訪問介護 サービス内容」の記事、初稿が完成しました。レビューお願いします。' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '確認します。明日中にフィードバック返しますね。' },
+      { sender: '担当U', avatar: 'green', initial: '田', text: '「サンプルKW_J」の記事、初稿が完成しました。レビューお願いします。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '確認します。明日中にフィードバック返しますね。' },
     ],
     technical: [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '構造化データの実装を進めています。FAQスキーマを優先で対応します。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '構造化データの実装を進めています。FAQスキーマを優先で対応します。' },
     ],
     report: [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '2月次レポートのドラフトが完成しました。所感部分のレビューをお願いします。<span class="mention">📄 2月次SEOレポート_ドラフト</span>' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '2月次レポートのドラフトが完成しました。所感部分のレビューをお願いします。<span class="mention">📄 2月次SEOレポート_ドラフト</span>' },
     ]
   };
 
-  const clientNames = { 1: 'ケアリッツ&パートナーズ', 2: 'フォーティネット', 3: 'K-GOLD' };
+  const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社' };
   const title = isPortal ? 'チャット' : `${clientNames[id]} - チャット`;
 
   return `
@@ -2905,16 +2919,16 @@ function renderChat(id, isPortal) {
   `;
 }
 
-// Report slide data (based on actual ケアリッツ monthly report)
+// Report slide data (based on actual クライアントA社 monthly report)
 const REPORT_SLIDES = [
   { id:'s1', num:1, title:'表紙', short:'表紙', type:'cover',
     content:`<div style="text-align:center;padding:40px 20px;">
       <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">2026年3月15日</div>
       <div style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:4px;">2月次 SEO成果状況報告レポート</div>
-      <div style="font-size:14px;color:#64748b;">株式会社ケアリッツ＆パートナーズ 御中</div>
+      <div style="font-size:14px;color:#64748b;">株式会社クライアントA社 御中</div>
     </div>` },
   { id:'s4', num:2, title:'全体概要', short:'全体概要', type:'text',
-    comment:'2月は季節性による就職需要の高まりを背景に、コーポレートページ（TOP・企業情報・採用ページ等）への流入が大きく増加しました。一方で、コラム記事（/magazine/配下）の流入は若干の減少傾向にあり、月間日数の差（1月31日→2月28日）が主要因と考えられます。3月に向けては、引き続きコラム施策による潜在層の獲得と、実装項目の進捗管理を両輪で進めてまいります。',
+    comment:'2月は季節性による就職需要の高まりを背景に、コーポレートページ（TOP・企業情報・採用ページ等）への流入が大きく増加しました。一方で、コラム記事（/column/配下）の流入は若干の減少傾向にあり、月間日数の差（1月31日→2月28日）が主要因と考えられます。3月に向けては、引き続きコラム施策による潜在層の獲得と、実装項目の進捗管理を両輪で進めてまいります。',
     content:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
       <div style="background:#eff6ff;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">総セッション</div><div style="font-size:22px;font-weight:800;color:#2563eb;">87,466</div><div style="font-size:11px;color:#10b981;">前年比 172%</div></div>
       <div style="background:#f0fdf4;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">オーガニックSS</div><div style="font-size:22px;font-weight:800;color:#059669;">40,600</div><div style="font-size:11px;color:#10b981;">前年比 220%</div></div>
@@ -2944,23 +2958,23 @@ const REPORT_SLIDES = [
     comment:'オーガニックセッション数は2月で40,600となり、昨月（40,371）対比101％、昨年同月（18,456）対比220％と、前月比・前年比ともに伸長しました。コラム記事での流入は月間日数の差などにより若干減少したものの、季節性による就職需要の高まりでコラム以外のコーポレートページからの流入増加がそれを補っている状況です。',
     content:'__SS_CHART__' },
   { id:'s11', num:7, title:'magazine配下 vs magazine以外', short:'セグメント別', type:'chart',
-    comment:'/magazine/配下のセッション数は2月で19,789（昨月21,132から減少）となりました。一方、/magazine/以外のセッション数は21,736（昨月20,225から増加）と伸長しています。コラムの減少は主に月間日数差（31日→28日）によるものと考えられ、日次ベースでは大きな落ち込みはございません。',
-    content:`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>/magazine/ 配下</span><span style="font-weight:700;">19,789</span></div><div style="height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden;"><div style="width:47.7%;height:100%;background:#3b82f6;border-radius:5px;"></div></div></div>
+    comment:'/column/配下のセッション数は2月で19,789（昨月21,132から減少）となりました。一方、/column/以外のセッション数は21,736（昨月20,225から増加）と伸長しています。コラムの減少は主に月間日数差（31日→28日）によるものと考えられ、日次ベースでは大きな落ち込みはございません。',
+    content:`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>/column/ 配下</span><span style="font-weight:700;">19,789</span></div><div style="height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden;"><div style="width:47.7%;height:100%;background:#3b82f6;border-radius:5px;"></div></div></div>
     <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>その他ページ</span><span style="font-weight:700;">21,736</span></div><div style="height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden;"><div style="width:52.3%;height:100%;background:#10b981;border-radius:5px;"></div></div></div>` },
   { id:'s12', num:8, title:'ユーザー数推移', short:'ユーザー数', type:'text',
     comment:'総ユーザー数は2月で27,476（昨月27,822からほぼ横ばい）となりました。昨年同月（10,560）対比では約260％と大幅増を維持しております。',
     content:`<div style="text-align:center;padding:10px;"><div style="font-size:11px;color:#64748b;">総ユーザー数</div><div style="font-size:28px;font-weight:800;color:#0f172a;">27,476</div><div style="font-size:12px;color:#10b981;">前年比 260%</div></div>` },
   { id:'s13', num:9, title:'入口ページランキングTOP10', short:'LP TOP10', type:'table',
-    comment:'TOPページ（9,918セッション、+1.7％）および企業情報ページ（1,066セッション、+21.8％）が上位を維持し、季節性による就職需要の増加を反映しています。コラム記事では「スピーチロックとは」（812セッション）、「腰椎圧迫骨折」（749セッション）などが安定した流入を獲得しております。',
+    comment:'TOPページ（9,918セッション、+1.7％）および企業情報ページ（1,066セッション、+21.8％）が上位を維持し、季節性による就職需要の増加を反映しています。コラム記事では「サンプル記事タイトルA」（812セッション）、「サンプルKW_B」（749セッション）などが安定した流入を獲得しております。',
     content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
       <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">1</td><td>TOPページ</td><td style="text-align:right;font-weight:600;">9,918</td><td style="text-align:right;color:#10b981;">+1.7%</td></tr>
       <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">2</td><td>企業情報</td><td style="text-align:right;font-weight:600;">1,066</td><td style="text-align:right;color:#10b981;">+21.8%</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">3</td><td>スピーチロックとは</td><td style="text-align:right;font-weight:600;">812</td><td style="text-align:right;color:#64748b;">-</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">4</td><td>腰椎圧迫骨折 高齢者</td><td style="text-align:right;font-weight:600;">749</td><td style="text-align:right;color:#64748b;">-</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">3</td><td>サンプル記事タイトルA</td><td style="text-align:right;font-weight:600;">812</td><td style="text-align:right;color:#64748b;">-</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">4</td><td>サンプルKW_B</td><td style="text-align:right;font-weight:600;">749</td><td style="text-align:right;color:#64748b;">-</td></tr>
       <tr><td style="padding:4px 6px;font-weight:600;">5</td><td>採用情報</td><td style="text-align:right;font-weight:600;">680</td><td style="text-align:right;color:#10b981;">+8.2%</td></tr>
     </table>` },
   { id:'s15', num:10, title:'CV数推移', short:'CV推移', type:'chart',
-    comment:'2月のオーガニックCV総数は157件（昨月73件から大幅増、昨年同月146件対比でも増加）となりました。特にapply_recruit_kaigo_timestampが133件と、昨月（65件）から倍増しております。季節性による就職需要の高まりが大きな要因ですが、SEO施策による自然検索流入の底上げが、CV数の伸びにしっかり結びついている結果です。',
+    comment:'2月のオーガニックCV総数は157件（昨月73件から大幅増、昨年同月146件対比でも増加）となりました。特にsample_cv_event_1が133件と、昨月（65件）から倍増しております。季節性による就職需要の高まりが大きな要因ですが、SEO施策による自然検索流入の底上げが、CV数の伸びにしっかり結びついている結果です。',
     content:`<div style="text-align:center;padding:8px;"><div style="font-size:11px;color:#64748b;">オーガニックCV合計</div><div style="font-size:28px;font-weight:800;color:#059669;">157件</div><div style="font-size:12px;color:#10b981;">前月比 215%</div></div>
     <div style="font-size:11px;margin-top:8px;">
       <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span>介護職応募（kaigo_timestamp）</span><span style="font-weight:700;">133件</span></div>
@@ -2968,30 +2982,30 @@ const REPORT_SLIDES = [
       <div style="display:flex;justify-content:space-between;padding:4px 0;"><span>資料ダウンロード</span><span style="font-weight:700;">9件</span></div>
     </div>` },
   { id:'s17', num:11, title:'KWフォーカス（前年プラス）', short:'KW前年+', type:'table',
-    comment:'「ケアリッツ」（+297）、「ケアリッツアンドパートナーズ」（+290）など指名検索ワードが大きく伸長。「スピーチロック」（+174）、「腰椎圧迫骨折 高齢者 入院期間」（+95）など、コラム施策で新規に獲得した記事系KWも堅調に推移しております。',
+    comment:'「クライアントA社」（+297）、「クライアントA社アンドパートナーズ」（+290）など指名検索ワードが大きく伸長。「サンプルKW_A」（+174）、「サンプルKW_B（ロングテール）」（+95）など、コラム施策で新規に獲得した記事系KWも堅調に推移しております。',
     content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">ケアリッツ</td><td style="text-align:right;color:#10b981;font-weight:700;">+297</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">ケアリッツアンドパートナーズ</td><td style="text-align:right;color:#10b981;font-weight:700;">+290</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">スピーチロック</td><td style="text-align:right;color:#10b981;font-weight:700;">+174</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">スピーチロックとは</td><td style="text-align:right;color:#10b981;font-weight:700;">+151</td></tr>
-      <tr><td style="padding:3px 6px;">腰椎圧迫骨折 高齢者 入院期間</td><td style="text-align:right;color:#10b981;font-weight:700;">+95</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">クライアントA社</td><td style="text-align:right;color:#10b981;font-weight:700;">+297</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">クライアントA社アンドパートナーズ</td><td style="text-align:right;color:#10b981;font-weight:700;">+290</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_A</td><td style="text-align:right;color:#10b981;font-weight:700;">+174</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプル記事タイトルA</td><td style="text-align:right;color:#10b981;font-weight:700;">+151</td></tr>
+      <tr><td style="padding:3px 6px;">サンプルKW_B（ロングテール）</td><td style="text-align:right;color:#10b981;font-weight:700;">+95</td></tr>
     </table>` },
   { id:'s20', num:12, title:'KWフォーカス（前月マイナス）', short:'KW前月-', type:'table',
-    comment:'「スピーチロックとは」（-58）、「スピーチロック」（-47）は月間日数差の影響。「傾眠とは」や「介護休暇」では順位上昇にもかかわらず表示回数が大幅減少しており、AIO（AI Overview）によるゼロクリック検索の影響が推察されます。今後のAIO対策の重要性を示唆するデータです。',
+    comment:'「サンプル記事タイトルA」（-58）、「サンプルKW_A」（-47）は月間日数差の影響。「サンプルKW_D」や「サンプルKW_G」では順位上昇にもかかわらず表示回数が大幅減少しており、AIO（AI Overview）によるゼロクリック検索の影響が推察されます。今後のAIO対策の重要性を示唆するデータです。',
     content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">スピーチロックとは</td><td style="text-align:right;color:#ef4444;font-weight:700;">-58</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">スピーチロック</td><td style="text-align:right;color:#ef4444;font-weight:700;">-47</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">介護タクシー</td><td style="text-align:right;color:#ef4444;font-weight:700;">-35</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">傾眠とは <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-28</td></tr>
-      <tr><td style="padding:3px 6px;">介護休暇 <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-22</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプル記事タイトルA</td><td style="text-align:right;color:#ef4444;font-weight:700;">-58</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_A</td><td style="text-align:right;color:#ef4444;font-weight:700;">-47</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_C</td><td style="text-align:right;color:#ef4444;font-weight:700;">-35</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_D <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-28</td></tr>
+      <tr><td style="padding:3px 6px;">サンプルKW_G <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-22</td></tr>
     </table>` },
   { id:'s22', num:13, title:'外部リンク数の推移', short:'被リンク', type:'chart',
-    comment:'2月の被リンク数は21,762と、直近で最大値を記録しました（昨月16,370から約33％増）。獲得元ドメインも計189サイトに達しており、yahoo.co.jp（4,847件）、mhlw.go.jp（3,163件）、openwork.jp（2,385件）といった権威性の高いドメインからのリンクが安定しております。',
+    comment:'2月の被リンク数は21,762と、直近で最大値を記録しました（昨月16,370から約33％増）。獲得元ドメインも計189サイトに達しており、example-referer-1.jp（4,847件）、example-referer-2.jp（3,163件）、example-referer-3.jp（2,385件）といった権威性の高いドメインからのリンクが安定しております。',
     content:`<div style="text-align:center;padding:8px;"><div style="font-size:11px;color:#64748b;">被リンク数</div><div style="font-size:28px;font-weight:800;color:#7c3aed;">21,762</div><div style="font-size:12px;color:#10b981;">前月比 +33%</div></div>
     <div style="font-size:11px;margin-top:8px;">
-      <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f1f5f9;"><span>yahoo.co.jp</span><span style="font-weight:600;">4,847件</span></div>
-      <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f1f5f9;"><span>mhlw.go.jp</span><span style="font-weight:600;">3,163件</span></div>
-      <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>openwork.jp</span><span style="font-weight:600;">2,385件</span></div>
+      <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f1f5f9;"><span>example-referer-1.jp</span><span style="font-weight:600;">4,847件</span></div>
+      <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f1f5f9;"><span>example-referer-2.jp</span><span style="font-weight:600;">3,163件</span></div>
+      <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>example-referer-3.jp</span><span style="font-weight:600;">2,385件</span></div>
     </div>` },
   { id:'s24', num:14, title:'改善施策の進捗', short:'施策進捗', type:'text',
     comment:'改善施策の全体進捗率は38.5％となっております。テスト環境のログインURLとFTP情報のご共有をお願いしている状況です。情報をご共有いただき次第、残りの実装項目を順次進行してまいります。',
@@ -3000,7 +3014,7 @@ const REPORT_SLIDES = [
 ];
 
 function renderReports(id, isPortal) {
-  const clientNames = { 1: 'ケアリッツ&パートナーズ', 2: 'フォーティネット', 3: 'K-GOLD' };
+  const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社' };
   const title = isPortal ? 'レポート' : `${clientNames[id]} - レポート`;
 
   if (isPortal) {
@@ -3092,7 +3106,7 @@ function renderPortalDashboard() {
 
   return `
     <div class="portal-welcome">
-      <h2>ケアリッツ&パートナーズ 様</h2>
+      <h2>クライアントA社 様</h2>
       <p>SEO施策の最新状況をご確認いただけます。</p>
     </div>
 
@@ -3136,7 +3150,7 @@ function renderPortalContents() {
     <div style="font-size:14px;font-weight:600;color:#64748b;margin-bottom:16px;">承認待ち</div>
     <div class="approval-grid">
       <div class="approval-card">
-        <div class="approval-card-title">訪問介護 サービス内容</div>
+        <div class="approval-card-title">サンプルKW_J</div>
         <div class="approval-card-meta">3,200文字 / 検索Vol: 5,400 / 〆切: 3/28</div>
         <div class="approval-btns">
           <button class="btn-approve">承認する</button>
@@ -3144,7 +3158,7 @@ function renderPortalContents() {
         </div>
       </div>
       <div class="approval-card">
-        <div class="approval-card-title">要介護認定 流れ</div>
+        <div class="approval-card-title">サンプルKW_K</div>
         <div class="approval-card-meta">2,800文字 / 検索Vol: 4,100 / 〆切: 3/31</div>
         <div class="approval-btns">
           <button class="btn-approve">承認する</button>
@@ -3156,12 +3170,12 @@ function renderPortalContents() {
     <div style="font-size:14px;font-weight:600;color:#64748b;margin-bottom:16px;margin-top:8px;">承認済み</div>
     <div class="approval-grid">
       <div class="approval-card approved">
-        <div class="approval-card-title">介護休暇 取り方</div>
+        <div class="approval-card-title">サンプルKW_G</div>
         <div class="approval-card-meta">2,500文字 / 3/20承認</div>
         <div><span class="approval-badge">&#x2705; 承認済み</span></div>
       </div>
       <div class="approval-card approved">
-        <div class="approval-card-title">スピーチロックとは（リライト）</div>
+        <div class="approval-card-title">サンプル記事タイトルA（リライト）</div>
         <div class="approval-card-meta">3,800文字 / 3/15承認</div>
         <div><span class="approval-badge">&#x2705; 承認済み</span></div>
       </div>
@@ -3180,7 +3194,7 @@ function renderWriterDashboard() {
     <h2 style="font-size:16px;font-weight:600;margin-bottom:16px;color:#0f172a;">アサイン記事一覧</h2>
 
     <div class="writer-card">
-      <div class="writer-card-title">訪問介護 サービス内容</div>
+      <div class="writer-card-title">サンプルKW_J</div>
       <div class="writer-card-meta">
         <span>〆切: 3/28</span>
         <span class="writer-status writing">執筆中</span>
@@ -3189,7 +3203,7 @@ function renderWriterDashboard() {
     </div>
 
     <div class="writer-card">
-      <div class="writer-card-title">要介護認定 流れ</div>
+      <div class="writer-card-title">サンプルKW_K</div>
       <div class="writer-card-meta">
         <span>〆切: 3/31</span>
         <span class="writer-status writing">執筆中</span>
@@ -3198,7 +3212,7 @@ function renderWriterDashboard() {
     </div>
 
     <div class="writer-card" style="border-left:3px solid #f59e0b;">
-      <div class="writer-card-title">介護休暇 取り方</div>
+      <div class="writer-card-title">サンプルKW_G</div>
       <div class="writer-card-meta">
         <span class="writer-status review">校正中 - フィードバック確認</span>
       </div>
@@ -3212,7 +3226,7 @@ function renderWriterFeedback() {
     <h1 class="page-title">フィードバック確認</h1>
 
     <div class="chart-container" style="margin-bottom:16px;">
-      <div class="chart-title">対象記事: 介護休暇 取り方</div>
+      <div class="chart-title">対象記事: サンプルKW_G</div>
       <div style="font-size:13px;color:#64748b;line-height:1.8;">
         ステータス: <span class="writer-status review" style="margin-left:4px;">校正中</span>
       </div>
@@ -3222,10 +3236,10 @@ function renderWriterFeedback() {
       <div class="chart-title">フィードバック</div>
       <div class="fb-thread">
         <div class="fb-item internal">
-          <div class="fb-avatar" style="background:#3b82f6;">板</div>
+          <div class="fb-avatar" style="background:#3b82f6;">T</div>
           <div class="fb-body">
             <div class="fb-header">
-              <span class="fb-name">板倉</span>
+              <span class="fb-name">担当T</span>
               <span class="fb-time">2026/3/22 14:30</span>
             </div>
             <div class="fb-text">校正完了。細かい表記修正のみ。公開して問題ないレベルです。</div>
@@ -3310,25 +3324,25 @@ function bindChatTabs() {
   const isPortal = currentMode === 'portal';
   const allMessages = {
     general: isPortal ? [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'お世話になっております。来月のコンテンツ企画について共有させていただきます。' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 介護タクシー料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'お世話になっております。来月のコンテンツ企画について共有させていただきます。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 サンプルKW_C料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
       { sender: 'あなた', avatar: 'purple', initial: '客', self: true, text: '承知しました。確認いたします。<span class="approved-tag">✅ 承認済み</span>' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'ありがとうございます！次回のミーティングで詳細をお話しさせてください。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'ありがとうございます！次回のミーティングで詳細をお話しさせてください。' },
     ] : [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 介護タクシー料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
-      { sender: '田中', avatar: 'green', initial: '田', text: '承知しました！一点確認ですが、CTAの配置は現状のままでよいでしょうか？' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '2月次レポートのP.5を参照してください。<span class="mention">📊 レポート: 2月次報告 スライド5</span>' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: 'リライト指示書を作成しました。<span class="mention">📄 サンプルKW_C料金_リライト指示書</span><br><span class="mention">📋 タスク: リライト実施</span>' },
+      { sender: '担当U', avatar: 'green', initial: '田', text: '承知しました！一点確認ですが、CTAの配置は現状のままでよいでしょうか？' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '2月次レポートのP.5を参照してください。<span class="mention">📊 レポート: 2月次報告 スライド5</span>' },
       { sender: 'クライアント', avatar: 'purple', initial: '客', text: '内容を確認しました。方向性に問題ありません。<span class="approved-tag">✅ 承認済み</span>' },
     ],
     content: [
-      { sender: '田中', avatar: 'green', initial: '田', text: '「訪問介護 サービス内容」の記事、初稿が完成しました。レビューお願いします。' },
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '確認します。明日中にフィードバック返しますね。' },
+      { sender: '担当U', avatar: 'green', initial: '田', text: '「サンプルKW_J」の記事、初稿が完成しました。レビューお願いします。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '確認します。明日中にフィードバック返しますね。' },
     ],
     technical: [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '構造化データの実装を進めています。FAQスキーマを優先で対応します。' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '構造化データの実装を進めています。FAQスキーマを優先で対応します。' },
     ],
     report: [
-      { sender: '板倉', avatar: 'blue', initial: '板', text: '2月次レポートのドラフトが完成しました。所感部分のレビューをお願いします。<span class="mention">📄 2月次SEOレポート_ドラフト</span>' },
+      { sender: '担当T', avatar: 'blue', initial: '板', text: '2月次レポートのドラフトが完成しました。所感部分のレビューをお願いします。<span class="mention">📄 2月次SEOレポート_ドラフト</span>' },
     ]
   };
 

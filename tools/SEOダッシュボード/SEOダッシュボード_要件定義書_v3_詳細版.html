@@ -1745,7 +1745,7 @@ POST https://www.googleapis.com/webmasters/v3
 {
   <span class="str">"rows"</span>: [
     {
-      <span class="str">"keys"</span>: [<span class="str">"スピーチロックとは"</span>],
+      <span class="str">"keys"</span>: [<span class="str">"サンプル記事タイトルA"</span>],
       <span class="str">"clicks"</span>: <span class="num">812</span>,
       <span class="str">"impressions"</span>: <span class="num">18420</span>,
       <span class="str">"ctr"</span>: <span class="num">0.044</span>,
@@ -1822,7 +1822,7 @@ POST https://www.googleapis.com/webmasters/v3
       <td><strong>セグメント別（magazine配下）</strong></td>
       <td><code>pagePath</code>, <code>date</code></td>
       <td><code>sessions</code>, <code>totalUsers</code></td>
-      <td>magazine配下 vs その他の比較。<code>dimensionFilter: pagePath contains "/magazine/"</code>で分離</td>
+      <td>magazine配下 vs その他の比較。<code>dimensionFilter: pagePath contains "/column/"</code>で分離</td>
     </tr>
     <tr>
       <td>R4</td>
@@ -2386,7 +2386,7 @@ POST https://analyticsdata.googleapis.com/v1beta
 
 <span class="kw">model</span> <span class="tp">Client</span> {
   id              <span class="tp">String</span>    @id @default(<span class="fn">cuid</span>())
-  companyName     <span class="tp">String</span>                          <span class="cm">// 会社名: "株式会社ケアリッツ&パートナーズ"</span>
+  companyName     <span class="tp">String</span>                          <span class="cm">// 会社名: "株式会社クライアントA社"</span>
   contractPlan    <span class="tp">ContractPlan</span> @default(<span class="str">FULL</span>)     <span class="cm">// 契約プラン (FULL / MAINTENANCE / CHURNED)</span>
   contractStartAt <span class="tp">DateTime</span>                        <span class="cm">// 契約開始日</span>
   contractEndAt   <span class="tp">DateTime</span>?                       <span class="cm">// 契約終了日（更新日）</span>
@@ -2402,7 +2402,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   id              <span class="tp">String</span>    @id @default(<span class="fn">cuid</span>())
   clientId        <span class="tp">String</span>
   client          <span class="tp">Client</span>    @relation(fields: [clientId], references: [id])
-  siteUrl         <span class="tp">String</span>                          <span class="cm">// "https://www.carerritz.com"</span>
+  siteUrl         <span class="tp">String</span>                          <span class="cm">// "https://www.client-a.com"</span>
   siteName        <span class="tp">String</span>                          <span class="cm">// 表示名</span>
 
   <span class="cm">// 外部サービス連携設定</span>
@@ -2419,7 +2419,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   googleTokenExpiry   <span class="tp">DateTime</span>?
 
   <span class="cm">// セグメント設定</span>
-  magazinePath    <span class="tp">String</span>?   @default(<span class="str">"/magazine/"</span>) <span class="cm">// コラム配下パス</span>
+  magazinePath    <span class="tp">String</span>?   @default(<span class="str">"/column/"</span>) <span class="cm">// コラム配下パス</span>
   cvEventNames    <span class="tp">String</span>[]  @default([])        <span class="cm">// 追跡CVイベント名リスト</span>
 
   createdAt       <span class="tp">DateTime</span>  @default(<span class="fn">now</span>())
@@ -2465,7 +2465,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   id            <span class="tp">String</span>    @id @default(<span class="fn">cuid</span>())
   projectId     <span class="tp">String</span>
   project       <span class="tp">Project</span>   @relation(fields: [projectId], references: [id])
-  keyword       <span class="tp">String</span>                          <span class="cm">// "スピーチロックとは"</span>
+  keyword       <span class="tp">String</span>                          <span class="cm">// "サンプル記事タイトルA"</span>
   category      <span class="tp">KwCategory</span> @default(<span class="str">ARTICLE</span>)  <span class="cm">// 指名KW / 記事系 / サービス</span>
   targetUrl     <span class="tp">String</span>?                         <span class="cm">// 対象ページURL</span>
   targetRank    <span class="tp">Int</span>?                            <span class="cm">// 目標順位</span>
@@ -2509,7 +2509,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   id              <span class="tp">String</span>    @id @default(<span class="fn">cuid</span>())
   projectId       <span class="tp">String</span>
   project         <span class="tp">Project</span>   @relation(fields: [projectId], references: [id])
-  title           <span class="tp">String</span>                        <span class="cm">// "スピーチロックとは？...</span>"
+  title           <span class="tp">String</span>                        <span class="cm">// "サンプル記事タイトルA？...</span>"
   slug            <span class="tp">String</span>?
   url             <span class="tp">String</span>?                       <span class="cm">// 公開URL</span>
 
@@ -2636,7 +2636,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   totalBacklinks    <span class="tp">Int</span>       @default(<span class="num">0</span>)
   referringDomains  <span class="tp">Int</span>       @default(<span class="num">0</span>)
   <span class="cm">// 主要参照ドメイン上位 (JSONB)</span>
-  topRefDomains     <span class="tp">Json</span>?     <span class="cm">// [{"domain":"yahoo.co.jp","backlinks":4847}, ...]</span>
+  topRefDomains     <span class="tp">Json</span>?     <span class="cm">// [{"domain":"example-referer-1.jp","backlinks":4847}, ...]</span>
 
   @@unique([projectId, date])
   @@index([projectId, date(sort: Desc)])
@@ -2758,8 +2758,8 @@ POST https://analyticsdata.googleapis.com/v1beta
   sender      <span class="tp">User</span>      @relation(fields: [senderId], references: [id])
 
   <span class="cm">// リッチテキスト本文（JSON）</span>
-  <span class="cm">// [{"type":"text","value":"..."}, {"type":"mention","entity":"user","id":"xxx","label":"@板倉"},</span>
-  <span class="cm">//  {"type":"ref","entity":"content","id":"xxx","label":"スピーチロックとは","meta":{"rank":2,"ss":812}}]</span>
+  <span class="cm">// [{"type":"text","value":"..."}, {"type":"mention","entity":"user","id":"xxx","label":"@担当T"},</span>
+  <span class="cm">//  {"type":"ref","entity":"content","id":"xxx","label":"サンプル記事タイトルA","meta":{"rank":2,"ss":812}}]</span>
   body        <span class="tp">Json</span>                            <span class="cm">// リッチテキストブロック配列</span>
   plainText   <span class="tp">String</span>    @db.Text             <span class="cm">// 全文検索用プレーンテキスト</span>
 
@@ -3088,20 +3088,20 @@ POST https://analyticsdata.googleapis.com/v1beta
           <div class="m-health-row">
             <div class="m-health">
               <div class="m-health-ring"><svg width="60" height="60" viewBox="0 0 60 60"><circle class="rbg" cx="30" cy="30" r="25"/><circle class="rfill" cx="30" cy="30" r="25" stroke="#10b981" stroke-dasharray="157" stroke-dashoffset="12.6"/></svg><div class="rtxt" style="color:#10b981">92</div></div>
-              <div class="m-health-name">ケアリッツ&P 様</div><div class="m-health-sub">流入&#9650; 順位&#9650; CV&#9650;&#9650;</div>
+              <div class="m-health-name">クライアントA 様</div><div class="m-health-sub">流入&#9650; 順位&#9650; CV&#9650;&#9650;</div>
             </div>
             <div class="m-health">
               <div class="m-health-ring"><svg width="60" height="60" viewBox="0 0 60 60"><circle class="rbg" cx="30" cy="30" r="25"/><circle class="rfill" cx="30" cy="30" r="25" stroke="#3b82f6" stroke-dasharray="157" stroke-dashoffset="36.1"/></svg><div class="rtxt" style="color:#60a5fa">77</div></div>
-              <div class="m-health-name">フォーティネット 様</div><div class="m-health-sub">流入&#8594; 順位&#9650; CV&#8594;</div>
+              <div class="m-health-name">クライアントB社 様</div><div class="m-health-sub">流入&#8594; 順位&#9650; CV&#8594;</div>
             </div>
             <div class="m-health">
               <div class="m-health-ring"><svg width="60" height="60" viewBox="0 0 60 60"><circle class="rbg" cx="30" cy="30" r="25"/><circle class="rfill" cx="30" cy="30" r="25" stroke="#f59e0b" stroke-dasharray="157" stroke-dashoffset="77"/></svg><div class="rtxt" style="color:#f59e0b">51</div></div>
-              <div class="m-health-name">K-GOLD 様</div><div class="m-health-sub" style="color:#f59e0b">&#9888; 流入&#9660; 順位&#9660;</div>
+              <div class="m-health-name">クライアントC社 様</div><div class="m-health-sub" style="color:#f59e0b">&#9888; 流入&#9660; 順位&#9660;</div>
             </div>
           </div>
-          <div class="m-alert"><span class="m-alert-icon">&#128308;</span><div class="m-alert-text">K-GOLD様: 「結婚指輪 買取」が 8位&#8594;16位 に急落</div><div class="m-alert-time">2時間前</div></div>
-          <div class="m-alert"><span class="m-alert-icon">&#128993;</span><div class="m-alert-text">K-GOLD様: 契約更新日まで残り38日</div><div class="m-alert-time">今日</div></div>
-          <div class="m-alert"><span class="m-alert-icon">&#128309;</span><div class="m-alert-text">ケアリッツ様: 2月次レポートのドラフトが生成完了</div><div class="m-alert-time">6時間前</div></div>
+          <div class="m-alert"><span class="m-alert-icon">&#128308;</span><div class="m-alert-text">クライアントC社様: 「サンプルKW_P」が 8位&#8594;16位 に急落</div><div class="m-alert-time">2時間前</div></div>
+          <div class="m-alert"><span class="m-alert-icon">&#128993;</span><div class="m-alert-text">クライアントC社様: 契約更新日まで残り38日</div><div class="m-alert-time">今日</div></div>
+          <div class="m-alert"><span class="m-alert-icon">&#128309;</span><div class="m-alert-text">クライアントA社様: 2月次レポートのドラフトが生成完了</div><div class="m-alert-time">6時間前</div></div>
         </div>
       </div></div>
     </div>
@@ -3186,7 +3186,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <div class="ui-mock-toggle" onclick="this.classList.toggle('open')">
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
-        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/carerritz</div><div style="width:40px"></div></div>
+        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a</div><div style="width:40px"></div></div>
         <div class="m-body">
           <div class="m-kpi-row">
             <div class="m-kpi"><div class="m-kpi-label">オーガニックSS <span class="m-src m-src-ga4">GA4</span></div><div class="m-kpi-val">40,600</div><div class="m-kpi-change up">&#9650; 前月比 101%</div></div>
@@ -3219,7 +3219,7 @@ POST https://analyticsdata.googleapis.com/v1beta
             <div class="m-chart">
               <div class="m-chart-title">magazine配下 vs その他</div>
               <div style="margin-top:8px">
-                <div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8;margin-bottom:4px"><span>/magazine/</span><span style="font-weight:700;color:#e2e8f0">19,789</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:11px;color:#94a3b8;margin-bottom:4px"><span>/column/</span><span style="font-weight:700;color:#e2e8f0">19,789</span></div>
                 <div style="height:8px;background:#1e293b;border-radius:4px;overflow:hidden"><div style="width:47.7%;height:100%;background:#3b82f6;border-radius:4px"></div></div>
               </div>
               <div style="margin-top:12px">
@@ -3308,7 +3308,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <div class="ui-mock-toggle" onclick="this.classList.toggle('open')">
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
-        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/carerritz/keywords</div><div style="width:40px"></div></div>
+        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a/keywords</div><div style="width:40px"></div></div>
         <div class="m-body">
           <div class="m-kpi-row">
             <div class="m-kpi" style="text-align:center"><div class="m-kpi-val" style="color:#10b981">12</div><div style="font-size:10px;color:#64748b">1-3位</div></div>
@@ -3321,11 +3321,11 @@ POST https://analyticsdata.googleapis.com/v1beta
             <table class="m-table">
               <thead><tr><th>キーワード</th><th>順位</th><th>前月比</th><th style="text-align:right">検索Vol</th><th style="text-align:right">クリック</th><th style="text-align:right">CTR</th></tr></thead>
               <tbody>
-                <tr><td style="color:#e2e8f0;font-weight:600">スピーチロックとは</td><td><span class="m-rank m-rank-g">2</span></td><td><span class="m-pill m-pill-up">&#9650;1</span></td><td style="text-align:right">12,100</td><td style="text-align:right">812</td><td style="text-align:right">4.4%</td></tr>
-                <tr><td style="color:#e2e8f0;font-weight:600">腰椎圧迫骨折 高齢者</td><td><span class="m-rank m-rank-g">1</span></td><td><span class="m-pill m-pill-up">&#9650;2</span></td><td style="text-align:right">4,400</td><td style="text-align:right">749</td><td style="text-align:right">7.6%</td></tr>
-                <tr><td style="color:#e2e8f0;font-weight:600">ケアリッツ</td><td><span class="m-rank m-rank-g">1</span></td><td><span class="m-pill" style="color:#64748b">&#8594;</span></td><td style="text-align:right">2,900</td><td style="text-align:right">1,845</td><td style="text-align:right">35.4%</td></tr>
-                <tr><td style="color:#e2e8f0;font-weight:600">介護タクシー 料金</td><td><span class="m-rank m-rank-b">7</span></td><td><span class="m-pill m-pill-down">&#9660;3</span></td><td style="text-align:right">6,600</td><td style="text-align:right">234</td><td style="text-align:right">2.3%</td></tr>
-                <tr><td style="color:#e2e8f0;font-weight:600">負担限度額認定証</td><td><span class="m-rank m-rank-o">14</span></td><td><span class="m-pill m-pill-up">&#9650;3</span></td><td style="text-align:right">8,100</td><td style="text-align:right">87</td><td style="text-align:right">1.3%</td></tr>
+                <tr><td style="color:#e2e8f0;font-weight:600">サンプル記事タイトルA</td><td><span class="m-rank m-rank-g">2</span></td><td><span class="m-pill m-pill-up">&#9650;1</span></td><td style="text-align:right">12,100</td><td style="text-align:right">812</td><td style="text-align:right">4.4%</td></tr>
+                <tr><td style="color:#e2e8f0;font-weight:600">サンプルKW_B</td><td><span class="m-rank m-rank-g">1</span></td><td><span class="m-pill m-pill-up">&#9650;2</span></td><td style="text-align:right">4,400</td><td style="text-align:right">749</td><td style="text-align:right">7.6%</td></tr>
+                <tr><td style="color:#e2e8f0;font-weight:600">クライアントA社</td><td><span class="m-rank m-rank-g">1</span></td><td><span class="m-pill" style="color:#64748b">&#8594;</span></td><td style="text-align:right">2,900</td><td style="text-align:right">1,845</td><td style="text-align:right">35.4%</td></tr>
+                <tr><td style="color:#e2e8f0;font-weight:600">サンプルKW_C</td><td><span class="m-rank m-rank-b">7</span></td><td><span class="m-pill m-pill-down">&#9660;3</span></td><td style="text-align:right">6,600</td><td style="text-align:right">234</td><td style="text-align:right">2.3%</td></tr>
+                <tr><td style="color:#e2e8f0;font-weight:600">サンプルKW_E</td><td><span class="m-rank m-rank-o">14</span></td><td><span class="m-pill m-pill-up">&#9650;3</span></td><td style="text-align:right">8,100</td><td style="text-align:right">87</td><td style="text-align:right">1.3%</td></tr>
               </tbody>
             </table>
           </div>
@@ -3466,7 +3466,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <div class="ui-mock-toggle" onclick="this.classList.toggle('open')">
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
-        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/carerritz/contents</div><div style="width:40px"></div></div>
+        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a/contents</div><div style="width:40px"></div></div>
         <div class="m-body">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
             <div style="font-size:14px;font-weight:700;color:#e2e8f0">コンテンツパイプライン</div>
@@ -3475,23 +3475,23 @@ POST https://analyticsdata.googleapis.com/v1beta
           <div class="m-kanban">
             <div class="m-kan-col">
               <div class="m-kan-header">企画作成中 <span class="m-kan-cnt">2</span></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">介護保険 申請方法</div><div class="m-kan-kw">Vol:9,900</div><div class="m-kan-meta"><span>4月予定</span></div></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">デイサービス 選び方</div><div class="m-kan-kw">Vol:3,600</div><div class="m-kan-meta"><span>4月予定</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプルKW_H</div><div class="m-kan-kw">Vol:9,900</div><div class="m-kan-meta"><span>4月予定</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプルKW_I</div><div class="m-kan-kw">Vol:3,600</div><div class="m-kan-meta"><span>4月予定</span></div></div>
             </div>
             <div class="m-kan-col">
               <div class="m-kan-header">執筆中 <span class="m-kan-cnt">2</span></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">訪問介護 サービス内容</div><div class="m-kan-kw">Vol:5,400</div><div class="m-kan-meta"><span style="color:#f59e0b">3/28 〆切</span></div></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">要介護認定 流れ</div><div class="m-kan-kw">Vol:6,600</div><div class="m-kan-meta"><span>3/31 〆切</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプルKW_J</div><div class="m-kan-kw">Vol:5,400</div><div class="m-kan-meta"><span style="color:#f59e0b">3/28 〆切</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプルKW_K</div><div class="m-kan-kw">Vol:6,600</div><div class="m-kan-meta"><span>3/31 〆切</span></div></div>
             </div>
             <div class="m-kan-col">
               <div class="m-kan-header">公開済み <span class="m-kan-cnt">2</span></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">スピーチロックとは</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">2位 &#9650;1</div><div class="m-kan-meta"><span>2024/11/15</span><span style="color:#10b981;font-weight:600">812 SS</span></div></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">腰椎圧迫骨折 高齢者</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">1位 &#9650;2</div><div class="m-kan-meta"><span>2024/12/01</span><span style="color:#10b981;font-weight:600">749 SS</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプル記事タイトルA</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">2位 &#9650;1</div><div class="m-kan-meta"><span>2024/11/15</span><span style="color:#10b981;font-weight:600">812 SS</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプルKW_B</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">1位 &#9650;2</div><div class="m-kan-meta"><span>2024/12/01</span><span style="color:#10b981;font-weight:600">749 SS</span></div></div>
             </div>
             <div class="m-kan-col" style="border-color:rgba(245,158,11,0.3)">
               <div class="m-kan-header" style="color:#f59e0b">リライト候補 <span class="m-kan-cnt">2</span></div>
-              <div class="m-kan-card" style="border-left:2px solid #f59e0b"><div class="m-kan-card-title">介護タクシー 料金</div><div class="m-kan-kw" style="background:rgba(245,158,11,0.1);color:#f59e0b">7位 &#9660;3</div><div class="m-kan-meta"><span>優先度: 92</span></div></div>
-              <div class="m-kan-card" style="border-left:2px solid #f59e0b"><div class="m-kan-card-title">傾眠とは</div><div class="m-kan-kw" style="background:rgba(139,92,246,0.1);color:#a78bfa">AIO影響</div><div class="m-kan-meta"><span>優先度: 85</span></div></div>
+              <div class="m-kan-card" style="border-left:2px solid #f59e0b"><div class="m-kan-card-title">サンプルKW_C</div><div class="m-kan-kw" style="background:rgba(245,158,11,0.1);color:#f59e0b">7位 &#9660;3</div><div class="m-kan-meta"><span>優先度: 92</span></div></div>
+              <div class="m-kan-card" style="border-left:2px solid #f59e0b"><div class="m-kan-card-title">サンプルKW_D</div><div class="m-kan-kw" style="background:rgba(139,92,246,0.1);color:#a78bfa">AIO影響</div><div class="m-kan-meta"><span>優先度: 85</span></div></div>
             </div>
           </div>
         </div>
@@ -3647,20 +3647,20 @@ POST https://analyticsdata.googleapis.com/v1beta
     <div class="ui-mock-toggle" onclick="this.classList.toggle('open')">
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
-        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/carerritz/contents/speech-lock</div><div style="width:40px"></div></div>
+        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a/contents/speech-lock</div><div style="width:40px"></div></div>
         <div class="m-body">
           <!-- 記事メタ情報 -->
           <div style="display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap">
             <div style="flex:1;min-width:280px">
-              <div style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:6px">スピーチロックとは？具体例や対策を解説</div>
+              <div style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:6px">サンプル記事タイトルA？具体例や対策を解説</div>
               <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
                 <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(16,185,129,0.12);color:#10b981;font-weight:600">公開済み</span>
-                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,0.12);color:#60a5fa">メインKW: スピーチロックとは</span>
+                <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,0.12);color:#60a5fa">メインKW: サンプル記事タイトルA</span>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;color:#94a3b8">
                 <div>公開日: <span style="color:#e2e8f0">2024/11/15</span></div>
                 <div>最終更新: <span style="color:#e2e8f0">2025/08/22</span></div>
-                <div>担当: <span style="color:#e2e8f0">田中</span></div>
+                <div>担当: <span style="color:#e2e8f0">担当U</span></div>
                 <div>文字数: <span style="color:#e2e8f0">4,820文字</span></div>
               </div>
             </div>
@@ -3703,10 +3703,10 @@ POST https://analyticsdata.googleapis.com/v1beta
             <table class="m-table">
               <thead><tr><th>クエリ</th><th>順位</th><th style="text-align:right">クリック</th><th style="text-align:right">表示回数</th><th style="text-align:right">CTR</th></tr></thead>
               <tbody>
-                <tr><td style="color:#e2e8f0;font-weight:600">スピーチロックとは</td><td><span class="m-rank m-rank-g">2</span></td><td style="text-align:right">812</td><td style="text-align:right">18,420</td><td style="text-align:right">4.4%</td></tr>
-                <tr><td style="color:#e2e8f0">スピーチロック</td><td><span class="m-rank m-rank-g">3</span></td><td style="text-align:right">421</td><td style="text-align:right">12,680</td><td style="text-align:right">3.3%</td></tr>
-                <tr><td style="color:#e2e8f0">スピーチロック 例</td><td><span class="m-rank m-rank-b">5</span></td><td style="text-align:right">89</td><td style="text-align:right">3,210</td><td style="text-align:right">2.8%</td></tr>
-                <tr><td style="color:#e2e8f0">スピーチロック 介護</td><td><span class="m-rank m-rank-b">4</span></td><td style="text-align:right">67</td><td style="text-align:right">2,890</td><td style="text-align:right">2.3%</td></tr>
+                <tr><td style="color:#e2e8f0;font-weight:600">サンプル記事タイトルA</td><td><span class="m-rank m-rank-g">2</span></td><td style="text-align:right">812</td><td style="text-align:right">18,420</td><td style="text-align:right">4.4%</td></tr>
+                <tr><td style="color:#e2e8f0">サンプルKW_A</td><td><span class="m-rank m-rank-g">3</span></td><td style="text-align:right">421</td><td style="text-align:right">12,680</td><td style="text-align:right">3.3%</td></tr>
+                <tr><td style="color:#e2e8f0">サンプルKW_A 例</td><td><span class="m-rank m-rank-b">5</span></td><td style="text-align:right">89</td><td style="text-align:right">3,210</td><td style="text-align:right">2.8%</td></tr>
+                <tr><td style="color:#e2e8f0">サンプルKW_A 介護</td><td><span class="m-rank m-rank-b">4</span></td><td style="text-align:right">67</td><td style="text-align:right">2,890</td><td style="text-align:right">2.3%</td></tr>
                 <tr><td style="color:#e2e8f0">言葉の拘束 介護</td><td><span class="m-rank m-rank-o">12</span></td><td style="text-align:right">18</td><td style="text-align:right">1,540</td><td style="text-align:right">1.2%</td></tr>
               </tbody>
             </table>
@@ -3720,19 +3720,19 @@ POST https://analyticsdata.googleapis.com/v1beta
                 <div style="width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0"></div>
                 <div style="font-size:11px;color:#64748b;min-width:72px">2025/08/22</div>
                 <div style="font-size:11px;color:#e2e8f0">タイトル変更 + H2構成見直し + 最新データに更新</div>
-                <div style="font-size:10px;color:#94a3b8;margin-left:auto">板倉</div>
+                <div style="font-size:10px;color:#94a3b8;margin-left:auto">担当T</div>
               </div>
               <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04)">
                 <div style="width:6px;height:6px;border-radius:50%;background:#8b5cf6;flex-shrink:0"></div>
                 <div style="font-size:11px;color:#64748b;min-width:72px">2025/03/10</div>
                 <div style="font-size:11px;color:#e2e8f0">FAQ構造化データ追加 + CTA強化</div>
-                <div style="font-size:10px;color:#94a3b8;margin-left:auto">田中</div>
+                <div style="font-size:10px;color:#94a3b8;margin-left:auto">担当U</div>
               </div>
               <div style="display:flex;align-items:center;gap:10px;padding:6px 0">
                 <div style="width:6px;height:6px;border-radius:50%;background:#10b981;flex-shrink:0"></div>
                 <div style="font-size:11px;color:#64748b;min-width:72px">2024/11/15</div>
                 <div style="font-size:11px;color:#e2e8f0">初回公開</div>
-                <div style="font-size:10px;color:#94a3b8;margin-left:auto">田中</div>
+                <div style="font-size:10px;color:#94a3b8;margin-left:auto">担当U</div>
               </div>
             </div>
           </div>
@@ -3811,7 +3811,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <div class="ui-mock-toggle" onclick="this.classList.toggle('open')">
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
-        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/carerritz/technical</div><div style="width:40px"></div></div>
+        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a/technical</div><div style="width:40px"></div></div>
         <div class="m-body">
 
           <!-- CWV スコアカード -->
@@ -3998,7 +3998,7 @@ POST https://analyticsdata.googleapis.com/v1beta
           <td><strong>スライドプレビュー（メインエリア）</strong></td>
           <td>
             選択中スライドの内容をフル幅で大きく表示。スライド番号とタイトルをヘッダーに表示。<br>
-            <strong>実際のレポートスライド構成（ケアリッツ様準拠、全14スライド）:</strong><br>
+            <strong>実際のレポートスライド構成（クライアントA社様準拠、全14スライド）:</strong><br>
             P.1 表紙 / P.2 全体概要（4指標KPI）/ P.3 コラムコンテンツ状況（パイプライン進捗）/ P.4 サービスページ改善施策（進捗率バー）/ P.5 チャンネル別流入数 / P.6 オーガニックSS推移（折れ線グラフ）/ P.7 magazine配下 vs その他 / P.8 ユーザー数推移 / P.9 入口ページTOP10（テーブル）/ P.10 CV数推移（イベント別内訳）/ P.11 KWフォーカス前年プラス / P.12 KWフォーカス前月マイナス（AIOタグ付き）/ P.13 外部リンク推移（参照ドメインTOP3）/ P.14 改善施策進捗（ブロッカー表示）
           </td>
         </tr>
@@ -4022,7 +4022,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <div class="ui-mock-toggle" onclick="this.classList.toggle('open')">
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
-        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/carerritz/reports</div><div style="width:40px"></div></div>
+        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a/reports</div><div style="width:40px"></div></div>
         <div class="m-body">
           <div class="m-two">
             <div>
@@ -4123,7 +4123,7 @@ POST https://analyticsdata.googleapis.com/v1beta
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
         <div class="m-portal">
-          <div class="m-portal-welcome">ケアリッツ&パートナーズ 様</div>
+          <div class="m-portal-welcome">クライアントA社 様</div>
           <div class="m-portal-sub">SEO施策 成果ダッシュボード &mdash; 最終更新: 2026/03/23 09:00</div>
           <div class="m-portal-cards">
             <div class="m-portal-card"><div class="m-portal-card-label">今月のオーガニック流入</div><div class="m-portal-card-val">28,450</div><div class="m-portal-card-sub">&#9650; 前月同日比 +12%</div></div>
@@ -4137,7 +4137,7 @@ POST https://analyticsdata.googleapis.com/v1beta
           <div style="margin-top:14px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px">
             <div style="font-size:12px;font-weight:600;color:#e2e8f0;margin-bottom:6px">承認待ちコンテンツ</div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.03);border-radius:6px">
-              <div><div style="font-size:11px;color:#e2e8f0">4月企画: 「介護保険 申請方法」「デイサービス 選び方」</div><div style="font-size:9px;color:#64748b;margin-top:2px">企画書を確認し、承認または差し戻しをお願いします</div></div>
+              <div><div style="font-size:11px;color:#e2e8f0">4月企画: 「サンプルKW_H」「サンプルKW_I」</div><div style="font-size:9px;color:#64748b;margin-top:2px">企画書を確認し、承認または差し戻しをお願いします</div></div>
               <div style="display:flex;gap:6px"><span style="background:#10b981;color:#fff;padding:4px 12px;border-radius:4px;font-size:10px;font-weight:600">承認</span><span style="border:1px solid #2a3654;color:#94a3b8;padding:4px 12px;border-radius:4px;font-size:10px">差し戻し</span></div>
             </div>
           </div>
@@ -4196,7 +4196,7 @@ POST https://analyticsdata.googleapis.com/v1beta
         <tr>
           <td><code>@ユーザー名</code></td>
           <td>プロジェクト参加メンバー</td>
-          <td><span style="background:rgba(59,130,246,0.12);color:#2563eb;padding:1px 6px;border-radius:4px;font-size:12px;font-weight:600">@板倉</span></td>
+          <td><span style="background:rgba(59,130,246,0.12);color:#2563eb;padding:1px 6px;border-radius:4px;font-size:12px;font-weight:600">@担当T</span></td>
           <td>該当ユーザーに通知（Slack + アプリ内）</td>
         </tr>
         <tr>
@@ -4208,7 +4208,7 @@ POST https://analyticsdata.googleapis.com/v1beta
         <tr>
           <td><code>#content:</code></td>
           <td>コンテンツ記事</td>
-          <td><span style="background:rgba(16,185,129,0.1);color:#059669;padding:2px 8px;border-radius:4px;font-size:12px">&#128196; スピーチロックとは（2位 / 812SS）</span></td>
+          <td><span style="background:rgba(16,185,129,0.1);color:#059669;padding:2px 8px;border-radius:4px;font-size:12px">&#128196; サンプル記事タイトルA（2位 / 812SS）</span></td>
           <td>コンテンツ詳細画面へ遷移。現在の順位・SS数も表示</td>
         </tr>
         <tr>
@@ -4220,7 +4220,7 @@ POST https://analyticsdata.googleapis.com/v1beta
         <tr>
           <td><code>#kw:</code></td>
           <td>管理キーワード</td>
-          <td><span style="background:rgba(6,182,212,0.1);color:#0891b2;padding:2px 8px;border-radius:4px;font-size:12px">&#128270; 介護タクシー 料金（7位 &#9660;3）</span></td>
+          <td><span style="background:rgba(6,182,212,0.1);color:#0891b2;padding:2px 8px;border-radius:4px;font-size:12px">&#128270; サンプルKW_C（7位 &#9660;3）</span></td>
           <td>KW詳細（順位推移グラフ）をモーダル表示</td>
         </tr>
       </tbody>
@@ -4260,7 +4260,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <div class="ui-mock-toggle" onclick="this.classList.toggle('open')">
       <button class="ui-mock-btn"><span class="mock-label">&#127912; UIイメージを表示</span><span class="mock-chevron">&#9660;</span></button>
       <div class="ui-mock-body"><div class="ui-mock-inner">
-        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/carerritz/chat</div><div style="width:40px"></div></div>
+        <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a/chat</div><div style="width:40px"></div></div>
         <div class="m-body">
           <div class="m-chat-container">
             <!-- チャンネル切替 -->
@@ -4275,15 +4275,15 @@ POST https://analyticsdata.googleapis.com/v1beta
             <div class="m-chat-messages">
               <!-- メッセージ1: コンサルタント -->
               <div class="m-chat-msg">
-                <div class="m-chat-avatar" style="background:#3b82f6">板</div>
+                <div class="m-chat-avatar" style="background:#3b82f6">T</div>
                 <div class="m-chat-bubble">
-                  <div class="m-chat-name" style="color:#60a5fa">板倉（コンサルタント）</div>
-                  <div>お疲れ様です。<span class="m-chat-mention">@田中</span> さん、先日ご相談した記事のリライトですが、下記が今月の優先対応記事です：</div>
+                  <div class="m-chat-name" style="color:#60a5fa">担当T（コンサルタント）</div>
+                  <div>お疲れ様です。<span class="m-chat-mention">@担当U</span> さん、先日ご相談した記事のリライトですが、下記が今月の優先対応記事です：</div>
                   <div style="margin-top:6px">
-                    <div class="m-chat-ref">&#128196; 介護タクシー 料金（7位 &#9660;3 / CTR低下）</div>
+                    <div class="m-chat-ref">&#128196; サンプルKW_C（7位 &#9660;3 / CTR低下）</div>
                   </div>
                   <div style="margin-top:4px">
-                    <div class="m-chat-ref">&#128203; タスク: 介護タクシー記事リライト（期日: 3/31）</div>
+                    <div class="m-chat-ref">&#128203; タスク: サンプルKW_C記事リライト（期日: 3/31）</div>
                   </div>
                   <div class="m-chat-time">10:32</div>
                 </div>
@@ -4293,7 +4293,7 @@ POST https://analyticsdata.googleapis.com/v1beta
               <div class="m-chat-msg">
                 <div class="m-chat-avatar" style="background:#10b981">田</div>
                 <div class="m-chat-bubble">
-                  <div class="m-chat-name" style="color:#34d399">田中（ライター）</div>
+                  <div class="m-chat-name" style="color:#34d399">担当U（ライター）</div>
                   <div>承知しました！順位が下がっている原因は何でしょうか？構成の見直しが必要でしょうか？</div>
                   <div class="m-chat-time">10:45</div>
                 </div>
@@ -4301,38 +4301,38 @@ POST https://analyticsdata.googleapis.com/v1beta
 
               <!-- メッセージ3: コンサルタント返信 -->
               <div class="m-chat-msg">
-                <div class="m-chat-avatar" style="background:#3b82f6">板</div>
+                <div class="m-chat-avatar" style="background:#3b82f6">T</div>
                 <div class="m-chat-bubble">
-                  <div class="m-chat-name" style="color:#60a5fa">板倉（コンサルタント）</div>
+                  <div class="m-chat-name" style="color:#60a5fa">担当T（コンサルタント）</div>
                   <div>先月のレポートで分析した内容がこちらです：</div>
                   <div style="margin-top:6px">
                     <div class="m-chat-ref">&#128202; 2月レポート / スライド20: KWフォーカス（前月マイナス）</div>
                   </div>
-                  <div style="margin-top:6px">表示回数が大幅減少（14,719→10,181）しています。競合が新規記事を投入した可能性があるので、<span class="m-chat-mention">@佐藤</span> さん競合記事の調査もお願いできますか？</div>
+                  <div style="margin-top:6px">表示回数が大幅減少（14,719→10,181）しています。競合が新規記事を投入した可能性があるので、<span class="m-chat-mention">@担当V</span> さん競合記事の調査もお願いできますか？</div>
                   <div class="m-chat-time">10:52</div>
                 </div>
               </div>
 
               <!-- メッセージ4: クライアント -->
               <div class="m-chat-msg">
-                <div class="m-chat-avatar" style="background:#8b5cf6">客</div>
+                <div class="m-chat-avatar" style="background:#8b5cf6">C</div>
                 <div class="m-chat-bubble">
-                  <div class="m-chat-name" style="color:#a78bfa">山田様（ケアリッツ＆パートナーズ）</div>
+                  <div class="m-chat-name" style="color:#a78bfa">担当W様（クライアントA社）</div>
                   <div>いつもありがとうございます。4月の企画書を確認しました。</div>
                   <div style="margin-top:6px">
-                    <div class="m-chat-ref">&#128196; 介護保険 申請方法（企画書）→ 承認済み &#9989;</div>
+                    <div class="m-chat-ref">&#128196; サンプルKW_H（企画書）→ 承認済み &#9989;</div>
                   </div>
-                  <div style="margin-top:4px">「デイサービス 選び方」については、クライアントのサービス名も入れていただけますか？</div>
+                  <div style="margin-top:4px">「サンプルKW_I」については、クライアントのサービス名も入れていただけますか？</div>
                   <div class="m-chat-time">14:20</div>
                 </div>
               </div>
 
               <!-- メッセージ5: 自分 -->
               <div class="m-chat-msg self">
-                <div class="m-chat-avatar" style="background:#3b82f6">板</div>
+                <div class="m-chat-avatar" style="background:#3b82f6">T</div>
                 <div class="m-chat-bubble">
-                  <div class="m-chat-name" style="color:#60a5fa">板倉（コンサルタント）</div>
-                  <div>山田様、ご確認ありがとうございます！承知しました。構成案に追記して再度共有いたします。</div>
+                  <div class="m-chat-name" style="color:#60a5fa">担当T（コンサルタント）</div>
+                  <div>担当W様、ご確認ありがとうございます！承知しました。構成案に追記して再度共有いたします。</div>
                   <div class="m-chat-time">14:35</div>
                 </div>
               </div>
