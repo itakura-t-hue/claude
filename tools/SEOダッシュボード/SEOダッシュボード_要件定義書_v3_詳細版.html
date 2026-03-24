@@ -1250,6 +1250,12 @@
       <td>「一旦止めます」と言われたら引き止める材料がない</td>
       <td>保守プラン提案 + データロックイン（解約したら全履歴データを失う）</td>
     </tr>
+    <tr>
+      <td>6</td>
+      <td><strong>BPOへの手作業委託コスト</strong></td>
+      <td>ベトナム事業所にLooker Studioスクショ→PPTX貼付作業を月5万円で委託。手作業のため品質にばらつき</td>
+      <td>レポート自動生成で完全自動化。BPOコスト月5万円を削減</td>
+    </tr>
   </tbody>
 </table>
 
@@ -1355,7 +1361,7 @@
     <li><strong>Ahrefs Advancedプラン（$449/月）のツール専用アカウント契約が必要</strong> — 120社の日次同期で現行アカウントのユニット上限を超過するため（詳細はセクション3.3参照）</li>
     <li>自社GCPプロジェクトの作成（Cloud Run, Cloud SQL, BigQuery, Memorystore, Cloud Storage）</li>
     <li>Google Ads APIの既存アカウントでの有効化（Keyword Planner利用）</li>
-    <li><strong>GA4の管理者権限への昇格依頼</strong> — 現行の共有用Gmailアカウントの権限を「閲覧者」→「管理者」に変更してもらう（BigQueryエクスポート設定を自社で代行するため）</li>
+    <li><strong>GA4の管理者権限への昇格依頼</strong> — 各案件で使用しているGmailアカウントの権限を「閲覧者」→「管理者」に変更してもらう（BigQueryエクスポート設定を自社で代行するため）</li>
   </ul>
 </div>
 
@@ -1363,7 +1369,7 @@
   <div class="callout-title">&#128188; データ管理方針：全データを自社GCPに集約</div>
   <p>本ツールが扱う全てのデータは<strong>自社GCPプロジェクト内で完結</strong>して管理します。</p>
   <ul>
-    <li><strong>GA4のローデータ（イベント単位の生データ）</strong>：GA4のBigQueryエクスポート機能を使い、<strong>エクスポート先を自社GCPのBigQuery</strong>に設定。ユーザー行動ログ（ページビュー、スクロール、クリック、CV等）が毎日自動で自社BQに蓄積される。設定は共有用GmailのGA4管理者権限で自社が代行するため、クライアントのGCPは不要</li>
+    <li><strong>GA4のローデータ（イベント単位の生データ）</strong>：GA4のBigQueryエクスポート機能を使い、<strong>エクスポート先を自社GCPのBigQuery</strong>に設定。ユーザー行動ログ（ページビュー、スクロール、クリック、CV等）が毎日自動で自社BQに蓄積される。設定は案件ごとのGmailアカウントのGA4管理者権限で自社が代行するため、クライアントのGCPは不要</li>
     <li><strong>GSC/Ahrefs等の集計データ</strong>：各APIで取得 → 自社BigQueryにINSERT</li>
     <li><strong>保守プランのロックイン</strong>：GA4ローデータ含む全データが自社管理下にあるため、解約時にはこの蓄積データへのアクセスが全て失われる。特にGA4ローデータはGA4本体では14ヶ月で消えるが、自社BQなら永久保持。これが保守プラン提案の核心</li>
   </ul>
@@ -1391,21 +1397,21 @@
     <tbody>
       <tr>
         <td><strong>GA4（ローデータ）</strong></td>
-        <td>共有Gmailに<strong>管理者権限</strong><br>（現行「閲覧者」から昇格依頼）</td>
+        <td>案件ごとのGmailアカウントに<strong>管理者権限</strong><br>（現行「閲覧者」から昇格依頼）</td>
         <td>GA4管理画面のBigQueryエクスポート機能を<strong>自社が設定代行</strong>。エクスポート先を自社GCPのBigQueryデータセットに指定。毎日自動送信</td>
         <td>全イベントの生データ（page_view, scroll, click, purchase等。ユーザーID、タイムスタンプ、パラメータ全て）</td>
         <td>GA4権限を「閲覧者→管理者」に変更（1回のみ）</td>
       </tr>
       <tr>
         <td><strong>GA4（集計データ）</strong></td>
-        <td>同上（管理者権限に包含）</td>
+        <td>同上（案件ごとのGmailアカウント、管理者権限に包含）</td>
         <td>GA4 Data API（OAuth 2.0）で日次バッチ取得 → 自社BQにINSERT</td>
         <td>セッション数、ユーザー数、CV数、チャンネル別、LP別等（ダッシュボード表示用）</td>
         <td>なし</td>
       </tr>
       <tr>
         <td><strong>GSC</strong></td>
-        <td>共有Gmailに閲覧者権限（現行通り）</td>
+        <td>案件ごとのGmailアカウントに閲覧者権限（現行通り）</td>
         <td>Search Console API（OAuth 2.0）で日次バッチ取得 → 自社BQにINSERT</td>
         <td>クエリ別クリック/表示/CTR/順位、ページ別データ</td>
         <td>なし</td>
@@ -1436,7 +1442,7 @@
 
   <h4 class="h3">GA4 BigQueryエクスポートの設定フロー</h4>
   <ol>
-    <li>クライアントにGA4の権限を「閲覧者」→「管理者」に変更してもらう（共有用Gmailアカウントに対して。<strong>1回のみの作業</strong>）</li>
+    <li>クライアントにGA4の権限を「閲覧者」→「管理者」に変更してもらう（案件ごとのGmailアカウントに対して。<strong>1回のみの作業</strong>）</li>
     <li>自社ディレクターがGA4管理画面にログインし、[管理] → [BigQueryリンク] からエクスポートを設定</li>
     <li>エクスポート先に<strong>自社GCPプロジェクトのBigQueryデータセット</strong>を指定（クライアント別のデータセット: <code>client_{id}_ga4</code>）</li>
     <li>エクスポート頻度: 「毎日」を選択（ストリーミングは不要、日次で十分）</li>
@@ -1680,7 +1686,7 @@ WEB事業部
   </thead>
   <tbody>
     <tr><td><strong>API</strong></td><td>Search Console API v1 — <code>searchanalytics.query</code></td></tr>
-    <tr><td><strong>認証</strong></td><td>OAuth 2.0。現行の共有用Gmailアカウント（クライアントから閲覧者権限を付与済み）でOAuth認証。リフレッシュトークンをPostgreSQLに暗号化保存し、バッチ処理で自動更新。GSCは閲覧者権限のままで取得可能（GA4と異なり管理者権限は不要）</td></tr>
+    <tr><td><strong>認証</strong></td><td>OAuth 2.0。クライアントごとのGmailアカウント（案件により異なる）でリフレッシュトークンをPostgreSQLに暗号化保存し、バッチ処理で自動更新。GSCは閲覧者権限のままで取得可能（GA4と異なり管理者権限は不要）</td></tr>
     <tr><td><strong>スコープ</strong></td><td><code>https://www.googleapis.com/auth/webmasters.readonly</code></td></tr>
     <tr><td><strong>同期頻度</strong></td><td>日次（毎日 03:00 JST）。GSCのデータ反映は2-3日遅延があるため、<code>date = today - 3</code> を取得</td></tr>
     <tr><td><strong>レートリミット</strong></td><td>1プロパティあたり1,200リクエスト/分（実質制限なし）</td></tr>
@@ -1790,7 +1796,7 @@ POST https://www.googleapis.com/webmasters/v3
   </thead>
   <tbody>
     <tr><td><strong>API</strong></td><td>GA4 Data API v1beta — <code>runReport</code> / <code>batchRunReports</code></td></tr>
-    <tr><td><strong>認証</strong></td><td>OAuth 2.0。共有用Gmailアカウント（<strong>GA4管理者権限</strong>に昇格依頼済み）で認証。管理者権限によりGA4 Data APIでの読み取りに加え、BigQueryエクスポート設定の代行も可能。未昇格のクライアントは閲覧者権限のままData APIのみで運用</td></tr>
+    <tr><td><strong>認証</strong></td><td>OAuth 2.0。クライアントごとのGmailアカウント（案件により異なる。<strong>GA4管理者権限</strong>に昇格依頼）で認証。管理者権限によりGA4 Data APIでの読み取りに加え、BigQueryエクスポート設定の代行も可能。未昇格のクライアントは閲覧者権限のままData APIのみで運用</td></tr>
     <tr><td><strong>スコープ</strong></td><td><code>https://www.googleapis.com/auth/analytics.readonly</code></td></tr>
     <tr><td><strong>同期頻度</strong></td><td>日次（毎日 03:30 JST）</td></tr>
     <tr><td><strong>レートリミット</strong></td><td>プロパティあたり: 同時10リクエスト、日10,000トークン</td></tr>
@@ -2079,6 +2085,34 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>補足</strong></td><td>Google Keyword PlannerはGoogleの公式データソースのため、Ahrefsの推定値より正確な検索ボリュームを提供します。KD（キーワード難易度）は引き続きAhrefsから取得します。ユーザーはKeyword Plannerからエクスポートしたcsvを手動アップロードして一括更新することも可能です。</td></tr>
   </tbody>
 </table>
+
+
+<!-- 自社順位取得ツール「have」 -->
+<h3 class="h2">3.7 自社順位取得ツール「have」</h3>
+
+<div class="callout callout-biz">
+  <div class="callout-title">&#128188; ひとことで言うと</div>
+  <p>自社運営の<strong>Yahoo順位自動取得ツール</strong>です。Yahooをスクレイピングし、登録ドメインの対象KWにおける日次掲載順位を取得します。ブラウザベースのWebアプリとして既に稼働中です。</p>
+</div>
+
+<table>
+  <thead>
+    <tr><th>項目</th><th>仕様</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>概要</strong></td><td>自社運営の順位自動取得ツール。Yahooをスクレイピングし、登録ドメインの対象KWにおける日次掲載順位を取得</td></tr>
+    <tr><td><strong>データ取得</strong></td><td>haveのDBから日次順位データを取得（API or DB直接参照）</td></tr>
+    <tr><td><strong>フロント</strong></td><td>ブラウザベースのWebアプリとして既に稼働中</td></tr>
+    <tr><td><strong>KW登録運用</strong></td><td>案件開始時にクライアントとKWを擦り合わせて登録。以後、随時追加</td></tr>
+    <tr><td><strong>GSCとの使い分け</strong></td><td>GSC = Google検索の実績データ（クリック・表示回数・CTR含む）。have = Yahoo検索の順位データ（日次）。両方を併用し、Google/Yahoo両方の順位を把握</td></tr>
+    <tr><td><strong>同期頻度</strong></td><td>日次（sync-gscと同タイミング、03:00 JST）</td></tr>
+  </tbody>
+</table>
+
+<div class="callout callout-biz">
+  <div class="callout-title">&#128188; ビジネス解説：なぜGSCとhaveの両方が必要か</div>
+  <p>GSCはGoogleの検索データしか取れません。日本ではYahoo!検索のシェアも一定あるため、haveでYahoo順位を取得しています。また、GSCは3日遅れのデータですが、haveは当日の順位をリアルタイムに近い形で確認できます。</p>
+</div>
 
 
 <!-- ============================================================ -->
@@ -2873,7 +2907,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   versionNumber   <span class="tp">Int</span>                             <span class="cm">// 1, 2, 3...</span>
   title           <span class="tp">String</span>
   body            <span class="tp">String</span>?   @db.Text             <span class="cm">// 原稿本文（差分計算用）</span>
-  submittedUrl    <span class="tp">String</span>?                         <span class="cm">// Google Docs URL or ファイルURL</span>
+  submittedUrl    <span class="tp">String</span>?                         <span class="cm">// Google Docs URL（執筆はすべてGoogleドキュメント）</span>
   submittedBy     <span class="tp">String</span>?                         <span class="cm">// 提出者ID</span>
   changesSummary  <span class="tp">String</span>?   @db.Text             <span class="cm">// 変更概要</span>
   createdAt       <span class="tp">DateTime</span>  @default(<span class="fn">now</span>())
@@ -3537,7 +3571,7 @@ POST https://analyticsdata.googleapis.com/v1beta
         </tr>
         <tr>
           <td><strong>原稿提出</strong></td>
-          <td>Google Docs URLの登録 or ファイルアップロード（Word/テキスト）</td>
+          <td>Google Docs URL登録（執筆はすべてGoogleドキュメントで実施）</td>
           <td>提出ボタンで<code>ContentVersion</code>に記録</td>
         </tr>
         <tr>
@@ -3625,8 +3659,8 @@ POST https://analyticsdata.googleapis.com/v1beta
         </tr>
         <tr>
           <td><strong>初稿/原稿プレビュー</strong></td>
-          <td>Google Docsスタイルのプレビュー。見出し構造+本文を表示。重要箇所は黄色ハイライト、コメント対象箇所は緑下線で表示。「Google Docsで開く」外部リンク付き</td>
-          <td>CMS連携 or Google Docs API</td>
+          <td>すべてGoogleドキュメントで作成。Google Docs API経由でプレビュー表示。見出し構造+本文を表示。重要箇所は黄色ハイライト、コメント対象箇所は緑下線で表示。「Google Docsで開く」外部リンク付き</td>
+          <td>Google Docs API</td>
         </tr>
         <tr>
           <td><strong>フィードバック・指摘スレッド</strong></td>
@@ -4354,6 +4388,66 @@ POST https://analyticsdata.googleapis.com/v1beta
 </div>
 
 
+<!-- Screen 14: アップデート分析 -->
+<div class="screen-spec">
+  <div class="screen-spec-header">
+    <div class="screen-spec-title">画面 14: アップデート分析</div>
+    <div class="screen-spec-path">/updates</div>
+  </div>
+  <div class="screen-spec-body">
+    <table class="spec-table">
+      <tr><td><strong>フェーズ</strong></td><td><span class="badge badge-p2">Phase 2</span></td></tr>
+      <tr><td><strong>概要</strong></td><td>Googleアルゴリズムアップデートの検知・影響分析画面。公式アップデートとシークレットアップデートを時系列で表示し、全案件への影響を可視化</td></tr>
+    </table>
+
+    <div class="callout callout-biz">
+      <div class="callout-title">&#128188; ビジネス解説：シークレットアップデート検知とは</div>
+      <p>Googleは公式発表なしにアルゴリズムを変更することがあります（シークレットアップデート）。全案件の順位データを横断的に分析し、同時期に多数のクライアントで共通の順位変動が発生した場合、アルゴリズム変動の可能性としてアラートを出します。これにより「なぜ急に順位が下がったのか」への初動対応が早まります。</p>
+    </div>
+
+    <h4 class="h4">ページ構成</h4>
+    <table>
+      <thead><tr><th>コンポーネント</th><th>表示内容</th><th>データソース</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>アップデートタイムライン</strong></td>
+          <td>Google公式アップデート（手動登録）+ シークレットアップデート（自動検知）を時系列表示</td>
+          <td>手動登録 + 自動検知</td>
+        </tr>
+        <tr>
+          <td><strong>影響度ヒートマップ</strong></td>
+          <td>アップデート前後で全案件の順位・流入変動を色分け表示</td>
+          <td><code>RankHistory</code>, <code>TrafficSnapshot</code></td>
+        </tr>
+        <tr>
+          <td><strong>週次トレンドチャート</strong></td>
+          <td>全案件の順位変動を集約した「業界平均」推移線</td>
+          <td><code>RankHistory</code>全案件集計</td>
+        </tr>
+        <tr>
+          <td><strong>アラート履歴</strong></td>
+          <td>シークレットアップデート検知アラートの一覧</td>
+          <td><code>AlertHistory</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="h4">シークレットアップデート検知ロジック</h4>
+    <div class="callout callout-eng">
+      <div class="callout-title">&#128736; 検知条件</div>
+      <pre><code>検知条件:
+  - 直近3日間で、全トラッキングKWの20%以上が&plusmn;3位以上変動
+  - かつ、変動が10社以上のクライアントで同時に発生
+  - かつ、変動方向（上昇/下落）に偏りがある（70%以上が同方向）
+
+→ AlertHistory に severity='critical', type='algorithm_update_suspected' で記録
+→ Slack即時通知 + 管理者メール</code></pre>
+    </div>
+
+  </div>
+</div>
+
+
 <!-- ============================================================ -->
 <!-- 6. API設計 -->
 <!-- ============================================================ -->
@@ -4490,6 +4584,13 @@ POST https://analyticsdata.googleapis.com/v1beta
       <td>PSI APIで登録URLのCWVを取得 → <code>CwvSnapshot</code>にinsert</td>
       <td>約60秒（20URL × mobile/desktop）</td>
       <td>同上</td>
+    </tr>
+    <tr>
+      <td><strong><code>sync-have</code></strong></td>
+      <td>03:00</td>
+      <td>haveのDBから日次順位データ取得 → <code>RankHistory</code>にマージ（source='have'）</td>
+      <td>約10秒</td>
+      <td>3回（5min, 15min, 60min）</td>
     </tr>
     <tr>
       <td><strong><code>calc-rewrite-scores</code></strong></td>
@@ -4680,6 +4781,18 @@ POST https://analyticsdata.googleapis.com/v1beta
       <td style="color:var(--orange)">Warning</td>
       <td>Slack（管理者チャンネル）</td>
     </tr>
+    <tr>
+      <td><strong>アルゴリズムアップデート検知</strong></td>
+      <td>全案件の順位・流入を横断分析し、共通の大幅変動パターンを検知</td>
+      <td style="color:var(--red)">Critical</td>
+      <td>Slack即時 + メール</td>
+    </tr>
+    <tr>
+      <td><strong>週次トレンドレポート</strong></td>
+      <td>毎週月曜に全案件の週次分析を自動実行。トレンド変動サマリーを配信</td>
+      <td style="color:var(--accent)">Info</td>
+      <td>Slack + メール（週次ダイジェスト）</td>
+    </tr>
   </tbody>
 </table>
 
@@ -4827,6 +4940,48 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>閲覧権限</strong></td><td>全コンサルタント・ディレクターが閲覧可能（クライアント名は匿名化オプション）</td></tr>
   </tbody>
 </table>
+
+<h3 class="h3">1次情報の創出</h3>
+
+<div class="callout callout-biz">
+  <div class="callout-title">&#128188; ビジネス解説：なぜ「1次情報」が重要か</div>
+  <p>SEO業界では多くの情報が二次的な引用や推測に基づいています。本ツールで蓄積した120+社のデータを匿名化・集計することで、「自社独自の分析に基づく1次情報」を発信できます。これはSEOコンサルティング会社としての<strong>ブランディングと、新規リード獲得</strong>に直結します。</p>
+</div>
+
+<h4 class="h4">活用例</h4>
+<table>
+  <thead><tr><th>1次情報</th><th>データソース</th><th>発信形態</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>業界別SEOベンチマーク</strong></td>
+      <td>120社の匿名集計データ（DR平均、順位分布、CVR等）</td>
+      <td>ホワイトペーパー、ブログ記事</td>
+    </tr>
+    <tr>
+      <td><strong>アルゴリズムアップデート影響レポート</strong></td>
+      <td>全案件の横断分析結果</td>
+      <td>速報ブログ、SNS投稿</td>
+    </tr>
+    <tr>
+      <td><strong>コンテンツ施策の効果統計</strong></td>
+      <td>KnowledgeBaseの施策→効果データを集計</td>
+      <td>セミナー資料、営業提案資料</td>
+    </tr>
+    <tr>
+      <td><strong>Yahoo vs Google順位乖離レポート</strong></td>
+      <td>have（Yahoo）とGSC（Google）の比較分析</td>
+      <td>業界レポート</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout callout-warn">
+  <div class="callout-title">&#9888; 実装上の留意点</div>
+  <ul>
+    <li>クライアントデータの匿名化は必須（社名・ドメインを除去し、業界カテゴリ単位で集計）</li>
+    <li>データの利用許諾をクライアント契約書に含める必要あり（法務確認事項）</li>
+  </ul>
+</div>
 
 
 <!-- ============================================================ -->
@@ -5271,8 +5426,13 @@ POST https://analyticsdata.googleapis.com/v1beta
       <td>1人あたり+5件 &times; 10人 &times; 月額&yen;300,000 &times; 12ヶ月（ポテンシャル）</td>
     </tr>
     <tr>
+      <td><strong>BPOレポート作業削減</strong></td>
+      <td style="font-weight:700">&yen;600,000</td>
+      <td>ベトナムBPOへの月額&yen;50,000 &times; 12ヶ月。レポート自動生成で完全代替</td>
+    </tr>
+    <tr>
       <td colspan="2" style="font-weight:700">年間効果合計</td>
-      <td style="font-weight:700">&yen;30,360,000〜</td>
+      <td style="font-weight:700">&yen;30,960,000〜</td>
     </tr>
   </tbody>
 </table>
@@ -5281,10 +5441,10 @@ POST https://analyticsdata.googleapis.com/v1beta
   <div class="callout-title">&#127919; ROIまとめ</div>
   <p><strong>開発投資</strong>: &yen;9,200,000-11,200,000（一時費用）<br>
   <strong>年間インフラコスト</strong>: &yen;1,700,000-2,230,000<br>
-  <strong>年間効果（解約防止+工数削減）</strong>: &yen;30,360,000<br>
-  <strong>初年度ROI</strong>: (30,360,000 - 2,230,000 - 11,200,000) / 11,200,000 = <strong style="color:var(--green); font-size:16px;">151%</strong><br>
+  <strong>年間効果（解約防止+保守転換+工数削減）</strong>: &yen;30,960,000<br>
+  <strong>初年度ROI</strong>: (30,960,000 - 2,230,000 - 11,200,000) / 11,200,000 = <strong style="color:var(--green); font-size:16px;">156%</strong><br>
   <strong style="color:var(--green); font-size:16px;">投資回収期間: 4-5ヶ月</strong><br>
-  2年目以降は年間&yen;28,000,000以上の純効果</p>
+  2年目以降は年間&yen;28,700,000以上の純効果</p>
 </div>
 
 <div class="callout callout-biz">
@@ -5324,7 +5484,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr>
       <td><strong>データ取得</strong></td>
       <td>GSC/GA4 APIからのデータ同期</td>
-      <td>共有用Gmailアカウント（クライアントから権限付与済み）</td>
+      <td>クライアントごとのGmailアカウント（案件により異なる。クライアントから権限付与済み）</td>
       <td><code>webmasters.readonly</code>, <code>analytics.readonly</code></td>
     </tr>
   </tbody>
@@ -5338,7 +5498,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   <li><strong>(C)</strong> GCPサービスアカウント + ドメイン全体の委任方式 → OAuthトークン管理が不要になるが、クライアント側の設定負荷が増える</li>
 </ul>
 
-<p><strong>補足:</strong> 現行運用は「共有Gmail 1アカウント」でGSC/GA4に閲覧者権限を付与してもらう方式（セクション1.6参照）。この場合は <strong>(A)</strong> が整合するが、リフレッシュトークン失効時の再認証フロー（管理者が手動で共有Gmailで再ログイン）を設計に含める必要がある。</p>
+<p><strong>補足:</strong> 現行運用ではクライアントから権限をいただくGmailアカウントは <strong>案件ごとに異なることがある</strong>。そのため <strong>(B) クライアントごとに個別トークン管理</strong> が実態に即した方式。Projectモデルの <code>googleAccessToken</code> / <code>googleRefreshToken</code> をそのまま活用し、案件ごとに異なるGmailアカウントのOAuthトークンを個別管理する。トークン失効時は設定画面から案件単位で再認証フローを実行。</p>
 
 <div class="h3">P0-2. クライアント・ライターの招待・認証フロー</div>
 
