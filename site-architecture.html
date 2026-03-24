@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サイト構造設計図 - ネット風評被害対策</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif;
+    background: #f0f2f5;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 18px;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 40px;
+  }
+
+  /* ===== TREE LAYOUT ===== */
+  .tree {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* TOP NODE */
+  .top-node {
+    background: #1a1a2e;
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    box-shadow: 0 4px 16px rgba(26,26,46,0.25);
+    position: relative;
+    z-index: 2;
+  }
+
+  .top-node .url {
+    font-size: 11px;
+    font-weight: 400;
+    color: #aab0c6;
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* vertical connector from TOP down */
+  .v-line-top {
+    width: 2px;
+    height: 32px;
+    background: #c5cad8;
+  }
+
+  /* horizontal bar connecting all L2 nodes */
+  .h-bar-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .h-bar {
+    position: absolute;
+    top: 0;
+    height: 2px;
+    background: #c5cad8;
+  }
+
+  /* L2 columns */
+  .l2-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    padding-top: 32px;
+  }
+
+  .l2-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  /* vertical connector above each L2 node */
+  .l2-col::before {
+    content: '';
+    width: 2px;
+    height: 32px;
+    background: #c5cad8;
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* L2 NODES */
+  .l2-node {
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    min-width: 130px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  .l2-node .url {
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: 3px;
+    display: block;
+    opacity: 0.75;
+  }
+
+  .l2-node .badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 20px;
+    margin-top: 5px;
+  }
+
+  /* color themes per section */
+  .node-service { background: #e8f0fe; color: #1a56db; border: 2px solid #1a56db; }
+  .node-service .badge { background: #1a56db; color: #fff; }
+
+  .node-price  { background: #fff3e0; color: #e65100; border: 2px solid #e65100; }
+  .node-price .badge  { background: #e65100; color: #fff; }
+
+  .node-case   { background: #e8f5e9; color: #2e7d32; border: 2px solid #2e7d32; }
+  .node-case .badge   { background: #2e7d32; color: #fff; }
+
+  .node-column { background: #f3e5f5; color: #7b1fa2; border: 2px solid #7b1fa2; }
+  .node-column .badge { background: #7b1fa2; color: #fff; }
+
+  .node-faq    { background: #e0f7fa; color: #00838f; border: 2px solid #00838f; }
+  .node-faq .badge    { background: #00838f; color: #fff; }
+
+  .node-company{ background: #fce4ec; color: #c62828; border: 2px solid #c62828; }
+  .node-company .badge{ background: #c62828; color: #fff; }
+
+  .node-contact{ background: #f9fbe7; color: #558b2f; border: 2px solid #558b2f; }
+  .node-contact .badge{ background: #558b2f; color: #fff; }
+
+  /* L3 children */
+  .l3-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    width: 100%;
+  }
+
+  /* vertical connector from L2 down to L3 group */
+  .v-line-l2 {
+    width: 2px;
+    height: 20px;
+    background: #c5cad8;
+  }
+
+  /* L3 items container */
+  .l3-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  /* vertical left border for L3 group */
+  .l3-items::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: #c5cad8;
+  }
+
+  .l3-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  /* horizontal connector for each L3 item */
+  .l3-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    width: 20px;
+    height: 2px;
+    background: #c5cad8;
+    transform: translateY(-50%);
+  }
+
+  .l3-node {
+    border-radius: 7px;
+    padding: 7px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+  }
+
+  .l3-node .url {
+    font-size: 9px;
+    font-weight: 400;
+    opacity: 0.7;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .l3-service { background: #dbeafe; color: #1e40af; border: 1.5px solid #93c5fd; }
+  .l3-case    { background: #dcfce7; color: #166534; border: 1.5px solid #86efac; }
+  .l3-column  { background: #f5d0fe; color: #7e22ce; border: 1.5px solid #d8b4fe; }
+
+  /* label tag for new/moved */
+  .tag-new  { font-size: 9px; background: #ef4444; color: #fff; border-radius: 4px; padding: 1px 5px; font-weight: 700; margin-left: 4px; }
+  .tag-move { font-size: 9px; background: #f59e0b; color: #fff; border-radius: 4px; padding: 1px 5px; font-weight: 700; margin-left: 4px; }
+
+  /* legend */
+  .legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #555;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<h1>推奨サイト構造設計図</h1>
+<p class="subtitle">株式会社ネット風評被害対策 — SEO改善提案</p>
+
+<div class="tree">
+
+  <!-- TOP -->
+  <div class="top-node">
+    TOP
+    <span class="url">net-fuhyohigai-taisaku.co.jp/</span>
+  </div>
+  <div class="v-line-top"></div>
+
+  <!-- L2 ROW -->
+  <div class="l2-row">
+
+    <!-- SERVICE -->
+    <div class="l2-col">
+      <div class="l2-node node-service">
+        サービス一覧
+        <span class="url">/service/</span>
+        <span class="badge">新設</span>
+      </div>
+      <div class="l3-group">
+        <div class="v-line-l2"></div>
+        <div class="l3-items">
+          <div class="l3-item">
+            <div class="l3-node l3-service">AI監視<span class="url">/service/ai-monitoring/</span></div>
+            <span class="tag-move">移設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-service">サジェスト対策<span class="url">/service/suggest/</span></div>
+            <span class="tag-move">移設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-service">関連KW対策<span class="url">/service/keyword/</span></div>
+            <span class="tag-move">移設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-service">逆SEO対策<span class="url">/service/reverse-seo/</span></div>
+            <span class="tag-move">移設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-service">風評被害対策<span class="url">/service/fuhyo/</span></div>
+            <span class="tag-move">移設</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICE -->
+    <div class="l2-col">
+      <div class="l2-node node-price">
+        料金
+        <span class="url">/price/</span>
+        <span class="badge">新設・優先高</span>
+      </div>
+    </div>
+
+    <!-- CASE -->
+    <div class="l2-col">
+      <div class="l2-node node-case">
+        導入事例
+        <span class="url">/case/</span>
+        <span class="badge">新設</span>
+      </div>
+      <div class="l3-group">
+        <div class="v-line-l2"></div>
+        <div class="l3-items">
+          <div class="l3-item">
+            <div class="l3-node l3-case">医療機関向け<span class="url">/case/medical/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-case">飲食・美容向け<span class="url">/case/restaurant/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-case">採用・人事向け<span class="url">/case/hr/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-case">法人全般<span class="url">/case/corporate/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMN -->
+    <div class="l2-col">
+      <div class="l2-node node-column">
+        コラム
+        <span class="url">/column/</span>
+        <span class="badge">カテゴリ整備</span>
+      </div>
+      <div class="l3-group">
+        <div class="v-line-l2"></div>
+        <div class="l3-items">
+          <div class="l3-item">
+            <div class="l3-node l3-column">サジェスト対策<span class="url">/column/suggest/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-column">削除申請<span class="url">/column/deletion/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-column">逆SEO<span class="url">/column/reverse-seo/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+          <div class="l3-item">
+            <div class="l3-node l3-column">風評被害全般<span class="url">/column/fuhyo/</span></div>
+            <span class="tag-new">新設</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="l2-col">
+      <div class="l2-node node-faq">
+        よくある質問
+        <span class="url">/faq/</span>
+        <span class="badge">新設</span>
+      </div>
+    </div>
+
+    <!-- COMPANY -->
+    <div class="l2-col">
+      <div class="l2-node node-company">
+        会社概要
+        <span class="url">/company/</span>
+        <span class="badge">新設</span>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="l2-col">
+      <div class="l2-node node-contact">
+        お問い合わせ
+        <span class="url">/contact/</span>
+        <span class="badge">新設</span>
+      </div>
+    </div>
+
+  </div>
+  <!-- end l2-row -->
+
+</div>
+<!-- end tree -->
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#1a1a2e;"></div> 既存ページ
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#ef4444;"></div> 新設ページ
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#f59e0b;"></div> 移設ページ（301リダイレクト設定必須）
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#e65100;"></div> 優先度：高
+  </div>
+</div>
+
+</body>
+</html>

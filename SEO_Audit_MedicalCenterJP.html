@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO総合監査レポート｜medicalcenterjp.com</title>
+<style>
+  :root {
+    --primary: #10253F;
+    --primary-70: rgba(16,37,63,0.70);
+    --primary-50: rgba(16,37,63,0.50);
+    --primary-30: rgba(16,37,63,0.30);
+    --primary-15: rgba(16,37,63,0.15);
+    --primary-08: rgba(16,37,63,0.08);
+    --primary-04: rgba(16,37,63,0.04);
+    --accent: #D4883A;
+    --accent-light: rgba(212,136,58,0.12);
+    --white: #FFFFFF;
+    --text: #10253F;
+    --border: rgba(16,37,63,0.12);
+    --green: #1B7A4A;
+    --green-bg: rgba(27,122,74,0.08);
+    --red: #B83A3A;
+    --red-bg: rgba(184,58,58,0.06);
+    --slide-w: 1122px;
+    --slide-h: 793px;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{font-family:"メイリオ",Meiryo,sans-serif;font-size:14px;color:var(--text);background:#F0F2F5;-webkit-font-smoothing:antialiased}
+  body{padding:0}
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--primary);height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .nav-title{color:#fff;font-size:13px;font-weight:500;letter-spacing:.02em}
+  .nav-controls{display:flex;align-items:center;gap:12px}
+  .nav-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;padding:5px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:inherit;transition:background .2s}
+  .nav-btn:hover{background:rgba(255,255,255,.22)}
+  .nav-btn.active{background:rgba(255,255,255,.25)}
+  .page-indicator{color:rgba(255,255,255,.7);font-size:12px;min-width:60px;text-align:center}
+  .deck{padding-top:68px;padding-bottom:40px;display:flex;flex-direction:column;align-items:center;gap:24px}
+  .deck.slide-mode .slide-wrapper{display:none}
+  .deck.slide-mode .slide-wrapper.active{display:block}
+  .slide-wrapper{width:100%;display:flex;justify-content:center}
+  .slide{width:var(--slide-w);height:var(--slide-h);background:var(--white);box-shadow:0 2px 20px rgba(0,0,0,.08);border-radius:2px;position:relative;overflow:hidden;padding:48px 56px;display:flex;flex-direction:column;page-break-after:always}
+  .slide-footer{position:absolute;bottom:0;left:0;right:0;height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;font-size:9px;color:var(--primary-50);border-top:1px solid var(--border)}
+  .slide-footer .page-num{font-weight:700;font-size:10px;color:var(--primary-70)}
+  .cover{padding:0;justify-content:flex-end}
+  .cover-top{position:absolute;top:0;left:0;right:0;height:52%;background:var(--primary);display:flex;flex-direction:column;justify-content:center;padding:0 64px}
+  .cover-top .label{font-size:11px;font-weight:500;letter-spacing:.15em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:16px}
+  .cover-top h1{font-size:32px;font-weight:700;color:#fff;line-height:1.4;letter-spacing:.02em}
+  .cover-top .sub{font-size:15px;color:rgba(255,255,255,.65);margin-top:12px;line-height:1.6}
+  .cover-bottom{height:48%;padding:40px 64px 48px;display:flex;flex-direction:column;justify-content:flex-end}
+  .cover-meta{display:flex;gap:48px}
+  .cover-meta dt{font-size:10px;color:var(--primary-50);font-weight:500;letter-spacing:.08em;margin-bottom:4px}
+  .cover-meta dd{font-size:13px;color:var(--text);font-weight:500}
+  .cover-line{width:48px;height:3px;background:var(--accent);border-radius:2px;margin-bottom:32px}
+  .divider{padding:0}
+  .divider-left{position:absolute;top:0;left:0;bottom:0;width:38%;background:var(--primary);display:flex;flex-direction:column;justify-content:center;padding:0 48px}
+  .divider-left .sec-num{font-size:64px;font-weight:700;color:rgba(255,255,255,.12);line-height:1;margin-bottom:12px}
+  .divider-left h2{font-size:24px;font-weight:700;color:#fff;line-height:1.5}
+  .divider-right{position:absolute;top:0;right:0;bottom:0;left:38%;display:flex;flex-direction:column;justify-content:center;padding:0 48px}
+  .divider-right .topics{list-style:none}
+  .divider-right .topics li{font-size:13px;color:var(--primary-70);padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+  .divider-right .topics li:last-child{border-bottom:none}
+  .topic-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  .slide-header{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-shrink:0}
+  .slide-header .sec-tag{font-size:10px;font-weight:700;color:var(--white);background:var(--primary);padding:3px 10px;border-radius:2px;letter-spacing:.05em}
+  .slide-header h3{font-size:18px;font-weight:700;color:var(--text);letter-spacing:.01em}
+  .header-line{height:2px;background:linear-gradient(90deg,var(--primary) 0%,transparent 100%);margin-bottom:24px;flex-shrink:0}
+  .slide-body{flex:1;overflow:hidden}
+  .issue-card{border-left:3px solid var(--primary);border-radius:0 4px 4px 0;padding:14px 18px;margin-bottom:12px;background:var(--primary-04)}
+  .issue-card.warn{border-left-color:var(--accent);background:var(--accent-light)}
+  .issue-card.bad{border-left-color:var(--red);background:var(--red-bg)}
+  .issue-card.good{border-left-color:var(--green);background:var(--green-bg)}
+  .issue-label{font-size:10px;font-weight:700;letter-spacing:.08em;margin-bottom:6px}
+  .issue-label.red{color:var(--red)}
+  .issue-label.green{color:var(--green)}
+  .issue-label.orange{color:var(--accent)}
+  .issue-text{font-size:12.5px;line-height:1.7;color:var(--text)}
+  .two-col{display:flex;gap:28px}.two-col>.col{flex:1}
+  .three-col{display:flex;gap:20px}.three-col>.col{flex:1}
+  .data-table{width:100%;border-collapse:collapse;font-size:11.5px}
+  .data-table thead th{background:var(--primary);color:#fff;font-weight:500;text-align:left;padding:8px 12px;font-size:10.5px;letter-spacing:.03em}
+  .data-table tbody td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5}
+  .data-table tbody tr:nth-child(even){background:var(--primary-04)}
+  .badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:2px;letter-spacing:.03em}
+  .badge-high{background:var(--red);color:#fff}
+  .badge-mid{background:var(--accent);color:#fff}
+  .badge-low{background:var(--primary-30);color:#fff}
+  .badge-ok{background:var(--green);color:#fff}
+  .kpi-row{display:flex;gap:16px;margin-bottom:20px}
+  .kpi-card{flex:1;border-radius:4px;padding:16px;text-align:center;border:1px solid var(--border)}
+  .kpi-card .kpi-val{font-size:28px;font-weight:700;color:var(--primary)}
+  .kpi-card .kpi-label{font-size:10px;color:var(--primary-50);margin-top:4px;letter-spacing:.05em}
+  .kpi-card.good{border-color:var(--green);background:var(--green-bg)}.kpi-card.good .kpi-val{color:var(--green)}
+  .kpi-card.warn{border-color:var(--accent);background:var(--accent-light)}.kpi-card.warn .kpi-val{color:var(--accent)}
+  .code-block{background:var(--primary);color:rgba(255,255,255,.85);border-radius:4px;padding:14px 18px;font-family:"Consolas","Monaco",monospace;font-size:11px;line-height:1.6;overflow-x:auto;white-space:pre}
+  .code-block .cm{color:rgba(255,255,255,.35)}
+  .code-block .tag{color:#7EC8E3}
+  .code-block .attr{color:var(--accent)}
+  .check-list{list-style:none}
+  .check-list li{font-size:12px;line-height:1.6;padding:5px 0 5px 20px;position:relative;color:var(--text)}
+  .check-list li::before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--primary-30)}
+  .check-list li.done::before{background:var(--green)}
+  .check-list li.bad::before{background:var(--red)}
+  .num-list{list-style:none;counter-reset:num}
+  .num-list li{font-size:12px;line-height:1.6;padding:6px 0 6px 28px;position:relative;counter-increment:num}
+  .num-list li::before{content:counter(num);position:absolute;left:0;top:5px;width:20px;height:20px;border-radius:50%;background:var(--primary);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .cluster-wrap{display:flex;align-items:center;justify-content:center;gap:24px}
+  .pillar-box{background:var(--primary);color:#fff;border-radius:6px;padding:16px 20px;text-align:center;font-size:12px;font-weight:700;min-width:140px;line-height:1.5}
+  .cluster-items{display:flex;flex-direction:column;gap:6px}
+  .cluster-item{background:var(--primary-08);border:1px solid var(--primary-15);border-radius:4px;padding:6px 12px;font-size:10.5px;color:var(--text)}
+  .cluster-arrow{color:var(--primary-30);font-size:20px}
+  .note{font-size:10px;color:var(--primary-50);line-height:1.5;margin-top:12px}
+  .caption{font-size:10.5px;color:var(--primary-50);font-weight:500;margin-bottom:8px;letter-spacing:.03em}
+  .hl{color:var(--accent);font-weight:700}
+  .strong{font-weight:700}
+  .verified{font-size:9px;color:var(--green);font-weight:700;letter-spacing:.05em}
+  .flow-row{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:16px}
+  .flow-box{background:var(--primary-08);border:1px solid var(--primary-30);border-radius:4px;padding:10px 16px;font-size:11px;font-weight:500;text-align:center;min-width:120px}
+  .flow-box.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+  .flow-arrow{color:var(--primary-30);font-size:16px}
+  @media(max-width:1180px){.slide{width:96vw;height:auto;min-height:60vw;padding:36px 40px}.cover-top,.cover-bottom{padding-left:40px;padding-right:40px}.divider-left,.divider-right{padding:0 28px}.slide-footer{padding:0 40px}}
+  @media(max-width:768px){.slide{width:100vw;border-radius:0;padding:28px 24px;min-height:auto}.deck{gap:12px;padding-top:56px}.two-col,.three-col{flex-direction:column;gap:16px}.cover-top{padding:0 28px;height:auto;padding-top:32px;padding-bottom:32px;position:relative}.cover-top h1{font-size:22px}.cover-bottom{height:auto;padding:28px}.cover-meta{flex-direction:column;gap:16px}.divider-left{position:relative;width:100%;padding:28px}.divider-right{position:relative;left:0;width:100%;padding:20px 28px}.kpi-row{flex-wrap:wrap}.kpi-card{min-width:45%}.flow-row{flex-wrap:wrap}.cluster-wrap{flex-direction:column}.slide-footer{padding:0 24px}.nav{padding:0 12px}.slide-header h3{font-size:15px}.data-table{font-size:10px}.data-table thead th,.data-table tbody td{padding:6px 8px}}
+  @media print{.nav{display:none}.deck{padding-top:0;gap:0}.slide-wrapper{page-break-after:always}.slide{box-shadow:none;border-radius:0}body{background:#fff}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-title">SEO Audit Report — medicalcenterjp.com</span>
+  <div class="nav-controls">
+    <button class="nav-btn" onclick="prevSlide()">◀ Prev</button>
+    <span class="page-indicator" id="pageIndicator">1 / 18</span>
+    <button class="nav-btn" onclick="nextSlide()">Next ▶</button>
+    <button class="nav-btn" id="modeBtn" onclick="toggleMode()">Slide Mode</button>
+  </div>
+</nav>
+<div class="deck" id="deck">
+
+<!-- SLIDE 01: COVER -->
+<div class="slide-wrapper"><div class="slide cover">
+  <div class="cover-top">
+    <div class="label">SEO COMPREHENSIVE AUDIT REPORT</div>
+    <h1>medicalcenterjp.com<br>SEO総合監査レポート</h1>
+    <div class="sub">日本調剤「メディカルセンター.JP」— 実サイト検証に基づく<br>現状分析と改善施策の提案</div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-line"></div>
+    <dl class="cover-meta">
+      <div><dt>DATE</dt><dd>2026年3月17日</dd></div>
+      <div><dt>TARGET</dt><dd>medicalcenterjp.com</dd></div>
+      <div><dt>VERIFIED</dt><dd>Chrome実機検証済み</dd></div>
+      <div><dt>SCOPE</dt><dd>7領域 包括監査</dd></div>
+    </dl>
+  </div>
+</div></div>
+
+<!-- SLIDE 02: EXEC SUMMARY -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">OVERVIEW</span><h3>エグゼクティブサマリー — 実機検証結果</h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="kpi-row">
+      <div class="kpi-card good"><div class="kpi-val">8</div><div class="kpi-label">正常に実装済みの項目</div></div>
+      <div class="kpi-card warn"><div class="kpi-val">5</div><div class="kpi-label">改善が必要な課題</div></div>
+      <div class="kpi-card"><div class="kpi-val">10</div><div class="kpi-label">提案する施策数</div></div>
+    </div>
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ 正常に実装済み <span class="verified">VERIFIED</span></div>
+        <div class="issue-card good"><div class="issue-label green">GOOD — 構造化データ</div><div class="issue-text">全ページにJSON-LD実装済み。FAQPage（TOP/FAQ/Supportに展開）、Article（コラム）、BreadcrumbList、Organization、WebSite が網羅的に設定。</div></div>
+        <div class="issue-card good"><div class="issue-label green">GOOD — 基本SEO要素</div><div class="issue-text">title / meta description / canonical / robots meta が全主要ページに設定済み。Yoast SEOによる管理。XMLサイトマップ（7分割）も正常稼働。</div></div>
+        <div class="issue-card good"><div class="issue-label green">GOOD — コラムコンテンツ</div><div class="issue-text">30本以上の開業コラム記事。科目別ガイド6科目（内科/外科/精神科/心療内科/産婦人科/小児科）、手順・資金・法務カテゴリも充実。</div></div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ 改善が必要な課題 <span class="verified">VERIFIED</span></div>
+        <div class="issue-card bad"><div class="issue-label red">ISSUE — h1タグ重複</div><div class="issue-text">TOPページに同一テキストのh1が<span class="strong">2つ</span>存在。検索エンジンのページ主題理解に悪影響。</div></div>
+        <div class="issue-card bad"><div class="issue-label red">ISSUE — パラメータURLの正規化</div><div class="issue-text">検索結果URL（?c_area=a_13等）に<span class="strong">canonical未設定</span>かつ index, follow。エリアの組み合わせで重複リスク。</div></div>
+        <div class="issue-card bad"><div class="issue-label red">ISSUE — robots.txt全許可</div><div class="issue-text">Disallowが空。パラメータURL・ログインページ等もクロール対象になっている。</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">02</span></div>
+</div></div>
+
+<!-- SLIDE 03: VERIFIED STATUS TABLE -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">VERIFIED</span><h3>実機検証 — 各ページのSEO実装状況</h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="caption">▼ Chrome実機検証で確認した各ページのSEO実装状況</div>
+    <table class="data-table" style="margin-bottom:16px">
+      <thead><tr><th style="width:14%">要素</th><th style="width:22%">TOPページ</th><th style="width:22%">コラム記事</th><th style="width:22%">FAQページ</th><th style="width:20%">検索結果(?c_area)</th></tr></thead>
+      <tbody>
+        <tr><td class="strong">title</td><td style="font-size:10px">クリニック開業・医院開業・医師開業支援や物件紹介なら…（58字）</td><td style="font-size:10px">{記事タイトル}｜メディカルセンター.JP</td><td style="font-size:10px">よくあるご質問 | 日本調剤…</td><td style="font-size:10px">東京のクリニック開業・医院開業物件｜…（動的生成）</td></tr>
+        <tr><td class="strong">meta desc</td><td><span class="badge badge-ok">設定済</span></td><td><span class="badge badge-ok">設定済</span></td><td><span class="badge badge-ok">設定済</span></td><td><span class="badge badge-ok">設定済</span></td></tr>
+        <tr><td class="strong">canonical</td><td><span class="badge badge-ok">設定済</span></td><td><span class="badge badge-ok">設定済</span></td><td><span class="badge badge-ok">設定済</span></td><td><span class="badge badge-high">未設定</span></td></tr>
+        <tr><td class="strong">h1</td><td><span class="badge badge-high">2つ重複</span></td><td><span class="badge badge-ok">1つ</span></td><td><span class="badge badge-ok">1つ</span></td><td><span class="badge badge-ok">1つ</span></td></tr>
+        <tr><td class="strong">JSON-LD</td><td style="font-size:10px">WebPage+FAQPage, Breadcrumb, WebSite, Org, Question×3</td><td style="font-size:10px">WebPage, Breadcrumb, WebSite, Org, <span class="hl">Article</span></td><td style="font-size:10px">WebPage+FAQPage, Breadcrumb, WebSite, Org, <span class="hl">Question×14</span></td><td style="font-size:10px">1件あり</td></tr>
+        <tr><td class="strong">robots meta</td><td style="font-size:10px">index, follow</td><td style="font-size:10px">index, follow</td><td style="font-size:10px">index, follow</td><td style="font-size:10px"><span class="hl">index, follow（要検討）</span></td></tr>
+      </tbody>
+    </table>
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ robots.txt <span class="verified">VERIFIED</span></div>
+        <div class="code-block">User-agent: *
+Disallow:        <span class="cm">← 空（全許可）</span>
+Sitemap: https://medicalcenterjp.com
+         /sitemap_index.xml</div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ XMLサイトマップ（Yoast SEO） <span class="verified">VERIFIED</span></div>
+        <ul class="check-list" style="font-size:11px">
+          <li class="done">sitemap_index.xml → 7分割サイトマップ</li>
+          <li class="done">articles-sitemap.xml（2026-03-16更新）</li>
+          <li class="done">columns-sitemap.xml（2026-03-04更新）</li>
+          <li class="done">works-sitemap.xml / works_area-sitemap.xml</li>
+          <li class="done">post-sitemap.xml / page-sitemap.xml / pickup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">03</span></div>
+</div></div>
+
+<!-- SLIDE 04: SECTION — ISSUES -->
+<div class="slide-wrapper"><div class="slide divider">
+  <div class="divider-left"><div class="sec-num">01</div><h2>実機検証で<br>確認された課題</h2></div>
+  <div class="divider-right">
+    <ul class="topics">
+      <li><span class="topic-dot"></span>TOPページ h1タグの重複（2つ）</li>
+      <li><span class="topic-dot"></span>パラメータ付き検索URLの canonical 未設定</li>
+      <li><span class="topic-dot"></span>robots.txt の Disallow が空</li>
+      <li><span class="topic-dot"></span>一部ページのh2空要素・画像alt不備</li>
+      <li><span class="topic-dot"></span>エリア別静的ランディングページの不在</li>
+    </ul>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">04</span></div>
+</div></div>
+
+<!-- SLIDE 05: H1 + CANONICAL -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">ISSUE 1-2</span><h3>h1重複 ＆ パラメータURL canonical未設定 <span class="badge badge-high">要修正</span> <span class="verified">VERIFIED</span></h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ ISSUE 1: TOPページ h1 が2つ</div>
+        <div class="issue-card bad"><div class="issue-label red">現状</div><div class="issue-text">同一テキストの <code>&lt;h1&gt;</code> が2つ。おそらくロゴ部分とメインビジュアルの両方にh1が設定されている。</div></div>
+        <div class="code-block" style="font-size:10px"><span class="cm">&lt;!-- 実際に検出された2つのh1 --&gt;</span>
+<span class="tag">&lt;h1&gt;</span>クリニック開業・医院開業・
+  医師開業支援や物件紹介なら
+  日本調剤「メディカルセンター
+  .JP」<span class="tag">&lt;/h1&gt;</span>
+<span class="tag">&lt;h1&gt;</span>（同一テキスト）<span class="tag">&lt;/h1&gt;</span></div>
+        <div class="issue-card warn" style="margin-top:10px"><div class="issue-label orange">修正</div><div class="issue-text" style="font-size:11px">ロゴ側を <code>&lt;div&gt;</code> に変更。h1は1つに限定し、テキストも短縮。<br><span class="strong">工数: 1日以内（header.php修正）</span></div></div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ ISSUE 2: 検索結果URLに canonical 無し</div>
+        <div class="issue-card bad"><div class="issue-label red">現状</div><div class="issue-text"><code>/?s=&dtl_flg=1&c_area=a_13</code> が <code>index, follow</code> だが <span class="strong">canonical未設定</span>。エリアの組み合わせで重複URL発生。</div></div>
+        <div class="code-block" style="font-size:10px"><span class="cm">/* 実機確認結果 */</span>
+URL:      /?s=&dtl_flg=1&c_area=a_13
+title:    東京のクリニック開業…
+robots:   <span class="attr">index, follow</span>
+canonical:<span class="attr"> 未設定</span> <span class="cm">← 問題</span></div>
+        <div class="issue-card warn" style="margin-top:10px"><div class="issue-label orange">修正（2つの選択肢）</div><div class="issue-text" style="font-size:11px"><span class="strong">A（推奨）:</span> 静的エリアLP（/area/tokyo/等）を新設し、パラメータURLは noindex + canonical で静的LPを指す<br><span class="strong">B:</span> パラメータ順序を正規化し自己参照canonical追加<br><span class="strong">工数: A=2〜3週 / B=2〜3日</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">05</span></div>
+</div></div>
+
+<!-- SLIDE 06: ROBOTS + MINOR -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">ISSUE 3-4</span><h3>robots.txt 全許可 ／ h2空要素・画像alt不備 <span class="verified">VERIFIED</span></h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ robots.txt <span class="badge badge-mid">中</span></div>
+        <div class="issue-card bad"><div class="issue-label red">現状</div><div class="issue-text"><code>Disallow:</code> が空で、ログインページ（/login/）、マイページ、パラメータ付き検索URL等もすべてクロール許可状態。</div></div>
+        <div class="caption" style="margin-top:12px">▼ 推奨 robots.txt</div>
+        <div class="code-block">User-agent: *
+Disallow: /login/
+Disallow: /mypage/
+Disallow: /*?s=
+Disallow: /*?dtl_flg=
+
+Sitemap: https://medicalcenterjp.com
+         /sitemap_index.xml</div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ h2空要素 (/support/) <span class="badge badge-low">低</span></div>
+        <div class="issue-card warn"><div class="issue-label orange">現状</div><div class="issue-text">/support/ ページで<span class="strong">空の&lt;h2&gt;タグが3つ</span>検出。見出し構造として不適切。テキストを入れるか、タグ自体を除去すべき。</div></div>
+        <div class="caption" style="margin-top:16px">▼ 画像alt属性の不備 <span class="badge badge-low">低</span></div>
+        <div class="issue-card warn"><div class="issue-label orange">現状</div><div class="issue-text">/support/ で <code>alt="SUPPORT1"</code> のような非記述的altを確認。全ページの画像altを監査し、物件名やエリア名を含む記述的altに修正すべき。</div></div>
+        <div class="code-block" style="margin-top:10px"><span class="cm">&lt;!-- 修正例 --&gt;</span>
+<span class="cm">&lt;!-- NG --&gt;</span> alt="SUPPORT1"
+<span class="cm">&lt;!-- OK --&gt;</span> alt="開業準備前のサポート
+  ニーズヒアリング"</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">06</span></div>
+</div></div>
+
+<!-- SLIDE 07: SECTION — CONTENT -->
+<div class="slide-wrapper"><div class="slide divider">
+  <div class="divider-left"><div class="sec-num">02</div><h2>コンテンツSEO<br>の改善提案</h2></div>
+  <div class="divider-right">
+    <ul class="topics">
+      <li><span class="topic-dot"></span>既存コンテンツの強み（30本以上のコラム）</li>
+      <li><span class="topic-dot"></span>未カバー科目の開業ガイド追加</li>
+      <li><span class="topic-dot"></span>トピッククラスター構築</li>
+      <li><span class="topic-dot"></span>E-E-A-T 強化策</li>
+    </ul>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">07</span></div>
+</div></div>
+
+<!-- SLIDE 08: CONTENT GAP -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">02 CONTENT</span><h3>既存コンテンツの棚卸しと未カバートピック <span class="badge badge-high">高</span></h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ 既存記事（Google検索で確認済み）</div>
+        <table class="data-table" style="font-size:10px">
+          <thead><tr><th>カテゴリ</th><th>記事タイトル</th></tr></thead>
+          <tbody>
+            <tr><td class="strong" rowspan="3" style="vertical-align:top">科目別</td><td>内科クリニック開業を失敗しないためのポイント</td></tr>
+            <tr><td>外科医の開業ガイド「流れ・費用・注意点」</td></tr>
+            <tr><td>精神科/心療内科の開業 / 産婦人科 / 小児科</td></tr>
+            <tr><td class="strong" rowspan="3" style="vertical-align:top">手順</td><td>開業準備ロードマップ ～14か月前から開院後～</td></tr>
+            <tr><td>開業手順と失敗しないポイント</td></tr>
+            <tr><td>開業スケジュールの手引 / 継承vs新規開業</td></tr>
+            <tr><td class="strong" rowspan="2" style="vertical-align:top">資金・法務</td><td>開業資金の目安と調達 / 融資の基礎知識</td></tr>
+            <tr><td>医療法人とは？メリット・デメリット</td></tr>
+            <tr><td class="strong" rowspan="2" style="vertical-align:top">その他</td><td>開業コンサル選び / 標榜診療科名 / 備品リスト</td></tr>
+            <tr><td>診療圏調査とは / 広告ガイドライン / 年収比較</td></tr>
+          </tbody>
+        </table>
+        <div class="issue-card good" style="margin-top:8px"><div class="issue-text" style="font-size:10.5px">計30本以上。基本トピックは網羅。科目別は<span class="strong">6科目</span>カバー済み。</div></div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ 未カバーの重要トピック（新規制作推奨）</div>
+        <table class="data-table" style="font-size:10.5px">
+          <thead><tr><th>トピック</th><th>想定KW</th><th>優先</th></tr></thead>
+          <tbody>
+            <tr><td class="strong">皮膚科クリニック開業</td><td>皮膚科 開業</td><td><span class="badge badge-high">高</span></td></tr>
+            <tr><td class="strong">眼科クリニック開業</td><td>眼科 開業</td><td><span class="badge badge-high">高</span></td></tr>
+            <tr><td class="strong">整形外科クリニック開業</td><td>整形外科 開業</td><td><span class="badge badge-high">高</span></td></tr>
+            <tr><td class="strong">耳鼻咽喉科開業</td><td>耳鼻科 開業</td><td><span class="badge badge-mid">中</span></td></tr>
+            <tr><td class="strong">泌尿器科開業</td><td>泌尿器科 開業</td><td><span class="badge badge-mid">中</span></td></tr>
+            <tr><td class="strong">エリア別 開業市場分析</td><td>東京 クリニック 開業</td><td><span class="badge badge-high">高</span></td></tr>
+            <tr><td class="strong">電子カルテの選び方</td><td>電子カルテ 比較</td><td><span class="badge badge-mid">中</span></td></tr>
+            <tr><td class="strong">クリニック集患マーケティング</td><td>クリニック 集患</td><td><span class="badge badge-mid">中</span></td></tr>
+            <tr><td class="strong">診療科別 開業費用の相場一覧</td><td>開業費用 相場</td><td><span class="badge badge-high">高</span></td></tr>
+          </tbody>
+        </table>
+        <div class="issue-card warn" style="margin-top:8px"><div class="issue-text" style="font-size:10.5px"><span class="hl">皮膚科・眼科・整形外科・耳鼻科・泌尿器科</span>が未カバー。エリア別市場分析も未確認。</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">08</span></div>
+</div></div>
+
+<!-- SLIDE 09: TOPIC CLUSTER + E-E-A-T -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">02 CONTENT</span><h3>トピッククラスター戦略 / E-E-A-T 強化</h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ トピッククラスター設計</div>
+        <div class="cluster-wrap" style="margin-bottom:16px">
+          <div class="pillar-box">ピラー<br>「医院開業<br>完全ガイド」</div>
+          <div class="cluster-arrow">→</div>
+          <div class="cluster-items">
+            <div class="cluster-item">開業手順 ✓ / 開業資金 ✓</div>
+            <div class="cluster-item">物件選び ✓ / 届出 ✓</div>
+            <div class="cluster-item">スタッフ採用（新規）</div>
+          </div>
+        </div>
+        <div class="cluster-wrap" style="margin-bottom:16px">
+          <div class="pillar-box">ピラー<br>「診療科別<br>開業ガイド」</div>
+          <div class="cluster-arrow">→</div>
+          <div class="cluster-items">
+            <div class="cluster-item">内科✓ / 外科✓ / 精神科✓</div>
+            <div class="cluster-item">産婦人科✓ / 小児科✓</div>
+            <div class="cluster-item"><span class="hl">皮膚科 / 眼科 / 整形外科（新規）</span></div>
+          </div>
+        </div>
+        <div class="cluster-wrap">
+          <div class="pillar-box">ピラー<br>「医療モール<br>開業ガイド」</div>
+          <div class="cluster-arrow">→</div>
+          <div class="cluster-items">
+            <div class="cluster-item">医療モールとは（新規）</div>
+            <div class="cluster-item">メリット・デメリット（新規）</div>
+            <div class="cluster-item">成功事例 / エリア別物件</div>
+          </div>
+        </div>
+        <div class="note">✓=既存記事あり。ピラーページ自体は新設が必要。既存記事間の相互リンクも強化すべき。</div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ E-E-A-T 強化策</div>
+        <ol class="num-list" style="margin-bottom:16px">
+          <li><span class="strong">著者ページ新設</span> — 各執筆者のプロフィール・資格・顔写真ページを作成</li>
+          <li><span class="strong">著者スキーマ強化</span> — Person情報に詳細を追加</li>
+          <li><span class="strong">監修者表示</span> — 「医師監修」バッジ表示</li>
+          <li><span class="strong">実績数値の明示</span> — 「支援実績○○件」をTOPに掲載</li>
+          <li><span class="strong">開業医インタビュー</span> — 「ドクターの声」をコラム記事化</li>
+        </ol>
+        <div class="caption">▼ コンテンツ鮮度管理</div>
+        <ul class="check-list" style="font-size:11.5px">
+          <li>年2回（4月・10月）全記事レビュー更新</li>
+          <li>更新記事に「2026年最新版」を追記</li>
+          <li>dateModified をスキーマに正確反映</li>
+          <li>古い記事は統合・リダイレクト検討</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">09</span></div>
+</div></div>
+
+<!-- SLIDE 10: SECTION — LOCAL SEO -->
+<div class="slide-wrapper"><div class="slide divider">
+  <div class="divider-left"><div class="sec-num">03</div><h2>ローカルSEO<br>＆ エリア戦略</h2></div>
+  <div class="divider-right">
+    <ul class="topics">
+      <li><span class="topic-dot"></span>エリア別静的ランディングページの新設</li>
+      <li><span class="topic-dot"></span>ファセットナビゲーションの3層戦略</li>
+      <li><span class="topic-dot"></span>Googleビジネスプロフィール活用</li>
+    </ul>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">10</span></div>
+</div></div>
+
+<!-- SLIDE 11: AREA LP -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">03 LOCAL</span><h3>エリア別静的LP ＆ ファセットナビゲーション <span class="badge badge-high">高</span></h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ 新設URL設計とコンテンツ構成</div>
+        <div class="code-block" style="font-size:10.5px;margin-bottom:12px">/area/tokyo/       <span class="cm">← 東京都</span>
+/area/kanagawa/    <span class="cm">← 神奈川県</span>
+/area/osaka/       <span class="cm">← 大阪府</span>
+/area/aichi/       <span class="cm">← 愛知県</span>
+/area/saitama/     <span class="cm">← 埼玉県</span>
+/area/chiba/       <span class="cm">← 千葉県</span>
+/area/fukuoka/     <span class="cm">← 福岡県</span>
+/area/hokkaido/    <span class="cm">← 北海道</span></div>
+        <div style="background:var(--primary-04);border:1px solid var(--border);border-radius:4px;padding:14px;font-size:11px;line-height:1.8">
+          <span class="strong" style="color:var(--accent)">h1</span> 東京都のクリニック開業・医療モール物件一覧<br>
+          <span style="color:var(--primary-50)">導入文</span> 200〜300字のユニークテキスト<br>
+          <span class="strong" style="color:var(--accent)">h2</span> 募集中物件一覧 / マーケットデータ / 開業実績 / 関連コラム<br>
+          <span class="strong" style="color:var(--red)">CTA</span> 診療圏調査を無料依頼
+        </div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ 3層インデックス戦略</div>
+        <table class="data-table">
+          <thead><tr><th>レイヤー</th><th>対象</th><th>設定</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge" style="background:var(--primary);color:#fff">L1</span></td><td class="strong">静的エリアLP</td><td>index + canonical自己参照</td></tr>
+            <tr><td><span class="badge badge-mid">L2</span></td><td class="strong">高需要の組み合わせ</td><td>index + canonical正規化</td></tr>
+            <tr><td><span class="badge badge-low">L3</span></td><td class="strong">その他パラメータURL</td><td><span class="hl">noindex</span> + canonical→L1</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px">
+          <div class="caption">▼ 技術的実装ポイント</div>
+          <ul class="check-list" style="font-size:11px">
+            <li class="done">フィルター変更は Ajax でUI更新（HTTP不発生）</li>
+            <li class="done">URL更新は history.replaceState()</li>
+            <li class="done">パラメータ順序の正規化ロジック追加</li>
+            <li class="done">ページネーション2ページ目以降は noindex</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">11</span></div>
+</div></div>
+
+<!-- SLIDE 12: UX/CRO + EXTERNAL -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">04-05</span><h3>UX/CRO 最適化 ＆ 外部SEO・被リンク戦略</h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ UX/CRO 改善施策</div>
+        <div class="issue-card good" style="margin-bottom:10px"><div class="issue-label green">既に良い点 <span class="verified">VERIFIED</span></div><div class="issue-text" style="font-size:11px">TOPに「会員登録のメリット」「ドクターの声」「よくある質問」等のCVR向上セクションが豊富。h2が16個と非常にリッチな構成。</div></div>
+        <ol class="num-list" style="font-size:11.5px">
+          <li><span class="strong">コラム中間CTA挿入</span> — 記事中間に「関連物件を見る」バナーを配置</li>
+          <li><span class="strong">追従型CTAバー（モバイル）</span> — 「無料会員登録」のフローティングバー</li>
+          <li><span class="strong">段階的情報公開</span> — 物件基本情報は非会員閲覧可、詳細で登録促進</li>
+          <li><span class="strong">会員登録の簡素化</span> — メールのみ初回登録、ソーシャルログイン</li>
+        </ol>
+      </div>
+      <div class="col">
+        <div class="caption">▼ 被リンク獲得施策</div>
+        <ol class="num-list" style="font-size:11.5px">
+          <li><span class="strong">独自調査データの公開</span> — 「開業医実態調査」「入居満足度調査」をプレスリリース配信</li>
+          <li><span class="strong">専門メディアへの寄稿</span> — m3.com、日経メディカル等へのコラム寄稿+リンク</li>
+          <li><span class="strong">セミナー・ウェビナー開催</span> — Peatix等への掲載で被リンク獲得</li>
+          <li><span class="strong">医師会・大学連携</span> — 各地域医師会、大学同窓会サイトからのリンク</li>
+          <li><span class="strong">日本調剤本体連携</span> — nicho.co.jp からコラム個別リンク増設</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">12</span></div>
+</div></div>
+
+<!-- SLIDE 13: TITLE OPT -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">06 ON-PAGE</span><h3>titleタグの最適化提案 <span class="verified">VERIFIED</span></h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <table class="data-table" style="margin-bottom:16px">
+      <thead><tr><th style="width:10%">ページ</th><th style="width:35%">現状のtitle <span class="verified">実機確認</span></th><th style="width:35%">改善案</th><th>効果</th></tr></thead>
+      <tbody>
+        <tr><td class="strong">TOP</td><td style="font-size:10px">クリニック開業・医院開業・医師開業支援や物件紹介なら日本調剤「メディカルセンター.JP」<br><span style="color:var(--accent);font-size:9px">（58文字 — やや長い）</span></td><td style="font-size:10px" class="hl">医療モール物件・クリニック開業支援｜日本調剤メディカルセンター.JP</td><td>33字に短縮</td></tr>
+        <tr><td class="strong">検索結果</td><td style="font-size:10px">東京のクリニック開業・医院開業物件｜日本調剤「メディカルセンター.JP」<br><span style="color:var(--green);font-size:9px">（動的生成 — 良い実装）</span></td><td style="font-size:10px">現状のままでOK</td><td>—</td></tr>
+        <tr><td class="strong">コラム</td><td style="font-size:10px">{記事タイトル}｜メディカルセンター.JP<br><span style="color:var(--green);font-size:9px">（良いフォーマット）</span></td><td style="font-size:10px">現状のままでOK</td><td>—</td></tr>
+        <tr><td class="strong">FAQ</td><td style="font-size:10px">よくあるご質問 | 日本調剤「メディカルセンター.JP」</td><td style="font-size:10px" class="hl">よくある質問｜クリニック開業・医療モール｜メディカルセンター.JP</td><td>KW追加</td></tr>
+        <tr><td class="strong">Support</td><td style="font-size:10px">日本調剤による医院開業サポート | 日本調剤「メディカルセンター.JP」</td><td style="font-size:10px" class="hl">医院開業サポート｜物件紹介・診療圏調査｜メディカルセンター.JP</td><td>重複解消</td></tr>
+      </tbody>
+    </table>
+    <div class="issue-card"><div class="issue-label">補足</div><div class="issue-text">コラム記事・検索結果ページのtitle構成は適切。改善はTOP・FAQ・Supportなど固定ページのみ。Yoast SEOの「SEOタイトル」欄で変更可能。</div></div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">13</span></div>
+</div></div>
+
+<!-- SLIDE 14: FULL SUMMARY TABLE -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">SUMMARY</span><h3>全課題・施策の一覧（検証ステータス付き）</h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <table class="data-table" style="font-size:10px">
+      <thead><tr><th style="width:5%">#</th><th style="width:26%">項目</th><th style="width:12%">検証</th><th style="width:10%">判定</th><th style="width:35%">所見</th><th>優先</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>構造化データ（JSON-LD）</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-ok">正常</span></td><td>FAQPage/Article/Breadcrumb/Org/WebSite 全て実装済み</td><td>—</td></tr>
+        <tr><td>2</td><td>XMLサイトマップ</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-ok">正常</span></td><td>Yoast SEO生成の7分割サイトマップ、定期更新あり</td><td>—</td></tr>
+        <tr><td>3</td><td>meta description</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-ok">正常</span></td><td>全ページに設定済み</td><td>—</td></tr>
+        <tr><td>4</td><td>canonical タグ</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-mid">一部問題</span></td><td>固定ページは正常。<span class="hl">検索結果ページのみ未設定</span></td><td><span class="badge badge-high">高</span></td></tr>
+        <tr><td>5</td><td>TOPページ h1</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-high">問題</span></td><td>同一テキストのh1が2つ存在</td><td><span class="badge badge-high">高</span></td></tr>
+        <tr><td>6</td><td>robots.txt</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-mid">改善余地</span></td><td>Disallow空。ログイン/パラメータURLを除外すべき</td><td><span class="badge badge-mid">中</span></td></tr>
+        <tr><td>7</td><td>h2空要素</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-mid">軽微</span></td><td>/support/ に空h2が3つ</td><td><span class="badge badge-low">低</span></td></tr>
+        <tr><td>8</td><td>画像alt属性</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-mid">一部問題</span></td><td>「SUPPORT1」等の非記述的altが一部存在</td><td><span class="badge badge-low">低</span></td></tr>
+        <tr><td>9</td><td>エリア別静的LP</td><td>構造確認</td><td><span class="badge badge-mid">未整備</span></td><td>パラメータURLのみ。静的LPの新設でローカルSEO強化</td><td><span class="badge badge-high">高</span></td></tr>
+        <tr><td>10</td><td>科目別コンテンツ</td><td>検索確認</td><td><span class="badge badge-mid">一部不足</span></td><td>6科目カバー済。皮膚科/眼科/整形外科等が未カバー</td><td><span class="badge badge-high">高</span></td></tr>
+        <tr><td>11</td><td>トピッククラスター</td><td>構造確認</td><td><span class="badge badge-mid">未構築</span></td><td>記事は豊富だがピラーページ・体系的内部リンクが未整備</td><td><span class="badge badge-mid">中</span></td></tr>
+        <tr><td>12</td><td>titleタグ最適化</td><td><span class="verified">VERIFIED</span></td><td><span class="badge badge-mid">改善余地</span></td><td>TOPが58文字で長い。FAQ/Supportも改善可能</td><td><span class="badge badge-mid">中</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">14</span></div>
+</div></div>
+
+<!-- SLIDE 15: ACTION PLAN -->
+<div class="slide-wrapper"><div class="slide">
+  <div class="slide-header"><span class="sec-tag">ACTION PLAN</span><h3>優先アクションリスト TOP 10</h3></div>
+  <div class="header-line"></div>
+  <div class="slide-body">
+    <table class="data-table" style="font-size:10.5px">
+      <thead><tr><th style="width:4%">#</th><th style="width:35%">施策</th><th style="width:10%">優先度</th><th style="width:10%">工数</th><th style="width:30%">期待効果</th><th>検証</th></tr></thead>
+      <tbody>
+        <tr><td class="strong">1</td><td class="strong">TOPページ h1 の重複解消</td><td><span class="badge badge-high">高</span></td><td>1日</td><td>ページ主題の明確化</td><td><span class="verified">VERIFIED</span></td></tr>
+        <tr><td class="strong">2</td><td class="strong">検索結果URLに canonical タグ追加</td><td><span class="badge badge-high">高</span></td><td>1〜2日</td><td>重複コンテンツの正規化</td><td><span class="verified">VERIFIED</span></td></tr>
+        <tr><td class="strong">3</td><td class="strong">エリア別静的LP新設（主要8都道府県）</td><td><span class="badge badge-high">高</span></td><td>2〜3週</td><td>エリアKW流入の大幅増加</td><td>提案</td></tr>
+        <tr><td class="strong">4</td><td class="strong">robots.txt に Disallow ルール追加</td><td><span class="badge badge-mid">中</span></td><td>1日</td><td>クロール効率の改善</td><td><span class="verified">VERIFIED</span></td></tr>
+        <tr><td class="strong">5</td><td class="strong">未カバー科目の開業ガイド制作（皮膚科/眼科/整形外科）</td><td><span class="badge badge-high">高</span></td><td>1〜2ヶ月</td><td>ロングテールKW流入増加</td><td>検索確認</td></tr>
+        <tr><td class="strong">6</td><td class="strong">トピッククラスター構築（ピラー3本+内部リンク）</td><td><span class="badge badge-mid">中</span></td><td>2〜4週</td><td>トピカルオーソリティ確立</td><td>提案</td></tr>
+        <tr><td class="strong">7</td><td class="strong">E-E-A-T強化（著者ページ・監修者・実績数値）</td><td><span class="badge badge-mid">中</span></td><td>1〜2週</td><td>YMYL信頼性向上</td><td>提案</td></tr>
+        <tr><td class="strong">8</td><td class="strong">TOPページ titleタグの短縮</td><td><span class="badge badge-mid">中</span></td><td>1日</td><td>検索CTR向上</td><td><span class="verified">VERIFIED</span></td></tr>
+        <tr><td class="strong">9</td><td class="strong">CTA配置改善（コラム中間CTA・追従バー）</td><td><span class="badge badge-mid">中</span></td><td>3〜5日</td><td>CV率向上</td><td>提案</td></tr>
+        <tr><td class="strong">10</td><td class="strong">画像alt属性・空h2の修正</td><td><span class="badge badge-low">低</span></td><td>1〜2日</td><td>アクセシビリティ改善</td><td><span class="verified">VERIFIED</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;display:flex;gap:16px">
+      <div class="issue-card" style="flex:1"><div class="issue-label">SHORT TERM（1週間以内）</div><div class="issue-text" style="font-size:11px">#1 #2 #4 #8 #10 — テンプレート修正のみで対応可能。Yoast SEO設定変更で完結するものも多い。</div></div>
+      <div class="issue-card warn" style="flex:1"><div class="issue-label orange">MID TERM（3ヶ月以内）</div><div class="issue-text" style="font-size:11px">#3 #5 #6 #7 #9 — エリアLP新設・コンテンツ制作がメイン。段階的に着手。</div></div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>CONFIDENTIAL — SEO Audit Report</span><span class="page-num">15</span></div>
+</div></div>
+
+<!-- SLIDE 16: CLOSING -->
+<div class="slide-wrapper"><div class="slide cover" style="justify-content:flex-start">
+  <div class="cover-top" style="height:45%;justify-content:flex-end;padding-bottom:40px">
+    <div class="label">CONCLUSION</div>
+    <h1>まとめ</h1>
+  </div>
+  <div class="cover-bottom" style="height:55%;justify-content:flex-start;padding-top:36px">
+    <div class="two-col">
+      <div class="col">
+        <div class="caption">▼ 総合評価</div>
+        <div class="issue-card good"><div class="issue-text" style="font-size:12px">メディカルセンター.JPは<span class="strong">SEO基盤が非常によく整備されたサイト</span>です。Yoast SEOによる構造化データ・サイトマップ・meta管理が適切に稼働しており、コラムコンテンツも30本以上と充実しています。</div></div>
+        <div class="issue-card warn"><div class="issue-text" style="font-size:12px">改善すべきポイントは<span class="strong">h1重複、検索URLのcanonical未設定、エリア別静的LPの新設</span>の3点が核心。いずれもサイト構造の最適化に関するもので、コンテンツの質自体は高い。</div></div>
+      </div>
+      <div class="col">
+        <div class="caption">▼ 検証方法</div>
+        <ul class="check-list" style="font-size:11px">
+          <li class="done">Chrome実機アクセスによるHTML構造検証</li>
+          <li class="done">JavaScript実行によるJSON-LD・meta・h1等の取得</li>
+          <li class="done">robots.txt / sitemap_index.xml の直接確認</li>
+          <li class="done">Google検索結果からのインデックス状況確認</li>
+          <li class="done">5ページ以上の個別検証（TOP/コラム/FAQ/検索/Support）</li>
+        </ul>
+        <div style="margin-top:16px">
+          <div class="caption">▼ 追加推奨分析</div>
+          <ul class="check-list" style="font-size:11px">
+            <li>Google Search Console パフォーマンスデータ</li>
+            <li>Google Analytics ユーザー行動データ</li>
+            <li>Ahrefs / Semrush 被リンク定量分析</li>
+            <li>PageSpeed Insights CWV実測</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:24px;text-align:center"><div style="font-size:10px;color:var(--primary-50)">本レポートは2026年3月17日時点の実機検証に基づいています</div></div>
+  </div>
+</div></div>
+
+</div>
+<script>
+(function(){const d=document.getElementById('deck'),s=Array.from(d.querySelectorAll('.slide-wrapper')),ind=document.getElementById('pageIndicator'),mb=document.getElementById('modeBtn');let c=0,sm=false;function u(){ind.textContent=(c+1)+' / '+s.length}window.toggleMode=function(){sm=!sm;if(sm){d.classList.add('slide-mode');mb.textContent='Scroll Mode';mb.classList.add('active');sh(c)}else{d.classList.remove('slide-mode');mb.textContent='Slide Mode';mb.classList.remove('active');s.forEach(x=>x.style.display='')}};function sh(i){if(!sm)return;s.forEach((x,j)=>{x.style.display=j===i?'':'none';j===i?x.classList.add('active'):x.classList.remove('active')});c=i;u();window.scrollTo(0,0)}window.prevSlide=function(){if(sm)sh(Math.max(0,c-1));else{const i=Math.max(0,c-1);s[i].scrollIntoView({behavior:'smooth',block:'start'});c=i;u()}};window.nextSlide=function(){if(sm)sh(Math.min(s.length-1,c+1));else{const i=Math.min(s.length-1,c+1);s[i].scrollIntoView({behavior:'smooth',block:'start'});c=i;u()}};document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();nextSlide()}if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();prevSlide()}});let t=false;window.addEventListener('scroll',function(){if(sm||t)return;t=true;requestAnimationFrame(function(){const y=window.scrollY+200;for(let i=s.length-1;i>=0;i--)if(s[i].offsetTop<=y){c=i;u();break}t=false})});u()})();
+</script>
+</body>
+</html>

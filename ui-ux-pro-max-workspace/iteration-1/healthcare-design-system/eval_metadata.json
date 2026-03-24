@@ -1,0 +1,14 @@
+{
+  "eval_id": 3,
+  "eval_name": "healthcare-design-system",
+  "prompt": "ヘルスケアアプリのデザインシステムを提案してほしい。React Nativeで作る予定で、お年寄りでも使いやすいUIにしたい。配色、フォント、アイコンの方針を教えて。できればマークダウンのドキュメントにまとめて。",
+  "assertions": [
+    {"name": "markdown-format", "description": "Output is a markdown (.md) file", "type": "code_check"},
+    {"name": "color-palette-defined", "description": "Defines specific hex color codes for the palette", "type": "code_check"},
+    {"name": "font-recommendations", "description": "Recommends specific font families with rationale", "type": "code_check"},
+    {"name": "icon-library-specified", "description": "Recommends a specific icon library (not just 'use icons')", "type": "code_check"},
+    {"name": "accessibility-focus", "description": "Addresses elderly user accessibility (large text, high contrast, large touch targets)", "type": "qualitative"},
+    {"name": "react-native-specific", "description": "Includes React Native specific guidance or code examples", "type": "code_check"},
+    {"name": "contrast-ratios-mentioned", "description": "Mentions WCAG contrast ratio requirements", "type": "code_check"}
+  ]
+}

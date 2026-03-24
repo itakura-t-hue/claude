@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "portfolio-lp",
+  "prompt": "フリーランスのポートフォリオサイトのトップページをHTMLで作って。モダンでミニマルな感じがいい。ヒーローセクション、実績セクション（カード3枚くらい）、お問い合わせフォームを入れてほしい。レスポンシブ対応で。",
+  "assertions": [
+    {"name": "single-html-file", "description": "Output is a single HTML file with embedded CSS", "type": "code_check"},
+    {"name": "has-hero-section", "description": "Contains a hero section with heading and CTA", "type": "code_check"},
+    {"name": "has-portfolio-cards", "description": "Contains 3 portfolio/project cards", "type": "code_check"},
+    {"name": "has-contact-form", "description": "Contains a contact form with name, email, message fields", "type": "code_check"},
+    {"name": "responsive-design", "description": "Has media queries or responsive CSS for mobile/tablet", "type": "code_check"},
+    {"name": "uses-google-fonts", "description": "Imports and uses Google Fonts for typography", "type": "code_check"},
+    {"name": "semantic-html", "description": "Uses semantic HTML elements (nav, main, section, footer)", "type": "code_check"},
+    {"name": "no-emoji-icons", "description": "Does not use emoji characters as functional UI icons", "type": "code_check"}
+  ]
+}

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ja" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SEO×AIO 実践カリキュラム | AI検索時代のWeb人材育成プログラム</title>
+<meta name="description" content="IT知識ゼロから設計・実装・SEO・AIO・データ分析・提案を一気通貫で習得する、8フェーズ全29章の実践型カリキュラム。"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ===== Design Tokens ===== */
+:root {
+  /* Learning Blue palette */
+  --primary-50: #EFF6FF;
+  --primary-100: #DBEAFE;
+  --primary-200: #BFDBFE;
+  --primary-300: #93C5FD;
+  --primary-400: #60A5FA;
+  --primary-500: #3B82F6;
+  --primary-600: #2563EB;
+  --primary-700: #1D4ED8;
+  --primary-800: #1E40AF;
+  --primary-900: #1E3A8A;
+  /* Accent: Teal for growth/learning */
+  --accent-400: #2DD4BF;
+  --accent-500: #14B8A6;
+  --accent-600: #0D9488;
+  /* Neutrals */
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --gray-700: #374151;
+  --gray-800: #1F2937;
+  --gray-900: #111827;
+  --gray-950: #030712;
+  /* Semantic */
+  --bg: #030712;
+  --bg-card: #111827;
+  --bg-card-hover: #1F2937;
+  --text-primary: #F9FAFB;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.15);
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  /* Transition */
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ===== Layout ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-lg); }
+.section { padding: var(--space-4xl) 0; }
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: var(--space-md);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto var(--space-3xl);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+/* ===== Header ===== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(3,7,18,0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--primary-500), var(--accent-500));
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-icon svg { width: 18px; height: 18px; color: white; }
+.nav { display: flex; align-items: center; gap: var(--space-xs); }
+.nav a {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+.nav a:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+.nav-cta {
+  background: var(--primary-600) !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+.nav-cta:hover { background: var(--primary-500) !important; }
+.mobile-menu { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: var(--space-sm); }
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  padding: var(--space-4xl) 0 var(--space-3xl);
+  text-align: center;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(20,184,166,0.08) 40%, transparent 70%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 16px 6px 8px;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary-300);
+  margin-bottom: var(--space-xl);
+}
+.hero-badge-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-400);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.hero h1 {
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-lg);
+  position: relative;
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, var(--primary-400), var(--accent-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto var(--space-2xl);
+  line-height: 1.8;
+}
+.hero-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn svg { width: 18px; height: 18px; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+  color: white;
+  box-shadow: 0 0 24px rgba(37,99,235,0.3);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 32px rgba(37,99,235,0.5);
+  transform: translateY(-1px);
+}
+.btn-secondary {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--border-hover);
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+/* ===== Features (何が違うのか) ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all var(--transition);
+}
+.feature-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+.feature-icon svg { width: 24px; height: 24px; }
+.feature-icon-blue { background: rgba(59,130,246,0.12); color: var(--primary-400); }
+.feature-icon-teal { background: rgba(20,184,166,0.12); color: var(--accent-400); }
+.feature-icon-purple { background: rgba(168,85,247,0.12); color: #C084FC; }
+.feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+.feature-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* ===== Roadmap ===== */
+.roadmap { position: relative; }
+.roadmap-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--primary-600), var(--accent-500), var(--primary-600));
+  transform: translateX(-50%);
+  opacity: 0.3;
+}
+.roadmap-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+}
+.roadmap-item:nth-child(even) .roadmap-content { order: 2; text-align: left; }
+.roadmap-item:nth-child(even) .roadmap-spacer { order: 1; }
+.roadmap-dot {
+  position: absolute;
+  left: 50%;
+  top: var(--space-lg);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  border: 3px solid var(--bg);
+}
+.roadmap-content {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all var(--transition);
+}
+.roadmap-content:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+.roadmap-phase {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-sm);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+.roadmap-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.roadmap-chapters {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+.roadmap-content p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+/* Phase colors */
+.phase-1 .roadmap-dot { background: #3B82F6; }
+.phase-1 .roadmap-phase { background: rgba(59,130,246,0.12); color: #60A5FA; }
+.phase-2 .roadmap-dot { background: #10B981; }
+.phase-2 .roadmap-phase { background: rgba(16,185,129,0.12); color: #34D399; }
+.phase-3 .roadmap-dot { background: #8B5CF6; }
+.phase-3 .roadmap-phase { background: rgba(139,92,246,0.12); color: #A78BFA; }
+.phase-4 .roadmap-dot { background: #F59E0B; }
+.phase-4 .roadmap-phase { background: rgba(245,158,11,0.12); color: #FCD34D; }
+.phase-5 .roadmap-dot { background: #EF4444; }
+.phase-5 .roadmap-phase { background: rgba(239,68,68,0.12); color: #FCA5A5; }
+.phase-6 .roadmap-dot { background: #06B6D4; }
+.phase-6 .roadmap-phase { background: rgba(6,182,212,0.12); color: #67E8F9; }
+.phase-7 .roadmap-dot { background: #F97316; }
+.phase-7 .roadmap-phase { background: rgba(249,115,22,0.12); color: #FDBA74; }
+.phase-8 .roadmap-dot { background: #EC4899; }
+.phase-8 .roadmap-phase { background: rgba(236,72,153,0.12); color: #F9A8D4; }
+
+/* ===== Sites Table ===== */
+.sites-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.sites-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.sites-table thead { background: rgba(255,255,255,0.03); }
+.sites-table th {
+  padding: var(--space-md) var(--space-lg);
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+.sites-table td {
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.sites-table tr:last-child td { border-bottom: none; }
+.sites-table tr:hover td { background: rgba(255,255,255,0.02); }
+.sites-table .phase-badge {
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ===== Skills Grid ===== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: all var(--transition);
+}
+.skill-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+.skill-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+.skill-icon svg { width: 20px; height: 20px; }
+.skill-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.skill-card p {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* ===== Target Audience ===== */
+.target-list {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.target-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition);
+}
+.target-item:hover { border-color: var(--border-hover); }
+.target-check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(20,184,166,0.12);
+  color: var(--accent-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.target-check svg { width: 14px; height: 14px; }
+.target-item p { color: var(--text-secondary); font-size: 0.95rem; }
+
+/* ===== CTA Section ===== */
+.cta-section {
+  text-align: center;
+  padding: var(--space-3xl) var(--space-xl);
+  background: linear-gradient(135deg, rgba(37,99,235,0.15), rgba(20,184,166,0.1));
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: var(--radius-xl);
+}
+.cta-section h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  margin-bottom: var(--space-md);
+}
+.cta-section p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+  font-size: 1rem;
+}
+
+/* ===== Footer ===== */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: var(--space-3xl) 0 var(--space-xl);
+  color: var(--text-muted);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+}
+.footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 320px; }
+.footer h4 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+.footer ul { list-style: none; }
+.footer li { margin-bottom: var(--space-sm); }
+.footer li a {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: color var(--transition);
+}
+.footer li a:hover { color: var(--text-primary); }
+.footer-bottom {
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* ===== Latest Column (コラム) ===== */
+.column-banner {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xl);
+}
+.column-banner h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; }
+.column-banner p { color: var(--text-secondary); font-size: 0.9rem; max-width: 600px; }
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .skills-grid { grid-template-columns: repeat(3, 1fr); }
+  .features-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .nav { display: none; }
+  .mobile-menu { display: flex; }
+  .features-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .roadmap-line { left: 20px; }
+  .roadmap-item { grid-template-columns: 1fr; gap: 0; }
+  .roadmap-item:nth-child(even) .roadmap-content { order: unset; text-align: left; }
+  .roadmap-spacer { display: none; }
+  .roadmap-dot { left: 20px; }
+  .roadmap-content { margin-left: 48px; }
+  .sites-table { font-size: 0.8rem; }
+  .sites-table th, .sites-table td { padding: var(--space-sm) var(--space-md); }
+  .footer-grid { grid-template-columns: 1fr; }
+  .column-banner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn { width: 100%; justify-content: center; }
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <span>SEO×AIO 実践カリキュラム</span>
+    </a>
+    <nav class="nav" role="navigation" aria-label="メインナビゲーション">
+      <a href="#curriculum">カリキュラム</a>
+      <a href="#skills">スキル</a>
+      <a href="#column">コラム</a>
+      <a href="#start" class="nav-cta">学習を始める</a>
+    </nav>
+    <button class="mobile-menu" aria-label="メニューを開く">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      8フェーズ・全29章の実践型カリキュラム
+    </div>
+    <h1>
+      ゼロからプロへ。<br/>
+      <span class="gradient-text">設計・実装・SEO・AIO・分析</span><br/>
+      を一気通貫で習得
+    </h1>
+    <p>IT知識ゼロから「設計・実装・公開・SEO・AIO・データ分析・提案」を一気通貫でこなせる超万能型Web人材へ。フェーズごとに異なるWebサイトを0から構築・公開するプロジェクトベース学習です。</p>
+    <div class="hero-actions">
+      <a href="#start" class="btn btn-primary">
+        学習を始める
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+      <a href="#curriculum" class="btn btn-secondary">
+        カリキュラム一覧
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Features ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">何が違うのか？</h2>
+    <p class="section-subtitle">従来のWeb講座は技術要素の積み上げで終わります。本カリキュラムはフェーズごとに異なるWebサイトを0から構築・公開するプロジェクトベース学習。データドリブンな分析と2026年AI検索対応が差別化ポイントです。</p>
+    <div class="features-grid">
+      <article class="feature-card">
+        <div class="feature-icon feature-icon-blue">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3>プロジェクトベース学習</h3>
+        <p>8つの異なるサイトを0から構築・公開。座学では得られない実務経験を積み重ねます。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon feature-icon-teal">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        </div>
+        <h3>データドリブン</h3>
+        <p>GA4・BigQuery・Looker Studioで「根拠のあるSEO施策立案」を実現します。</p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon feature-icon-purple">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4c0 2 1 3 2.5 4.5L12 12l1.5-1.5C15 9 16 8 16 6a4 4 0 0 0-4-4z"/><path d="M12 12v10"/><path d="M4 20h16"/></svg>
+        </div>
+        <h3>2026年AI検索対応</h3>
+        <p>従来SEOとAIO/LLMO/GEOの両立を学び、AI時代に対応した人材になれます。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Roadmap ===== -->
+<section class="section" id="curriculum">
+  <div class="container">
+    <h2 class="section-title">学習ロードマップ</h2>
+    <p class="section-subtitle">8つのフェーズで段階的にスキルを習得。各フェーズでは異なるWebサイトを0から構築・公開し、実践力を積み上げます。</p>
+    <div class="roadmap">
+      <div class="roadmap-line" aria-hidden="true"></div>
+
+      <div class="roadmap-item phase-1">
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 1</div>
+          <h3>Web入門</h3>
+          <div class="roadmap-chapters">第1〜4章 — ポートフォリオサイト</div>
+          <p>セマンティックHTMLからTailwind CSSまで、Web制作の基本をマスター。Figmaでデザイン、Git/GitHubでバージョン管理し、初めてのサイトをGitHub Pagesで世界に公開します。</p>
+        </div>
+        <div class="roadmap-spacer"></div>
+      </div>
+
+      <div class="roadmap-item phase-2">
+        <div class="roadmap-spacer"></div>
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 2</div>
+          <h3>初級</h3>
+          <div class="roadmap-chapters">第5〜9章 — コーポレートサイト</div>
+          <p>JavaScriptとTypeScriptで動的ページを実装。サイト構造設計・ローカルSEO・テクニカルSEOの基本を学び、独自ドメインでVercel公開。GA4・GSCの導入でデータ計測の基礎を確立します。</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item phase-3">
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 3</div>
+          <h3>中級前半</h3>
+          <div class="roadmap-chapters">第10〜13章 — ブログ/メディアサイト</div>
+          <p>WordPress×PHPでCMSベースのサイト構築を学習。キーワードリサーチ・E-E-A-T対策・コンテンツSEOから被リンク戦略まで、コンテンツドリブンなSEOスキルを習得。動画SEOも実装します。</p>
+        </div>
+        <div class="roadmap-spacer"></div>
+      </div>
+
+      <div class="roadmap-item phase-4">
+        <div class="roadmap-spacer"></div>
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 4</div>
+          <h3>中級後半</h3>
+          <div class="roadmap-chapters">第14〜17章 — SaaS型Webアプリ</div>
+          <p>React/Next.js+TypeScriptで動的Webアプリを構築。API連携・ヘッドレスCMS・SSR/SSG/ISRのレンダリング戦略を習得し、JavaScript SEOの課題を解決。CRO実践も養成します。</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item phase-5">
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 5</div>
+          <h3>上級</h3>
+          <div class="roadmap-chapters">第18〜20章 — 大規模EC/ポータルサイト</div>
+          <p>データベース設計・SQL・Shopifyを学び、大規模サイト特有のSEO課題（ファセットナビゲーション、クロールバジェット、動的URL管理）を解決。EC特化SEOと法務対応も習得します。</p>
+        </div>
+        <div class="roadmap-spacer"></div>
+      </div>
+
+      <div class="roadmap-item phase-6">
+        <div class="roadmap-spacer"></div>
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 6</div>
+          <h3>AI検索最適化</h3>
+          <div class="roadmap-chapters">第21〜23章 — 既存サイト横断AIO実装</div>
+          <p>AI検索の仕組みとLLMO/GEO/AEOの実装方法を学習。llms.txtの設計・セマンティックHTML最適化・構造化データのAIO再設計を実施。AI可視性を計測し、統合戦略を構築します。</p>
+        </div>
+      </div>
+
+      <div class="roadmap-item phase-7">
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 7</div>
+          <h3>データ分析深化</h3>
+          <div class="roadmap-chapters">第24〜26章 — 多言語サイト+分析基盤</div>
+          <p>GA4×BigQuery連携でSQL分析を実践。Looker Studioダッシュボード構築。SEOツール（Ahrefs/SEMrush/Screaming Frog）の使いこなし。Next.js i18nでhreflang実装の多言語サイトを公開。</p>
+        </div>
+        <div class="roadmap-spacer"></div>
+      </div>
+
+      <div class="roadmap-item phase-8">
+        <div class="roadmap-spacer"></div>
+        <div class="roadmap-content">
+          <span class="roadmap-dot" aria-hidden="true"></span>
+          <div class="roadmap-phase">Phase 8</div>
+          <h3>総合実務</h3>
+          <div class="roadmap-chapters">第27〜29章 — SEO監査・提案プロジェクト</div>
+          <p>テクニカル監査・コンテンツ監査・被リンク監査・競合分析を一気通貫で実施。改善提案書・月次レポート・プレゼンテーションスキルを習得。大型案件の総合演習でカリキュラムを完遂します。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Sites Table ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">作れるサイト一覧</h2>
+    <p class="section-subtitle">カリキュラムを通じて8つの異なるWebサイト/プロジェクトを実際に構築・公開します。</p>
+    <div class="sites-table-wrapper">
+      <table class="sites-table" role="table">
+        <thead>
+          <tr><th>フェーズ</th><th>サイト種別</th><th>技術スタック</th><th>公開方法</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(59,130,246,0.12);color:#60A5FA">Phase 1</span></td>
+            <td>ポートフォリオサイト</td>
+            <td>HTML/CSS/Tailwind</td>
+            <td>GitHub Pages</td>
+          </tr>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(16,185,129,0.12);color:#34D399">Phase 2</span></td>
+            <td>コーポレートサイト</td>
+            <td>JavaScript/TypeScript/SEO</td>
+            <td>Vercel（独自ドメイン）</td>
+          </tr>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(139,92,246,0.12);color:#A78BFA">Phase 3</span></td>
+            <td>ブログ/メディアサイト</td>
+            <td>WordPress/PHP</td>
+            <td>レンタルサーバー</td>
+          </tr>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(245,158,11,0.12);color:#FCD34D">Phase 4</span></td>
+            <td>SaaS型Webアプリ</td>
+            <td>React/Next.js/API連携</td>
+            <td>Vercel</td>
+          </tr>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(239,68,68,0.12);color:#FCA5A5">Phase 5</span></td>
+            <td>大規模EC/ポータルサイト</td>
+            <td>Shopify/SQL/DB設計</td>
+            <td>Shopify</td>
+          </tr>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(6,182,212,0.12);color:#67E8F9">Phase 6</span></td>
+            <td>既存サイト横断AIO実装</td>
+            <td>AIO/llms.txt/構造化データ</td>
+            <td>各サイトに追加実装</td>
+          </tr>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(249,115,22,0.12);color:#FDBA74">Phase 7</span></td>
+            <td>多言語サイト</td>
+            <td>Next.js i18n/BigQuery</td>
+            <td>Vercel</td>
+          </tr>
+          <tr>
+            <td><span class="phase-badge" style="background:rgba(236,72,153,0.12);color:#F9A8D4">Phase 8</span></td>
+            <td>SEO監査・提案プロジェクト</td>
+            <td>分析・ダッシュボード・レポート</td>
+            <td>プレゼン資料</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Column Banner ===== -->
+<section class="section" id="column">
+  <div class="container">
+    <div class="column-banner">
+      <div>
+        <h3>最新コラム</h3>
+        <p>SEO・AIOの最新情報や実践ノウハウをコラムで発信中。業界のトレンドやツールレビュー、テクニカルTipsなど、学習の補助にお役立てください。</p>
+      </div>
+      <a href="/blog" class="btn btn-secondary">
+        コラムを読む
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Skills ===== -->
+<section class="section" id="skills">
+  <div class="container">
+    <h2 class="section-title">身につくスキル</h2>
+    <p class="section-subtitle">12カテゴリのスキルを体系的に習得。フロントエンドからコンサルタント実務まで、即戦力レベルで活用できます。</p>
+    <div class="skills-grid">
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(59,130,246,0.12);color:#60A5FA">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>フロントエンド技術</h3>
+        <p>HTML/CSS/Tailwind、JavaScript/TypeScript、React/Next.jsまでフロントエンド全般をカバー</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(16,185,129,0.12);color:#34D399">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+        </div>
+        <h3>バックエンド・DB</h3>
+        <p>PHP基礎、RDB設計、SQL実践、REST API設計、ヘッドレスCMS連携を習得</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(139,92,246,0.12);color:#A78BFA">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <h3>CMS・EC構築</h3>
+        <p>WordPress（テーマ・プラグイン・PHP改修）とShopifyでのストア構築を実践</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(236,72,153,0.12);color:#F9A8D4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg>
+        </div>
+        <h3>デザイン・UI/UX</h3>
+        <p>Figma、Webデザイン原則、UI/UX設計、WCAGアクセシビリティを習得</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(245,158,11,0.12);color:#FCD34D">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <h3>SEO全般</h3>
+        <p>テクニカルSEO、コンテンツSEO、ローカルSEO、国際SEO、EC特化SEOを体系的に学習</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(6,182,212,0.12);color:#67E8F9">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4c0 2 1 3 2.5 4.5L12 12l1.5-1.5C15 9 16 8 16 6a4 4 0 0 0-4-4z"/><path d="M12 12v10"/><path d="M4 20h16"/></svg>
+        </div>
+        <h3>AIO（AI検索最適化）</h3>
+        <p>AI検索最適化（LLMO/GEO/AEO）、llms.txt実装、AI可視性計測と統合戦略を実践</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(249,115,22,0.12);color:#FDBA74">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        </div>
+        <h3>データ分析</h3>
+        <p>GA4/GSC/BigQuery/Looker Studio/Ahrefs/SEMrushで高度なデータ分析を実行</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(239,68,68,0.12);color:#FCA5A5">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>CRO・マーケティング</h3>
+        <p>CRO基礎、LPO、デジタルマーケティング全体構造、SNS×SEO連携を理解</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(34,197,94,0.12);color:#86EFAC">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+        </div>
+        <h3>コンサルタント実務</h3>
+        <p>SEO監査、改善提案書、月次レポート、KPI設計、プレゼンテーションを実践</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(99,102,241,0.12);color:#A5B4FC">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+        </div>
+        <h3>開発ツール・インフラ</h3>
+        <p>Git/GitHub、ドメイン/DNS、Vercel、CDN、HTTPS/SSL、CI/CDを実践的に運用</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(168,85,247,0.12);color:#C4B5FD">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+        </div>
+        <h3>AI活用</h3>
+        <p>生成AIのSEO業務活用、AIコード生成、AIと人間の役割分担を理解</p>
+      </article>
+
+      <article class="skill-card">
+        <div class="skill-icon" style="background:rgba(20,184,166,0.12);color:#5EEAD4">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3>法務・コンプライアンス</h3>
+        <p>著作権、個人情報保護、特定商取引法、薬機法・景品表示法の基礎を習得</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== Target Audience ===== -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">誰が対象？</h2>
+    <div class="target-list">
+      <div class="target-item">
+        <div class="target-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>IT知識ゼロからWeb人材として成長したい新卒社員</p>
+      </div>
+      <div class="target-item">
+        <div class="target-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>既存のスキルを体系化し、実務経験を積みたいジュニアWebディベロッパー</p>
+      </div>
+      <div class="target-item">
+        <div class="target-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>Web制作とマーケティングを統合した思考ができる人材に育成したい企業研修</p>
+      </div>
+      <div class="target-item">
+        <div class="target-check"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <p>SEOとAI検索の両方に対応した最先端の知識を習得したい個人学習者</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="section" id="start">
+  <div class="container">
+    <div class="cta-section">
+      <h2>今すぐ学習を始めましょう</h2>
+      <p>全章無料で公開中。チェックリストで進捗を管理しながら、自分のペースで学習を進められます。</p>
+      <a href="/chapters/1" class="btn btn-primary">
+        第1章から始める
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:16px">
+          <div class="logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <span>SEO×AIO 実践カリキュラム</span>
+        </div>
+        <p>AI検索時代のデータドリブンWeb人材育成プログラム。設計・実装・SEO・AIO・分析を一気通貫で学ぶ実践型教材です。</p>
+      </div>
+      <div>
+        <h4>ナビゲーション</h4>
+        <ul>
+          <li><a href="/">トップ</a></li>
+          <li><a href="/chapters">章一覧</a></li>
+          <li><a href="/blog">コラム</a></li>
+          <li><a href="/privacy">プライバシーポリシー</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>フェーズ</h4>
+        <ul>
+          <li><a href="#">Phase 1: Web入門</a></li>
+          <li><a href="#">Phase 2: 初級</a></li>
+          <li><a href="#">Phase 3: 中級前半</a></li>
+          <li><a href="#">Phase 4: 中級後半</a></li>
+          <li><a href="#">Phase 5: 上級</a></li>
+          <li><a href="#">Phase 6: AI検索最適化</a></li>
+          <li><a href="#">Phase 7: データ分析深化</a></li>
+          <li><a href="#">Phase 8: 総合実務</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 SEO×AIO 実践カリキュラム. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

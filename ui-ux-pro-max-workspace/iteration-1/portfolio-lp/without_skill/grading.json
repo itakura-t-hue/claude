@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "portfolio-lp",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "single-html-file", "passed": true, "evidence": "Output is a single index.html file with embedded CSS"},
+    {"text": "has-hero-section", "passed": true, "evidence": "Hero section at lines 496-502 with h1 'Creative & Professional Design' and CTA button"},
+    {"text": "has-portfolio-cards", "passed": true, "evidence": "Three portfolio cards at lines 509-551 for EC site, corporate site, and mobile app"},
+    {"text": "has-contact-form", "passed": true, "evidence": "Contact form at lines 560-577 with name, email, and message fields"},
+    {"text": "responsive-design", "passed": true, "evidence": "Media queries at lines 398-449 and 451-482 provide responsive design for tablets and mobile"},
+    {"text": "uses-google-fonts", "passed": false, "evidence": "Uses system fonts (-apple-system, BlinkMacSystemFont, Segoe UI) instead of Google Fonts"},
+    {"text": "semantic-html", "passed": true, "evidence": "Uses semantic HTML: <header>, <nav>, <main>, <section>, <footer>"},
+    {"text": "no-emoji-icons", "passed": false, "evidence": "Uses emoji characters in card-image elements (🎨, 💼, 📱 at lines 512, 526, 540) as functional UI icons"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "eval_id": 3,
+  "eval_name": "healthcare-design-system",
+  "configuration": "without_skill",
+  "expectations": [
+    {"text": "markdown-format", "passed": true, "evidence": "Output is a .md file with proper markdown formatting, headers, and code blocks"},
+    {"text": "color-palette-defined", "passed": true, "evidence": "Defines hex codes and RGB values: Healthcare Blue #2563EB, Wellness Green #10B981, Care Red #EF4444, with detailed color table"},
+    {"text": "font-recommendations", "passed": true, "evidence": "Recommends Segoe UI / San Francisco for iOS, with Roboto/Noto Sans JP fallbacks and specific font size requirements"},
+    {"text": "icon-library-specified", "passed": false, "evidence": "Describes icons using emoji symbols (❤️, 📊, 💊, 📅) instead of recommending a specific icon library"},
+    {"text": "accessibility-focus", "passed": true, "evidence": "Addresses elderly user accessibility with large fonts (16pt+), WCAG AA contrast (4.5:1), large touch targets (44-48px)"},
+    {"text": "react-native-specific", "passed": true, "evidence": "Includes React Native specific implementation with colors.ts, typography.ts, Button component example, and SafeAreaView guidance"},
+    {"text": "contrast-ratios-mentioned", "passed": true, "evidence": "Mentions WCAG AA standards (4.5:1 minimum) and AAA level (7:1) with specific color combinations"}
+  ]
+}

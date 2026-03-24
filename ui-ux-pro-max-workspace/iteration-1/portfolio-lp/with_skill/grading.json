@@ -1,0 +1,15 @@
+{
+  "eval_id": 2,
+  "eval_name": "portfolio-lp",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "single-html-file", "passed": true, "evidence": "Output is a single index.html file with embedded CSS in <style> tag (lines 12-687)"},
+    {"text": "has-hero-section", "passed": true, "evidence": "Hero section at lines 704-723 contains h1 'クリエイティブでモダンなデザイン', subtitle, and CTA buttons"},
+    {"text": "has-portfolio-cards", "passed": true, "evidence": "Three portfolio cards at lines 735-789 with titles 'SaaS Webアプリケーション', 'スタートアップブランディング', 'High performance Website'"},
+    {"text": "has-contact-form", "passed": true, "evidence": "Contact form at lines 802-884 with fields for name, email, message (plus additional fields for company and service)"},
+    {"text": "responsive-design", "passed": true, "evidence": "Media queries at lines 576-630 provide responsive breakpoints for 768px and 480px"},
+    {"text": "uses-google-fonts", "passed": true, "evidence": "Lines 8-10 import Google Fonts (Manrope and Sora font families)"},
+    {"text": "semantic-html", "passed": true, "evidence": "Uses semantic HTML: <header>, <nav>, <main>, <section id='portfolio'>, <article>, <footer>"},
+    {"text": "no-emoji-icons", "passed": false, "evidence": "Uses emoji characters as functional icons in card-image elements (🎨, ✨, 🚀 at lines 737, 756, 775)"}
+  ]
+}

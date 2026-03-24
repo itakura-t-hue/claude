@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SEO×AIO 実践カリキュラム | CYBERPUNK EDITION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+/* ===== Cyberpunk Tokens ===== */
+:root{
+  --bg:#06060c;
+  --bg2:#0a0a14;
+  --card:rgba(10,10,20,0.85);
+  --text:#e0e0e8;
+  --text2:#7a7a8e;
+  --text3:#4a4a5e;
+  --cyan:#00f0ff;
+  --magenta:#ff2d7b;
+  --yellow:#f0ff00;
+  --green:#39ff14;
+  --purple:#bf5af2;
+  --orange:#ff8800;
+  --g-cyan:rgba(0,240,255,0.4);
+  --g-mag:rgba(255,45,123,0.4);
+  --g-yel:rgba(240,255,0,0.3);
+  --border:rgba(0,240,255,0.08);
+  --border2:rgba(0,240,255,0.18);
+  --t:200ms cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP','JetBrains Mono',monospace;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* ===== Scanlines Overlay ===== */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);
+}
+
+/* ===== Grid Background ===== */
+.grid-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,240,255,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,240,255,0.025) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 40%,black 30%,transparent 70%);
+}
+
+/* ===== Canvases ===== */
+#three-hero{position:absolute;inset:0;z-index:0;pointer-events:none}
+#matrix-rain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.08}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ===== HUD Overlay ===== */
+.hud{position:fixed;inset:0;z-index:100;pointer-events:none}
+.hud-corner{position:absolute;width:60px;height:60px}
+.hud-tl{top:16px;left:16px;border-top:1px solid var(--cyan);border-left:1px solid var(--cyan);opacity:0.2}
+.hud-tr{top:16px;right:16px;border-top:1px solid var(--magenta);border-right:1px solid var(--magenta);opacity:0.2}
+.hud-bl{bottom:16px;left:16px;border-bottom:1px solid var(--cyan);border-left:1px solid var(--cyan);opacity:0.15}
+.hud-br{bottom:16px;right:16px;border-bottom:1px solid var(--magenta);border-right:1px solid var(--magenta);opacity:0.15}
+.hud-scanline{
+  position:fixed;left:0;right:0;height:1px;z-index:100;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:0;animation:hudScan 10s ease-in-out infinite;
+}
+@keyframes hudScan{
+  0%,100%{top:-2px;opacity:0}
+  5%{opacity:0.15}
+  50%{opacity:0.08}
+  95%{opacity:0.15}
+  99%{top:100vh;opacity:0}
+}
+.hud-data{
+  position:fixed;top:90px;right:24px;z-index:100;pointer-events:none;
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--cyan);opacity:0.2;
+  text-align:right;line-height:1.8;
+}
+.hud-data span{display:block}
+.hud-data .hud-val{color:var(--magenta)}
+.hud-left-data{
+  position:fixed;bottom:100px;left:24px;z-index:100;pointer-events:none;
+  font-family:'JetBrains Mono',monospace;font-size:0.55rem;color:var(--cyan);opacity:0.15;
+  writing-mode:vertical-lr;letter-spacing:0.2em;
+}
+
+/* ===== Layout ===== */
+.container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+.section{padding:120px 0}
+.sec-label{
+  font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.2em;
+  color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:12px;
+}
+.sec-label::before{content:'//';color:var(--magenta)}
+.sec-label::after{content:'';flex:1;max-width:120px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+.sec-title{
+  font-family:'Orbitron','Noto Sans JP',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;
+  letter-spacing:-0.02em;line-height:1.2;margin-bottom:16px;
+}
+.sec-sub{color:var(--text2);max-width:600px;font-size:0.95rem;line-height:1.8;margin-bottom:64px}
+.center{text-align:center}.center .sec-sub{margin-left:auto;margin-right:auto}
+
+/* ===== Glitch Text ===== */
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;
+}
+.glitch::before{
+  color:var(--cyan);z-index:-1;
+  animation:glitch-1 3s infinite linear alternate-reverse;
+  clip-path:inset(0 0 80% 0);
+}
+.glitch::after{
+  color:var(--magenta);z-index:-2;
+  animation:glitch-2 2.5s infinite linear alternate-reverse;
+  clip-path:inset(80% 0 0 0);
+}
+@keyframes glitch-1{
+  0%,100%{transform:translate(0)}
+  20%{transform:translate(-3px,2px)}
+  40%{transform:translate(3px,-1px)}
+  60%{transform:translate(-2px,1px)}
+  80%{transform:translate(2px,-2px)}
+}
+@keyframes glitch-2{
+  0%,100%{transform:translate(0)}
+  25%{transform:translate(2px,1px)}
+  50%{transform:translate(-3px,-1px)}
+  75%{transform:translate(1px,2px)}
+}
+
+/* ===== Neon Text ===== */
+.neon-cyan{color:var(--cyan);text-shadow:0 0 8px var(--g-cyan),0 0 20px var(--g-cyan)}
+.neon-mag{color:var(--magenta);text-shadow:0 0 8px var(--g-mag),0 0 20px var(--g-mag)}
+.neon-yel{color:var(--yellow);text-shadow:0 0 8px var(--g-yel),0 0 16px var(--g-yel)}
+
+/* ===== Header ===== */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(6,6,12,0.75);backdrop-filter:blur(24px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Orbitron',monospace;font-weight:800;font-size:0.85rem;letter-spacing:0.05em}
+.logo-mark{
+  width:32px;height:32px;border:2px solid var(--cyan);
+  display:flex;align-items:center;justify-content:center;position:relative;
+  clip-path:polygon(15% 0%,100% 0%,100% 85%,85% 100%,0% 100%,0% 15%);
+}
+.logo-mark::after{content:'';position:absolute;inset:0;background:var(--cyan);opacity:0.08}
+.logo-mark svg{width:14px;height:14px;color:var(--cyan)}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a{
+  padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:500;
+  color:var(--text2);transition:all var(--t);letter-spacing:0.02em;position:relative;
+}
+.nav a::after{
+  content:'';position:absolute;bottom:4px;left:14px;right:14px;height:1px;
+  background:var(--cyan);transform:scaleX(0);transition:transform 0.3s;
+}
+.nav a:hover{color:var(--cyan)}
+.nav a:hover::after{transform:scaleX(1)}
+.nav-cta{
+  color:var(--bg)!important;background:var(--cyan)!important;font-weight:700!important;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  padding:8px 24px 8px 20px!important;
+  text-shadow:none!important;
+  box-shadow:0 0 16px var(--g-cyan);
+}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{box-shadow:0 0 28px var(--g-cyan)!important}
+.mobile-menu{display:none;background:none;border:none;color:var(--cyan);cursor:pointer;padding:8px}
+
+/* ===== Hero ===== */
+.hero{padding:200px 0 160px;text-align:center;position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-glow{
+  position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);
+  width:1200px;height:800px;pointer-events:none;
+  background:
+    radial-gradient(ellipse 500px 350px at 30% 40%,rgba(0,240,255,0.15),transparent),
+    radial-gradient(ellipse 400px 300px at 70% 50%,rgba(255,45,123,0.12),transparent),
+    radial-gradient(ellipse 300px 250px at 50% 60%,rgba(191,90,242,0.08),transparent);
+  filter:blur(60px);opacity:0.7;animation:heroGlow 8s ease-in-out infinite alternate;
+}
+@keyframes heroGlow{0%{opacity:0.5;transform:translate(-50%,-50%) scale(1) rotate(0deg)}100%{opacity:0.8;transform:translate(-50%,-50%) scale(1.15) rotate(2deg)}}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 18px 6px 14px;
+  border:1px solid var(--border2);
+  font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;
+  color:var(--cyan);margin-bottom:36px;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+  position:relative;z-index:2;animation:fadeUp .8s ease-out;
+  backdrop-filter:blur(8px);
+}
+.hero-badge::before{content:'';position:absolute;inset:0;background:rgba(0,240,255,0.04)}
+.hero-badge-dot{width:6px;height:6px;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+
+.hero h1{
+  font-family:'Orbitron','Noto Sans JP',sans-serif;
+  font-size:clamp(2.2rem,6.5vw,5rem);font-weight:900;
+  line-height:1.08;letter-spacing:-0.03em;
+  margin-bottom:28px;position:relative;z-index:2;
+}
+.hero-gradient{
+  background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--purple),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  background-size:300% auto;animation:gradShift 4s linear infinite;
+}
+@keyframes gradShift{0%{background-position:0%}100%{background-position:300%}}
+
+/* Typing cursor */
+.typing-cursor{
+  display:inline-block;width:3px;height:1em;background:var(--cyan);
+  margin-left:4px;vertical-align:text-bottom;
+  animation:cursorBlink 0.8s step-end infinite;
+  box-shadow:0 0 8px var(--cyan);
+}
+@keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
+.hero-typed{
+  font-family:'JetBrains Mono',monospace;font-size:clamp(0.85rem,1.5vw,1rem);
+  color:var(--cyan);margin-bottom:20px;position:relative;z-index:2;
+  min-height:1.8em;
+}
+.hero p{
+  font-size:clamp(0.95rem,1.8vw,1.1rem);color:var(--text2);
+  max-width:640px;margin:0 auto 44px;line-height:1.8;position:relative;z-index:2;
+}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== Floating 3D Objects (CSS) ===== */
+.float-obj{
+  position:absolute;pointer-events:none;z-index:1;opacity:0.5;
+  animation:floatY 6s ease-in-out infinite;
+}
+.float-obj:nth-child(2){animation-delay:-2s;animation-duration:7s}
+.float-obj:nth-child(3){animation-delay:-4s;animation-duration:8s}
+@keyframes floatY{0%,100%{transform:translateY(0) rotateX(0) rotateZ(0)}50%{transform:translateY(-20px) rotateX(180deg) rotateZ(90deg)}}
+
+.holo-diamond{
+  width:50px;height:50px;position:relative;
+  transform-style:preserve-3d;animation:spinDiamond 12s linear infinite;
+}
+.holo-diamond::before,.holo-diamond::after{
+  content:'';position:absolute;inset:10px;border:1.5px solid;
+}
+.holo-diamond::before{border-color:var(--cyan);transform:rotateX(45deg) rotateZ(45deg);box-shadow:0 0 8px var(--g-cyan)}
+.holo-diamond::after{border-color:var(--magenta);transform:rotateX(-45deg) rotateZ(-45deg);box-shadow:0 0 8px var(--g-mag)}
+@keyframes spinDiamond{from{transform:rotateY(0) rotateX(20deg)}to{transform:rotateY(360deg) rotateX(20deg)}}
+
+.holo-ring{
+  width:60px;height:60px;border-radius:50%;
+  border:1.5px solid var(--purple);position:relative;
+  box-shadow:0 0 10px rgba(191,90,242,0.2);
+  animation:spinRing 14s linear infinite;
+}
+.holo-ring::before{
+  content:'';position:absolute;inset:8px;border-radius:50%;
+  border:1px solid var(--cyan);animation:spinRing 10s linear infinite reverse;
+}
+@keyframes spinRing{from{transform:rotateY(0) rotateX(60deg)}to{transform:rotateY(360deg) rotateX(60deg)}}
+
+.holo-triangle{
+  width:0;height:0;
+  border-left:20px solid transparent;border-right:20px solid transparent;
+  border-bottom:35px solid rgba(0,240,255,0.2);
+  filter:drop-shadow(0 0 6px rgba(0,240,255,0.3));
+  animation:spinTri 18s linear infinite;
+}
+@keyframes spinTri{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+
+/* ===== Buttons ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 32px;font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:700;
+  border:none;cursor:pointer;transition:all 0.3s;position:relative;letter-spacing:0.03em;
+}
+.btn svg{width:16px;height:16px}
+.btn-cyber{
+  background:var(--cyan);color:var(--bg);
+  clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);
+  box-shadow:0 0 24px var(--g-cyan),0 0 60px rgba(0,240,255,0.15);
+}
+.btn-cyber:hover{box-shadow:0 0 40px var(--g-cyan),0 0 80px rgba(0,240,255,0.25);transform:translateY(-3px)}
+.btn-ghost{
+  background:transparent;color:var(--cyan);
+  border:1px solid var(--border2);
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+}
+.btn-ghost:hover{border-color:var(--cyan);background:rgba(0,240,255,0.05);box-shadow:0 0 20px rgba(0,240,255,0.1);transform:translateY(-3px)}
+
+/* ===== 3D Tilt Cards ===== */
+.tilt-card{
+  transform-style:preserve-3d;transition:transform 0.15s ease-out;
+  will-change:transform;
+}
+.tilt-card-inner{
+  transform:translateZ(0);
+  transition:transform 0.15s ease-out;
+}
+
+/* ===== Feature Cards ===== */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cyber-card{
+  background:var(--card);border:1px solid var(--border);
+  padding:32px;position:relative;overflow:hidden;transition:all 0.4s;
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+  backdrop-filter:blur(8px);
+}
+.cyber-card::before{
+  content:'';position:absolute;top:0;right:0;width:20px;height:20px;
+  border-left:1px solid var(--border2);border-bottom:1px solid var(--border2);
+  transform:translate(50%,-50%) rotate(45deg);
+}
+.cyber-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+/* Holographic shimmer on hover */
+.cyber-card .holo-shimmer{
+  position:absolute;inset:0;opacity:0;transition:opacity 0.4s;
+  background:linear-gradient(105deg,transparent 20%,rgba(0,240,255,0.03) 30%,rgba(255,45,123,0.03) 50%,rgba(191,90,242,0.03) 70%,transparent 80%);
+  background-size:200% 200%;pointer-events:none;
+}
+.cyber-card:hover .holo-shimmer{
+  opacity:1;
+  animation:shimmer 2s linear infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.cyber-card:hover{
+  border-color:var(--border2);
+  box-shadow:0 0 40px rgba(0,240,255,0.1),0 20px 60px rgba(0,0,0,0.5),0 0 1px var(--cyan);
+}
+.cyber-card:hover::after{opacity:1}
+.cc-icon{
+  width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;position:relative;
+}
+.cc-icon svg{width:28px;height:28px}
+.cc-icon::after{
+  content:'';position:absolute;inset:-4px;opacity:0.15;filter:blur(12px);border-radius:50%;
+}
+.ic1{color:var(--cyan)}.ic1::after{background:var(--cyan)}
+.ic2{color:var(--magenta)}.ic2::after{background:var(--magenta)}
+.ic3{color:var(--yellow)}.ic3::after{background:var(--yellow)}
+.cyber-card h3{font-family:'Orbitron',monospace;font-size:0.95rem;font-weight:700;margin-bottom:10px;letter-spacing:0.02em}
+.cyber-card p{color:var(--text2);font-size:0.85rem;line-height:1.7}
+
+/* ===== Scroll Reveal ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.7s cubic-bezier(0.4,0,0.2,1)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}
+
+/* ===== Roadmap ===== */
+.roadmap{position:relative}
+.rm-line{
+  position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%);
+  background:repeating-linear-gradient(180deg,var(--cyan) 0,var(--cyan) 8px,transparent 8px,transparent 16px);
+  opacity:0.15;
+}
+/* Animated pulse along the line */
+.rm-line::after{
+  content:'';position:absolute;left:-3px;width:7px;height:40px;border-radius:4px;
+  background:linear-gradient(180deg,transparent,var(--cyan),transparent);
+  animation:linePulse 4s linear infinite;
+}
+@keyframes linePulse{0%{top:-40px;opacity:0}10%{opacity:0.6}90%{opacity:0.6}100%{top:100%;opacity:0}}
+
+.rm-item{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:36px}
+.rm-item:nth-child(even) .rm-card{order:2}.rm-item:nth-child(even) .rm-space{order:1}
+.rm-dot{
+  position:absolute;left:50%;top:28px;width:14px;height:14px;
+  transform:translateX(-50%) rotate(45deg);z-index:2;border:2px solid var(--bg);
+  box-shadow:0 0 12px currentColor;
+}
+.rm-card{
+  background:var(--card);border:1px solid var(--border);padding:28px;
+  transition:all 0.4s;position:relative;overflow:hidden;backdrop-filter:blur(8px);
+  clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));
+}
+.rm-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;transition:height 0.5s}
+.rm-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 30px rgba(0,240,255,0.06)}
+.rm-card:hover::before{height:100%}
+.rm-ph{
+  font-family:'Orbitron',monospace;display:inline-flex;padding:3px 12px;
+  font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+}
+.rm-card h3{font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;margin-bottom:4px;letter-spacing:0.01em}
+.rm-ch{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text3);margin-bottom:10px}
+.rm-card p{color:var(--text2);font-size:0.82rem;line-height:1.7}
+/* Phase colors */
+.p1 .rm-dot{background:var(--cyan)}.p1 .rm-ph{background:rgba(0,240,255,0.1);color:var(--cyan)}.p1 .rm-card::before{background:var(--cyan)}
+.p2 .rm-dot{background:var(--green)}.p2 .rm-ph{background:rgba(57,255,20,0.08);color:var(--green)}.p2 .rm-card::before{background:var(--green)}
+.p3 .rm-dot{background:var(--purple)}.p3 .rm-ph{background:rgba(191,90,242,0.1);color:var(--purple)}.p3 .rm-card::before{background:var(--purple)}
+.p4 .rm-dot{background:var(--magenta)}.p4 .rm-ph{background:rgba(255,45,123,0.1);color:var(--magenta)}.p4 .rm-card::before{background:var(--magenta)}
+.p5 .rm-dot{background:var(--yellow)}.p5 .rm-ph{background:rgba(240,255,0,0.08);color:var(--yellow)}.p5 .rm-card::before{background:var(--yellow)}
+.p6 .rm-dot{background:#00ff88}.p6 .rm-ph{background:rgba(0,255,136,0.08);color:#00ff88}.p6 .rm-card::before{background:#00ff88}
+.p7 .rm-dot{background:var(--orange)}.p7 .rm-ph{background:rgba(255,136,0,0.08);color:var(--orange)}.p7 .rm-card::before{background:var(--orange)}
+.p8 .rm-dot{background:#ff44cc}.p8 .rm-ph{background:rgba(255,68,204,0.08);color:#ff44cc}.p8 .rm-card::before{background:#ff44cc}
+
+/* ===== Table ===== */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--border);background:var(--card);backdrop-filter:blur(8px)}
+table{width:100%;border-collapse:collapse;font-size:0.85rem;font-family:'JetBrains Mono','Noto Sans JP',monospace}
+thead{background:rgba(0,240,255,0.03)}
+th{padding:14px 20px;text-align:left;font-family:'Orbitron',monospace;font-weight:600;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--cyan);border-bottom:1px solid var(--border)}
+td{padding:14px 20px;border-bottom:1px solid var(--border);color:var(--text2)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,240,255,0.02)}
+.badge{display:inline-flex;padding:2px 10px;font-family:'Orbitron',monospace;font-size:0.6rem;font-weight:700;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+
+/* ===== Skills ===== */
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sk{
+  background:var(--card);border:1px solid var(--border);padding:20px;
+  transition:all 0.4s;position:relative;overflow:hidden;backdrop-filter:blur(8px);
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+}
+.sk::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity 0.3s;
+}
+.sk:hover{border-color:var(--border2);transform:translateY(-4px) scale(1.02);box-shadow:0 8px 24px rgba(0,0,0,0.4),0 0 20px rgba(0,240,255,0.06)}
+.sk:hover::before{opacity:1}
+.sk-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.sk-icon svg{width:20px;height:20px}
+.sk h3{font-family:'Orbitron',monospace;font-size:0.72rem;font-weight:700;margin-bottom:6px;letter-spacing:0.02em}
+.sk p{color:var(--text2);font-size:0.72rem;line-height:1.6}
+
+/* ===== Column Banner ===== */
+.col-banner{
+  background:var(--card);border:1px solid var(--border);padding:40px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+  position:relative;overflow:hidden;backdrop-filter:blur(8px);
+  clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px));
+}
+.col-banner::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--magenta),var(--cyan),var(--magenta));opacity:0.5;
+}
+.col-banner h3{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.col-banner p{color:var(--text2);font-size:0.85rem;max-width:540px}
+
+/* ===== Target ===== */
+.tgt-list{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.tgt{
+  display:flex;align-items:flex-start;gap:16px;padding:18px 24px;
+  background:var(--card);border:1px solid var(--border);transition:all 0.3s;backdrop-filter:blur(8px);
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.tgt:hover{border-color:var(--border2);transform:translateX(8px);box-shadow:0 0 20px rgba(0,240,255,0.06)}
+.tgt-chk{
+  flex-shrink:0;width:22px;height:22px;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--cyan);color:var(--cyan);
+  clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
+}
+.tgt-chk svg{width:12px;height:12px}
+.tgt p{color:var(--text2);font-size:0.9rem}
+
+/* ===== CTA ===== */
+.cta-box{
+  text-align:center;padding:80px 32px;position:relative;overflow:hidden;
+  border:1px solid var(--border);backdrop-filter:blur(8px);
+  clip-path:polygon(0 0,calc(100% - 32px) 0,100% 32px,100% 100%,32px 100%,0 calc(100% - 32px));
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,240,255,0.06),transparent 50%,rgba(255,45,123,0.04));
+}
+.cta-box::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),transparent);opacity:0.6;
+}
+.cta-box .cta-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:400px;pointer-events:none;
+  background:radial-gradient(ellipse,rgba(0,240,255,0.06),transparent 70%);
+  filter:blur(40px);animation:ctaPulse 3s ease-in-out infinite alternate;
+}
+@keyframes ctaPulse{0%{opacity:0.5;transform:translate(-50%,-50%) scale(0.9)}100%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+.cta-box h2{font-family:'Orbitron',monospace;font-size:clamp(1.3rem,3vw,2rem);font-weight:900;margin-bottom:16px;position:relative;z-index:1}
+.cta-box p{color:var(--text2);margin-bottom:32px;position:relative;z-index:1}
+.cta-box .btn{position:relative;z-index:1}
+
+/* ===== Footer ===== */
+.footer{border-top:1px solid var(--border);padding:64px 0 32px;color:var(--text3)}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand p{font-size:0.82rem;line-height:1.7;max-width:300px}
+.footer h4{font-family:'Orbitron',monospace;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--cyan);margin-bottom:16px}
+.footer ul{list-style:none}.footer li{margin-bottom:8px}
+.footer li a{font-size:0.82rem;color:var(--text3);transition:color var(--t)}
+.footer li a:hover{color:var(--cyan)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--border);font-size:0.72rem;text-align:center;font-family:'JetBrains Mono',monospace}
+
+/* ===== Section divider glow ===== */
+.section-divider{
+  width:100%;height:1px;position:relative;margin:0 auto;max-width:800px;
+}
+.section-divider::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--magenta),transparent);
+  opacity:0.3;
+}
+.section-divider::after{
+  content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;
+  transform:translateX(-50%) rotate(45deg);background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
+}
+
+/* ===== Responsive ===== */
+@media(max-width:1024px){.skills-grid{grid-template-columns:repeat(3,1fr)}.hud-data{display:none}}
+@media(max-width:768px){
+  .nav{display:none}.mobile-menu{display:flex}
+  .features-grid,.skills-grid{grid-template-columns:repeat(2,1fr)}
+  .rm-line{left:16px}.rm-item{grid-template-columns:1fr;gap:0}
+  .rm-item:nth-child(even) .rm-card{order:unset}.rm-space{display:none}
+  .rm-dot{left:16px}.rm-card{margin-left:44px}
+  .fgrid{grid-template-columns:1fr}
+  .col-banner{flex-direction:column;text-align:center}
+  .hero{padding:160px 0 120px;min-height:auto}
+  .hud-corner{width:40px;height:40px}
+  .float-obj{display:none}
+}
+@media(max-width:480px){
+  .skills-grid,.features-grid{grid-template-columns:1fr}
+  .hero-actions{flex-direction:column;align-items:center}
+  .btn{width:100%;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+  html{scroll-behavior:auto}.reveal{opacity:1;transform:none}
+  #particles,#matrix-rain,#three-hero,.grid-bg,body::after,.hud,.float-obj,.hud-scanline{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div class="grid-bg" aria-hidden="true"></div>
+<canvas id="matrix-rain" aria-hidden="true"></canvas>
+<canvas id="particles" aria-hidden="true"></canvas>
+
+<!-- HUD Overlay (subtle) -->
+<div class="hud" aria-hidden="true">
+  <div class="hud-corner hud-tl"></div>
+  <div class="hud-corner hud-tr"></div>
+  <div class="hud-corner hud-bl"></div>
+  <div class="hud-corner hud-br"></div>
+  <div class="hud-scanline"></div>
+  <div class="hud-data">
+    <span>SYS://SCALE_BASICS</span>
+    <span>STATUS: <span class="hud-val">ONLINE</span></span>
+    <span>SCROLL: <span class="hud-val" id="hud-scroll">0%</span></span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <span class="neon-cyan">SEO×AIO</span>&nbsp;実践カリキュラム
+    </a>
+    <nav class="nav" role="navigation" aria-label="メインナビゲーション">
+      <a href="#curriculum">CURRICULUM</a>
+      <a href="#skills">SKILLS</a>
+      <a href="#column">COLUMN</a>
+      <a href="#start" class="nav-cta">START_</a>
+    </nav>
+    <button class="mobile-menu" aria-label="メニュー"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <canvas id="three-hero" aria-hidden="true"></canvas>
+
+  <!-- CSS 3D Floating Objects -->
+  <div class="float-obj" style="top:15%;left:8%;perspective:600px" aria-hidden="true">
+    <div class="holo-diamond"></div>
+  </div>
+  <div class="float-obj" style="top:25%;right:10%;perspective:600px" aria-hidden="true">
+    <div class="holo-ring"></div>
+  </div>
+  <div class="float-obj" style="bottom:20%;left:12%;perspective:600px" aria-hidden="true">
+    <div class="holo-triangle"></div>
+  </div>
+
+  <div class="container" style="position:relative;z-index:2">
+    <div class="hero-badge"><span class="hero-badge-dot"></span>8_PHASE // 29_CHAPTERS // PROJECT_BASED</div>
+    <div class="hero-typed" id="hero-typed"></div>
+    <h1>
+      <span class="glitch" data-text="ゼロからプロへ。">ゼロからプロへ。</span><br/>
+      <span class="hero-gradient">設計・実装・SEO・AIO・分析</span><br/>
+      を一気通貫で習得
+    </h1>
+    <p>IT知識ゼロから「設計・実装・公開・SEO・AIO・データ分析・提案」を一気通貫でこなせる超万能型Web人材へ。フェーズごとに異なるWebサイトを0から構築・公開するプロジェクトベース学習。</p>
+    <div class="hero-actions">
+      <a href="#start" class="btn btn-cyber">INITIALIZE_LEARNING<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#curriculum" class="btn btn-ghost">VIEW_CURRICULUM</a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section class="section">
+  <div class="container center">
+    <div class="sec-label">DIFFERENTIATION</div>
+    <h2 class="sec-title">何が<span class="neon-cyan">違う</span>のか？</h2>
+    <p class="sec-sub">従来のWeb講座は技術要素の積み上げ。本カリキュラムはフェーズごとに異なるWebサイトを0から構築・公開するプロジェクトベース学習。データドリブンな分析と2026年AI検索対応が差別化ポイント。</p>
+    <div class="features-grid">
+      <article class="cyber-card tilt-card reveal">
+        <div class="holo-shimmer"></div>
+        <div class="cc-icon ic1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3 class="neon-cyan">PROJECT_BASED</h3>
+        <p>8つの異なるサイトを0から構築・公開。座学では得られない実務経験を積み重ねる。</p>
+      </article>
+      <article class="cyber-card tilt-card reveal rd1">
+        <div class="holo-shimmer"></div>
+        <div class="cc-icon ic2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+        <h3 class="neon-mag">DATA_DRIVEN</h3>
+        <p>GA4・BigQuery・Looker Studioで「根拠のあるSEO施策立案」を実現。</p>
+      </article>
+      <article class="cyber-card tilt-card reveal rd2">
+        <div class="holo-shimmer"></div>
+        <div class="cc-icon ic3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 0-4 4c0 2 1 3 2.5 4.5L12 12l1.5-1.5C15 9 16 8 16 6a4 4 0 0 0-4-4z"/><path d="M12 12v10"/><path d="M4 20h16"/></svg></div>
+        <h3 class="neon-yel">AI_SEARCH_2026</h3>
+        <p>従来SEOとAIO/LLMO/GEOの両立を学び、AI時代に対応した人材に。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section class="section" id="curriculum">
+  <div class="container center">
+    <div class="sec-label">ROADMAP</div>
+    <h2 class="sec-title">学習<span class="neon-mag">ロードマップ</span></h2>
+    <p class="sec-sub">8つのフェーズで段階的にスキルを習得。各フェーズでは異なるWebサイトを0から構築・公開し、実践力を積み上げる。</p>
+  </div>
+  <div class="container">
+    <div class="roadmap">
+      <div class="rm-line" aria-hidden="true"></div>
+      <div class="rm-item p1 reveal"><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_01</div><h3>Web入門</h3><div class="rm-ch">CH.01-04 // ポートフォリオサイト</div><p>セマンティックHTMLからTailwind CSSまで、Web制作の基本をマスター。Figmaでデザイン、Git/GitHubでバージョン管理し、GitHub Pagesで公開。</p></div><div class="rm-space"></div></div>
+      <div class="rm-item p2 reveal"><div class="rm-space"></div><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_02</div><h3>初級</h3><div class="rm-ch">CH.05-09 // コーポレートサイト</div><p>JavaScript/TypeScriptで動的ページを実装。サイト構造設計・SEOの基本を学び、Vercel公開。GA4導入でデータ計測の基礎を確立。</p></div></div>
+      <div class="rm-item p3 reveal"><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_03</div><h3>中級前半</h3><div class="rm-ch">CH.10-13 // ブログ/メディアサイト</div><p>WordPress×PHPでCMS構築。キーワードリサーチ・E-E-A-T対策・コンテンツSEOから被リンク戦略まで習得。</p></div><div class="rm-space"></div></div>
+      <div class="rm-item p4 reveal"><div class="rm-space"></div><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_04</div><h3>中級後半</h3><div class="rm-ch">CH.14-17 // SaaS型Webアプリ</div><p>React/Next.js+TypeScriptで動的Webアプリ構築。API連携・SSR/SSG/ISR・JavaScript SEOの課題を解決。</p></div></div>
+      <div class="rm-item p5 reveal"><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_05</div><h3>上級</h3><div class="rm-ch">CH.18-20 // 大規模EC/ポータル</div><p>DB設計・SQL・Shopify。大規模サイト特有のSEO課題（ファセットナビ、クロールバジェット、動的URL管理）を解決。</p></div><div class="rm-space"></div></div>
+      <div class="rm-item p6 reveal"><div class="rm-space"></div><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_06</div><h3>AI検索最適化</h3><div class="rm-ch">CH.21-23 // 既存サイト横断AIO</div><p>LLMO/GEO/AEOの実装。llms.txt設計・構造化データのAIO再設計。AI可視性を計測し統合戦略を構築。</p></div></div>
+      <div class="rm-item p7 reveal"><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_07</div><h3>データ分析深化</h3><div class="rm-ch">CH.24-26 // 多言語サイト+分析基盤</div><p>GA4×BigQuery連携でSQL分析。Looker Studioダッシュボード構築。Next.js i18nで多言語サイト公開。</p></div><div class="rm-space"></div></div>
+      <div class="rm-item p8 reveal"><div class="rm-space"></div><div class="rm-card tilt-card"><span class="rm-dot"></span><div class="rm-ph">Phase_08</div><h3>総合実務</h3><div class="rm-ch">CH.27-29 // SEO監査・提案</div><p>テクニカル監査・コンテンツ監査・競合分析を一気通貫。改善提案書・月次レポート・プレゼンスキルを習得。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section class="section">
+  <div class="container center">
+    <div class="sec-label">OUTPUT</div>
+    <h2 class="sec-title">作れるサイト<span class="neon-yel">一覧</span></h2>
+    <p class="sec-sub">カリキュラムを通じて8つの異なるWebサイト/プロジェクトを実際に構築・公開。</p>
+    <div class="tbl-wrap reveal">
+      <table role="table"><thead><tr><th>PHASE</th><th>TYPE</th><th>STACK</th><th>DEPLOY</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge" style="background:rgba(0,240,255,0.08);color:var(--cyan)">01</span></td><td>ポートフォリオ</td><td>HTML/CSS/Tailwind</td><td>GitHub Pages</td></tr>
+        <tr><td><span class="badge" style="background:rgba(57,255,20,0.06);color:var(--green)">02</span></td><td>コーポレート</td><td>JS/TS/SEO</td><td>Vercel</td></tr>
+        <tr><td><span class="badge" style="background:rgba(191,90,242,0.08);color:var(--purple)">03</span></td><td>ブログ/メディア</td><td>WordPress/PHP</td><td>レンタルサーバー</td></tr>
+        <tr><td><span class="badge" style="background:rgba(255,45,123,0.08);color:var(--magenta)">04</span></td><td>SaaS Webアプリ</td><td>React/Next.js</td><td>Vercel</td></tr>
+        <tr><td><span class="badge" style="background:rgba(240,255,0,0.06);color:var(--yellow)">05</span></td><td>大規模EC/ポータル</td><td>Shopify/SQL</td><td>Shopify</td></tr>
+        <tr><td><span class="badge" style="background:rgba(0,255,136,0.06);color:#00ff88">06</span></td><td>横断AIO実装</td><td>AIO/llms.txt</td><td>各サイト追加</td></tr>
+        <tr><td><span class="badge" style="background:rgba(255,136,0,0.06);color:var(--orange)">07</span></td><td>多言語サイト</td><td>Next.js i18n</td><td>Vercel</td></tr>
+        <tr><td><span class="badge" style="background:rgba(255,68,204,0.06);color:#ff44cc">08</span></td><td>SEO監査・提案</td><td>分析/レポート</td><td>プレゼン資料</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section class="section" id="column">
+  <div class="container">
+    <div class="col-banner tilt-card reveal">
+      <div><h3>最新コラム</h3><p>SEO・AIOの最新情報や実践ノウハウをコラムで発信中。トレンド、ツールレビュー、テクニカルTipsなど。</p></div>
+      <a href="/blog" class="btn btn-ghost">READ_MORE<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="container center">
+    <div class="sec-label">SKILL_TREE</div>
+    <h2 class="sec-title">身につく<span class="neon-cyan">スキル</span></h2>
+    <p class="sec-sub">12カテゴリのスキルを体系的に習得。フロントエンドからコンサルタント実務まで即戦力。</p>
+    <div class="skills-grid">
+      <article class="sk tilt-card reveal"><div class="sk-icon ic1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>FRONTEND</h3><p>HTML/CSS/Tailwind、JS/TS、React/Next.js</p></article>
+      <article class="sk tilt-card reveal rd1"><div class="sk-icon ic2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div><h3>BACKEND_DB</h3><p>PHP、RDB設計、SQL、REST API</p></article>
+      <article class="sk tilt-card reveal rd2"><div class="sk-icon ic3"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><h3>CMS_EC</h3><p>WordPress改修、Shopifyストア構築</p></article>
+      <article class="sk tilt-card reveal rd3"><div class="sk-icon" style="color:var(--magenta)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg></div><h3>DESIGN_UX</h3><p>Figma、UI/UX、アクセシビリティ</p></article>
+      <article class="sk tilt-card reveal"><div class="sk-icon" style="color:var(--yellow)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><h3>SEO_ALL</h3><p>テクニカル・コンテンツ・ローカル・国際SEO</p></article>
+      <article class="sk tilt-card reveal rd1"><div class="sk-icon" style="color:#00ff88"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 0-4 4c0 2 1 3 2.5 4.5L12 12l1.5-1.5C15 9 16 8 16 6a4 4 0 0 0-4-4z"/><path d="M12 12v10"/><path d="M4 20h16"/></svg></div><h3>AIO_OPTIMIZE</h3><p>LLMO/GEO/AEO、llms.txt実装</p></article>
+      <article class="sk tilt-card reveal rd2"><div class="sk-icon" style="color:var(--orange)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div><h3>DATA_ANALYSIS</h3><p>GA4/BigQuery/Looker Studio/Ahrefs</p></article>
+      <article class="sk tilt-card reveal rd3"><div class="sk-icon" style="color:var(--magenta)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>CRO_MKTG</h3><p>CRO基礎、LPO、SNS×SEO連携</p></article>
+      <article class="sk tilt-card reveal"><div class="sk-icon" style="color:var(--green)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></div><h3>CONSULTING</h3><p>SEO監査、提案書、KPI設計</p></article>
+      <article class="sk tilt-card reveal rd1"><div class="sk-icon" style="color:var(--purple)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div><h3>DEVOPS_INFRA</h3><p>Git/GitHub、DNS、Vercel、CI/CD</p></article>
+      <article class="sk tilt-card reveal rd2"><div class="sk-icon" style="color:var(--cyan)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div><h3>AI_TOOLS</h3><p>生成AI業務活用、AIコード生成</p></article>
+      <article class="sk tilt-card reveal rd3"><div class="sk-icon" style="color:var(--yellow)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg></div><h3>LEGAL_COMPLY</h3><p>著作権、個人情報保護、特商法</p></article>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section class="section">
+  <div class="container center">
+    <div class="sec-label">TARGET</div>
+    <h2 class="sec-title">誰が<span class="neon-mag">対象</span>？</h2>
+    <div class="tgt-list">
+      <div class="tgt reveal"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>IT知識ゼロからWeb人材として成長したい新卒社員</p></div>
+      <div class="tgt reveal rd1"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>既存のスキルを体系化し、実務経験を積みたいジュニアWebディベロッパー</p></div>
+      <div class="tgt reveal rd2"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>Web制作とマーケティングを統合した思考ができる人材に育成したい企業研修</p></div>
+      <div class="tgt reveal rd3"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>SEOとAI検索の両方に対応した最先端の知識を習得したい個人学習者</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="start">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-glow" aria-hidden="true"></div>
+      <h2>今すぐ学習を<span class="neon-cyan">始めましょう</span></h2>
+      <p>全章無料で公開中。チェックリストで進捗を管理しながら、自分のペースで。</p>
+      <a href="/chapters/1" class="btn btn-cyber">EXECUTE: CH.01<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="fgrid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:16px"><div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="neon-cyan">SEO×AIO</span>&nbsp;実践カリキュラム</div>
+        <p>AI検索時代のデータドリブンWeb人材育成プログラム。設計・実装・SEO・AIO・分析を一気通貫で学ぶ実践型教材。</p>
+      </div>
+      <div><h4>NAV</h4><ul><li><a href="/">トップ</a></li><li><a href="/chapters">章一覧</a></li><li><a href="/blog">コラム</a></li><li><a href="/privacy">プライバシーポリシー</a></li></ul></div>
+      <div><h4>PHASES</h4><ul><li><a href="#">01: Web入門</a></li><li><a href="#">02: 初級</a></li><li><a href="#">03: 中級前半</a></li><li><a href="#">04: 中級後半</a></li><li><a href="#">05: 上級</a></li><li><a href="#">06: AI検索最適化</a></li><li><a href="#">07: データ分析深化</a></li><li><a href="#">08: 総合実務</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 SEO×AIO 実践カリキュラム // ALL_RIGHTS_RESERVED</div>
+  </div>
+</footer>
+
+<script>
+/* ===== Three.js Hero Scene ===== */
+(function(){
+  const canvas = document.getElementById('three-hero');
+  const hero = document.querySelector('.hero');
+  if(!canvas || !hero) return;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, hero.offsetWidth / hero.offsetHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(hero.offsetWidth, hero.offsetHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  // Main icosahedron wireframe
+  const icoGeo = new THREE.IcosahedronGeometry(1.8, 1);
+  const icoMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.25 });
+  const ico = new THREE.Mesh(icoGeo, icoMat);
+  scene.add(ico);
+
+  // Inner icosahedron
+  const icoGeo2 = new THREE.IcosahedronGeometry(1.2, 0);
+  const icoMat2 = new THREE.MeshBasicMaterial({ color: 0xff2d7b, wireframe: true, transparent: true, opacity: 0.15 });
+  const ico2 = new THREE.Mesh(icoGeo2, icoMat2);
+  scene.add(ico2);
+
+  // Octahedron
+  const octGeo = new THREE.OctahedronGeometry(0.6, 0);
+  const octMat = new THREE.MeshBasicMaterial({ color: 0xbf5af2, wireframe: true, transparent: true, opacity: 0.3 });
+  const oct = new THREE.Mesh(octGeo, octMat);
+  scene.add(oct);
+
+  // Torus ring
+  const torusGeo = new THREE.TorusGeometry(2.5, 0.02, 8, 100);
+  const torusMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.12 });
+  const torus = new THREE.Mesh(torusGeo, torusMat);
+  torus.rotation.x = Math.PI / 3;
+  scene.add(torus);
+
+  // Second torus
+  const torusGeo2 = new THREE.TorusGeometry(2.8, 0.015, 8, 100);
+  const torusMat2 = new THREE.MeshBasicMaterial({ color: 0xff2d7b, transparent: true, opacity: 0.08 });
+  const torus2 = new THREE.Mesh(torusGeo2, torusMat2);
+  torus2.rotation.x = -Math.PI / 4;
+  torus2.rotation.z = Math.PI / 6;
+  scene.add(torus2);
+
+  // (Small floating shapes removed for cleaner look)
+
+  // Mouse tracking
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  let time = 0;
+  function animate(){
+    requestAnimationFrame(animate);
+    time += 0.01;
+
+    // Main shapes rotation with mouse influence
+    ico.rotation.x += 0.003;
+    ico.rotation.y += 0.005;
+    ico.rotation.x += mouseY * 0.001;
+    ico.rotation.y += mouseX * 0.001;
+
+    ico2.rotation.x -= 0.004;
+    ico2.rotation.y -= 0.006;
+
+    oct.rotation.x += 0.008;
+    oct.rotation.y += 0.01;
+    oct.rotation.z += 0.005;
+
+    torus.rotation.z += 0.002;
+    torus2.rotation.z -= 0.003;
+
+    // Camera slight movement based on mouse
+    camera.position.x += (mouseX * 0.3 - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY * 0.3 - camera.position.y) * 0.02;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Resize
+  window.addEventListener('resize', () => {
+    const w = hero.offsetWidth, h = hero.offsetHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+})();
+
+/* ===== Matrix Digital Rain ===== */
+(function(){
+  const c = document.getElementById('matrix-rain');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, columns, drops;
+  const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFSEOLLMOAIO<>/{}[]';
+  const fontSize = 14;
+
+  function init(){
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+    columns = Math.floor(W / fontSize);
+    drops = Array.from({length: columns}, () => Math.random() * -100);
+  }
+  init();
+  window.addEventListener('resize', init);
+
+  function draw(){
+    ctx.fillStyle = 'rgba(6,6,12,0.08)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.font = fontSize + 'px JetBrains Mono, monospace';
+    ctx.fillStyle = 'rgba(0,240,255,0.35)';
+
+    for(let i = 0; i < drops.length; i++){
+      const char = chars[Math.floor(Math.random() * chars.length)];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+      ctx.fillText(char, x, y);
+      if(y > H && Math.random() > 0.98) drops[i] = 0;
+      drops[i] += 0.4;
+    }
+  }
+  setInterval(draw, 80);
+})();
+
+/* ===== Particles with connections ===== */
+(function(){
+  const c = document.getElementById('particles');
+  if(!c) return;
+  const x = c.getContext('2d');
+  let W, H, pts = [];
+
+  function resize(){W = c.width = innerWidth; H = c.height = innerHeight}
+  resize();
+  addEventListener('resize', resize);
+
+  class P{
+    constructor(){this.reset()}
+    reset(){
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.s = Math.random() * 1.5 + 0.3;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.o = Math.random() * 0.5 + 0.1;
+      this.c = Math.random() > 0.6 ? '0,240,255' : Math.random() > 0.5 ? '255,45,123' : '191,90,242';
+      this.pulse = Math.random() * Math.PI * 2;
+    }
+    update(){
+      this.x += this.vx;
+      this.y += this.vy;
+      this.pulse += 0.02;
+      if(this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw(){
+      const osc = 0.5 + Math.sin(this.pulse) * 0.5;
+      x.beginPath();
+      x.arc(this.x, this.y, this.s * (0.8 + osc * 0.4), 0, Math.PI * 2);
+      x.fillStyle = `rgba(${this.c},${this.o * osc})`;
+      x.fill();
+    }
+  }
+
+  const n = Math.min(50, Math.floor(W * H / 30000));
+  for(let i = 0; i < n; i++) pts.push(new P());
+
+  function lines(){
+    for(let i = 0; i < pts.length; i++) for(let j = i + 1; j < pts.length; j++){
+      const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+      if(d < 150){
+        x.beginPath();
+        x.moveTo(pts[i].x, pts[i].y);
+        x.lineTo(pts[j].x, pts[j].y);
+        x.strokeStyle = `rgba(0,240,255,${0.05 * (1 - d / 150)})`;
+        x.lineWidth = 0.4;
+        x.stroke();
+      }
+    }
+  }
+
+  (function loop(){
+    x.clearRect(0, 0, W, H);
+    pts.forEach(p => {p.update(); p.draw()});
+    lines();
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ===== 3D Tilt Card Effect ===== */
+(function(){
+  const cards = document.querySelectorAll('.tilt-card');
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  if(isMobile) return;
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (y - centerY) / centerY * -8;
+      const rotateY = (x - centerX) / centerX * 8;
+
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px) scale(1.02)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0) scale(1)';
+    });
+  });
+})();
+
+/* ===== Typing Animation ===== */
+(function(){
+  const el = document.getElementById('hero-typed');
+  if(!el) return;
+
+  const lines = [
+    '> INITIALIZING SEO×AIO CURRICULUM...',
+    '> LOADING 8 PHASES // 29 CHAPTERS...',
+    '> SYSTEM STATUS: READY_',
+    '> AWAITING USER INPUT...',
+  ];
+
+  let lineIndex = 0, charIndex = 0, isDeleting = false, timer;
+
+  function type(){
+    const currentLine = lines[lineIndex];
+
+    if(!isDeleting){
+      el.innerHTML = currentLine.substring(0, charIndex) + '<span class="typing-cursor"></span>';
+      charIndex++;
+
+      if(charIndex > currentLine.length){
+        clearTimeout(timer);
+        timer = setTimeout(() => { isDeleting = true; type(); }, 2000);
+        return;
+      }
+      timer = setTimeout(type, 40 + Math.random() * 40);
+    } else {
+      el.innerHTML = currentLine.substring(0, charIndex) + '<span class="typing-cursor"></span>';
+      charIndex--;
+
+      if(charIndex < 0){
+        isDeleting = false;
+        lineIndex = (lineIndex + 1) % lines.length;
+        charIndex = 0;
+        timer = setTimeout(type, 500);
+        return;
+      }
+      timer = setTimeout(type, 20);
+    }
+  }
+  setTimeout(type, 800);
+})();
+
+/* ===== HUD Scroll Tracking ===== */
+(function(){
+  const scrollEl = document.getElementById('hud-scroll');
+  if(!scrollEl) return;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if(!ticking){
+      requestAnimationFrame(() => {
+        const scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        scrollEl.textContent = scrollPct + '%';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+
+/* ===== Scroll Reveal ===== */
+(function(){
+  const o = new IntersectionObserver(e => {
+    e.forEach(el => {
+      if(el.isIntersecting){
+        el.target.classList.add('vis');
+        o.unobserve(el.target);
+      }
+    });
+  }, {threshold: 0.08, rootMargin: '0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => o.observe(el));
+})();
+
+/* ===== Mobile menu toggle ===== */
+(function(){
+  const btn = document.querySelector('.mobile-menu');
+  const nav = document.querySelector('.nav');
+  if(!btn || !nav) return;
+  btn.addEventListener('click', () => {
+    const open = nav.style.display === 'flex';
+    nav.style.display = open ? 'none' : 'flex';
+    nav.style.flexDirection = 'column';
+    nav.style.position = 'absolute';
+    nav.style.top = '60px';
+    nav.style.left = '0';
+    nav.style.right = '0';
+    nav.style.background = 'rgba(6,6,12,0.95)';
+    nav.style.padding = open ? '0' : '16px';
+    nav.style.borderBottom = open ? 'none' : '1px solid rgba(0,240,255,0.1)';
+    nav.style.backdropFilter = 'blur(20px)';
+  });
+})();
+</script>
+</body>
+</html>

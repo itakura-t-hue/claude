@@ -1,0 +1,14 @@
+{
+  "eval_id": 3,
+  "eval_name": "healthcare-design-system",
+  "configuration": "with_skill",
+  "expectations": [
+    {"text": "markdown-format", "passed": true, "evidence": "Output is a .md file with proper markdown formatting including headers, code blocks, and tables"},
+    {"text": "color-palette-defined", "passed": true, "evidence": "Defines specific hex colors: Primary Green #06A77D, Secondary Teal #055160, Wellness Blue #0D7FB8, status colors with hex codes"},
+    {"text": "font-recommendations", "passed": true, "evidence": "Recommends Source Sans Pro for headings/body and IBM Plex Mono for vital signs with rationale for each"},
+    {"text": "icon-library-specified", "passed": true, "evidence": "Specifically recommends Lucide React and Phosphor Icons for medical icons (section 6, lines 324-362)"},
+    {"text": "accessibility-focus", "passed": true, "evidence": "Extensively addresses elderly user accessibility: large fonts (16px+ body), high contrast ratios (7:1 AAA), large touch targets (44-48px)"},
+    {"text": "react-native-specific", "passed": true, "evidence": "Includes React Native specific guidance with SafeAreaView, FlatList virtualization, color scheme implementation, and component examples"},
+    {"text": "contrast-ratios-mentioned", "passed": true, "evidence": "Mentions WCAG AAA level contrast ratios (7:1), specific ratios for colors (5.2:1, 6.8:1, 4.6:1, 5.1:1)"}
+  ]
+}

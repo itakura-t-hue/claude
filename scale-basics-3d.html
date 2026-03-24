@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SEO×AIO 実践カリキュラム</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --bg:#06060e;--card:rgba(10,10,18,0.85);--text:#e2e2ee;--text2:#7a7a90;--text3:#44445a;
+  --cyan:#00f0ff;--mag:#ff2d7b;--yel:#e0ff00;--grn:#39ff14;--pur:#bf5af2;
+  --gc:rgba(0,240,255,0.4);--gm:rgba(255,45,123,0.35);--gy:rgba(224,255,0,0.3);
+  --bdr:rgba(0,240,255,0.07);--bdr2:rgba(0,240,255,0.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans JP','JetBrains Mono',monospace;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* Scanline */
+body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px)}
+
+/* 3D Canvas */
+#three-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* Grid floor */
+.grid-floor{position:fixed;bottom:0;left:0;right:0;height:50vh;z-index:0;pointer-events:none;
+  background:linear-gradient(0deg,rgba(0,240,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,0.03) 1px,transparent 1px);
+  background-size:80px 80px;
+  transform:perspective(500px) rotateX(45deg);transform-origin:center bottom;
+  mask-image:linear-gradient(to top,rgba(0,0,0,0.5),transparent 70%);
+}
+
+.container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+.section{padding:140px 0}
+.sec-label{font-family:'Orbitron',monospace;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.sec-label::before{content:'//';color:var(--mag)}
+.sec-label::after{content:'';flex:1;max-width:100px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+.sec-title{font-family:'Orbitron','Noto Sans JP',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-0.02em;line-height:1.2;margin-bottom:16px}
+.sec-sub{color:var(--text2);max-width:600px;font-size:0.92rem;line-height:1.8;margin-bottom:64px}
+.center{text-align:center}.center .sec-sub{margin-left:auto;margin-right:auto}
+
+/* Neon */
+.nc{color:var(--cyan);text-shadow:0 0 7px var(--gc),0 0 18px var(--gc)}
+.nm{color:var(--mag);text-shadow:0 0 7px var(--gm),0 0 18px var(--gm)}
+.ny{color:var(--yel);text-shadow:0 0 7px var(--gy),0 0 16px var(--gy)}
+
+/* Glitch */
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;overflow:hidden}
+.glitch::before{color:var(--cyan);z-index:-1;animation:g1 3s infinite linear alternate-reverse;clip-path:inset(0 0 80% 0)}
+.glitch::after{color:var(--mag);z-index:-2;animation:g2 2.5s infinite linear alternate-reverse;clip-path:inset(80% 0 0 0)}
+@keyframes g1{0%,100%{transform:translate(0)}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-1px)}60%{transform:translate(-2px,1px)}80%{transform:translate(2px,-2px)}}
+@keyframes g2{0%,100%{transform:translate(0)}25%{transform:translate(2px,1px)}50%{transform:translate(-3px,-1px)}75%{transform:translate(1px,2px)}}
+
+/* Header */
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(6,6,14,0.65);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Orbitron',monospace;font-weight:800;font-size:0.85rem;letter-spacing:0.05em}
+.logo-mark{width:32px;height:32px;border:2px solid var(--cyan);display:flex;align-items:center;justify-content:center;clip-path:polygon(15% 0%,100% 0%,100% 85%,85% 100%,0% 100%,0% 15%);position:relative}
+.logo-mark::after{content:'';position:absolute;inset:0;background:var(--cyan);opacity:0.06}
+.logo-mark svg{width:14px;height:14px;color:var(--cyan)}
+.nav{display:flex;align-items:center;gap:4px}
+.nav a{padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.73rem;font-weight:500;color:var(--text2);transition:all 200ms}
+.nav a:hover{color:var(--cyan)}
+.nav-cta{color:var(--bg)!important;background:var(--cyan)!important;font-weight:700!important;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);padding:8px 22px 8px 18px!important;box-shadow:0 0 16px var(--gc)}
+.nav-cta:hover{box-shadow:0 0 30px var(--gc)!important}
+.mobile-menu{display:none;background:none;border:none;color:var(--cyan);cursor:pointer;padding:8px}
+
+/* Hero */
+.hero{padding:220px 0 180px;text-align:center;position:relative}
+.hero-glow{position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);width:1100px;height:800px;pointer-events:none;background:radial-gradient(ellipse 450px 350px at 35% 45%,var(--gc),transparent),radial-gradient(ellipse 400px 280px at 65% 55%,var(--gm),transparent);filter:blur(90px);opacity:0.4;animation:hg 6s ease-in-out infinite alternate}
+@keyframes hg{0%{opacity:0.35;transform:translate(-50%,-50%) scale(1)}100%{opacity:0.55;transform:translate(-50%,-50%) scale(1.12)}}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:6px 18px 6px 14px;border:1px solid var(--bdr2);font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:600;color:var(--cyan);margin-bottom:36px;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);position:relative;z-index:2;animation:fadeUp .8s ease-out}
+.hero-badge::before{content:'';position:absolute;inset:0;background:rgba(0,240,255,0.04)}
+.hero-badge-dot{width:6px;height:6px;background:var(--grn);box-shadow:0 0 8px var(--grn);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.15}}
+.hero h1{font-family:'Orbitron','Noto Sans JP',sans-serif;font-size:clamp(2.5rem,7vw,5.5rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;margin-bottom:28px;position:relative;z-index:2;animation:fadeUp .8s ease-out .1s both}
+.hero-grad{background:linear-gradient(90deg,var(--cyan),var(--mag),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:gs 3s linear infinite}
+@keyframes gs{0%{background-position:0%}100%{background-position:200%}}
+.hero p{font-size:clamp(0.92rem,1.8vw,1.08rem);color:var(--text2);max-width:640px;margin:0 auto 44px;line-height:1.8;position:relative;z-index:2;animation:fadeUp .8s ease-out .2s both}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;z-index:2;animation:fadeUp .8s ease-out .3s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-family:'Orbitron',monospace;font-size:0.82rem;font-weight:700;border:none;cursor:pointer;transition:all 200ms;position:relative;letter-spacing:0.03em}
+.btn svg{width:16px;height:16px}
+.btn-cyber{background:var(--cyan);color:var(--bg);clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);box-shadow:0 0 24px var(--gc)}
+.btn-cyber:hover{box-shadow:0 0 44px var(--gc);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--cyan);border:1px solid var(--bdr2);clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%)}
+.btn-ghost:hover{border-color:var(--cyan);background:rgba(0,240,255,0.04);box-shadow:0 0 20px rgba(0,240,255,0.08)}
+
+/* Floating 3D Decorations (CSS) */
+.float-obj{position:absolute;pointer-events:none;z-index:1;opacity:0.12}
+.float-obj.hex{width:120px;height:120px;border:1px solid var(--cyan);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);animation:floatSpin 20s linear infinite}
+.float-obj.diamond{width:80px;height:80px;border:1px solid var(--mag);transform:rotate(45deg);animation:floatY 8s ease-in-out infinite}
+.float-obj.tri{width:0;height:0;border-left:50px solid transparent;border-right:50px solid transparent;border-bottom:86px solid transparent;border-bottom-color:rgba(0,240,255,0.08);animation:floatSpin 15s linear infinite reverse}
+@keyframes floatSpin{to{transform:rotate(360deg)}}
+@keyframes floatY{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(-20px)}}
+
+/* Cards */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cc{background:var(--card);border:1px solid var(--bdr);padding:32px;position:relative;overflow:hidden;transition:all 0.3s;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));backdrop-filter:blur(12px)}
+.cc::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity 0.3s}
+.cc:hover{border-color:var(--bdr2);transform:translateY(-6px) scale(1.01);box-shadow:0 0 50px rgba(0,240,255,0.06),0 24px 60px rgba(0,0,0,0.5)}
+.cc:hover::after{opacity:1}
+.cc-i{width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.cc-i svg{width:28px;height:28px}
+.cc h3{font-family:'Orbitron',monospace;font-size:0.92rem;font-weight:700;margin-bottom:10px;letter-spacing:0.02em}
+.cc p{color:var(--text2);font-size:0.84rem;line-height:1.7}
+
+/* Scroll */
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.6s cubic-bezier(0.4,0,0.2,1)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}
+
+/* Roadmap */
+.roadmap{position:relative}
+.rm-line{position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%);background:repeating-linear-gradient(180deg,var(--cyan) 0,var(--cyan) 6px,transparent 6px,transparent 14px);opacity:0.12}
+.rm-item{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:36px}
+.rm-item:nth-child(even) .rm-c{order:2}.rm-item:nth-child(even) .rm-s{order:1}
+.rm-dot{position:absolute;left:50%;top:28px;width:12px;height:12px;transform:translateX(-50%) rotate(45deg);z-index:3;border:2px solid var(--bg)}
+.rm-c{background:var(--card);border:1px solid var(--bdr);padding:28px;transition:all 0.3s;position:relative;overflow:hidden;backdrop-filter:blur(12px);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px))}
+.rm-c::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;transition:height 0.4s}
+.rm-c:hover{border-color:var(--bdr2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+.rm-c:hover::before{height:100%}
+.rm-ph{font-family:'Orbitron',monospace;display:inline-flex;padding:3px 12px;font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%)}
+.rm-c h3{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;margin-bottom:4px}
+.rm-ch{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3);margin-bottom:10px}
+.rm-c p{color:var(--text2);font-size:0.8rem;line-height:1.7}
+.p1 .rm-dot{background:var(--cyan)}.p1 .rm-ph{background:rgba(0,240,255,0.08);color:var(--cyan)}.p1 .rm-c::before{background:var(--cyan)}
+.p2 .rm-dot{background:var(--grn)}.p2 .rm-ph{background:rgba(57,255,20,0.06);color:var(--grn)}.p2 .rm-c::before{background:var(--grn)}
+.p3 .rm-dot{background:var(--pur)}.p3 .rm-ph{background:rgba(191,90,242,0.08);color:var(--pur)}.p3 .rm-c::before{background:var(--pur)}
+.p4 .rm-dot{background:var(--mag)}.p4 .rm-ph{background:rgba(255,45,123,0.08);color:var(--mag)}.p4 .rm-c::before{background:var(--mag)}
+.p5 .rm-dot{background:var(--yel)}.p5 .rm-ph{background:rgba(224,255,0,0.06);color:var(--yel)}.p5 .rm-c::before{background:var(--yel)}
+.p6 .rm-dot{background:#00ff88}.p6 .rm-ph{background:rgba(0,255,136,0.06);color:#00ff88}.p6 .rm-c::before{background:#00ff88}
+.p7 .rm-dot{background:#ff8800}.p7 .rm-ph{background:rgba(255,136,0,0.06);color:#ff8800}.p7 .rm-c::before{background:#ff8800}
+.p8 .rm-dot{background:#ff44cc}.p8 .rm-ph{background:rgba(255,68,204,0.06);color:#ff44cc}.p8 .rm-c::before{background:#ff44cc}
+
+/* Table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--bdr);background:var(--card);backdrop-filter:blur(12px)}
+table{width:100%;border-collapse:collapse;font-size:0.82rem;font-family:'JetBrains Mono','Noto Sans JP',monospace}
+thead{background:rgba(0,240,255,0.02)}
+th{padding:14px 20px;text-align:left;font-family:'Orbitron',monospace;font-weight:600;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--cyan);border-bottom:1px solid var(--bdr)}
+td{padding:14px 20px;border-bottom:1px solid var(--bdr);color:var(--text2)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(0,240,255,0.015)}
+.badge{display:inline-flex;padding:2px 10px;font-family:'Orbitron',monospace;font-size:0.58rem;font-weight:700;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sk{background:var(--card);border:1px solid var(--bdr);padding:20px;transition:all 0.3s;position:relative;overflow:hidden;backdrop-filter:blur(12px);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+.sk::before{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0;transition:opacity 0.3s}
+.sk:hover{border-color:var(--bdr2);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+.sk:hover::before{opacity:1}
+.sk-i{width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.sk-i svg{width:20px;height:20px}
+.sk h3{font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:700;margin-bottom:6px}
+.sk p{color:var(--text2);font-size:0.7rem;line-height:1.6}
+
+/* Column */
+.col-b{background:var(--card);border:1px solid var(--bdr);padding:40px;display:flex;align-items:center;justify-content:space-between;gap:32px;position:relative;overflow:hidden;backdrop-filter:blur(12px);clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px))}
+.col-b::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--mag),var(--cyan),var(--mag));opacity:0.4}
+.col-b h3{font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.col-b p{color:var(--text2);font-size:0.85rem;max-width:540px}
+
+/* Target */
+.tgt-list{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.tgt{display:flex;align-items:flex-start;gap:16px;padding:18px 24px;background:var(--card);border:1px solid var(--bdr);transition:all 200ms;backdrop-filter:blur(12px);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
+.tgt:hover{border-color:var(--bdr2);transform:translateX(6px)}
+.tgt-chk{flex-shrink:0;width:22px;height:22px;margin-top:2px;display:flex;align-items:center;justify-content:center;border:1px solid var(--cyan);color:var(--cyan);clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+.tgt-chk svg{width:12px;height:12px}
+.tgt p{color:var(--text2);font-size:0.88rem}
+
+/* CTA */
+.cta-box{text-align:center;padding:72px 32px;position:relative;overflow:hidden;border:1px solid var(--bdr);clip-path:polygon(0 0,calc(100% - 32px) 0,100% 32px,100% 100%,32px 100%,0 calc(100% - 32px))}
+.cta-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,240,255,0.05),transparent 50%,rgba(255,45,123,0.03))}
+.cta-box::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--mag),transparent);opacity:0.5}
+.cta-box h2{font-family:'Orbitron',monospace;font-size:clamp(1.2rem,3vw,1.9rem);font-weight:900;margin-bottom:16px;position:relative;z-index:1}
+.cta-box p{color:var(--text2);margin-bottom:32px;position:relative;z-index:1}
+.cta-box .btn{position:relative;z-index:1}
+
+/* Footer */
+.footer{border-top:1px solid var(--bdr);padding:64px 0 32px;color:var(--text3)}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-brand p{font-size:0.8rem;line-height:1.7;max-width:300px}
+.footer h4{font-family:'Orbitron',monospace;font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--cyan);margin-bottom:16px}
+.footer ul{list-style:none}.footer li{margin-bottom:8px}
+.footer li a{font-size:0.8rem;color:var(--text3);transition:color 200ms}.footer li a:hover{color:var(--cyan)}
+.footer-bottom{padding-top:24px;border-top:1px solid var(--bdr);font-size:0.7rem;text-align:center;font-family:'JetBrains Mono',monospace}
+
+/* Responsive */
+@media(max-width:1024px){.skills-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){
+  .nav{display:none}.mobile-menu{display:flex}
+  .features-grid,.skills-grid{grid-template-columns:repeat(2,1fr)}
+  .rm-line{left:16px}.rm-item{grid-template-columns:1fr;gap:0}
+  .rm-item:nth-child(even) .rm-c{order:unset}.rm-s{display:none}
+  .rm-dot{left:16px}.rm-c{margin-left:44px}
+  .fgrid{grid-template-columns:1fr}
+  .col-b{flex-direction:column;text-align:center}
+  .hero{padding:160px 0 120px}
+  .float-obj{display:none}
+}
+@media(max-width:480px){
+  .skills-grid,.features-grid{grid-template-columns:1fr}
+  .hero-actions{flex-direction:column;align-items:center}
+  .btn{width:100%;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+  html{scroll-behavior:auto}.reveal{opacity:1;transform:none}
+  #three-bg,.grid-floor,body::after{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-floor" aria-hidden="true"></div>
+<canvas id="three-bg" aria-hidden="true"></canvas>
+
+<!-- Floating geometric CSS decorations -->
+<div class="float-obj hex" style="top:15%;left:5%;opacity:0.06" aria-hidden="true"></div>
+<div class="float-obj diamond" style="top:35%;right:8%;opacity:0.08" aria-hidden="true"></div>
+<div class="float-obj tri" style="top:60%;left:3%;opacity:0.05" aria-hidden="true"></div>
+<div class="float-obj hex" style="top:75%;right:4%;opacity:0.04;width:80px;height:80px" aria-hidden="true"></div>
+<div class="float-obj diamond" style="top:90%;left:10%;opacity:0.06;width:60px;height:60px" aria-hidden="true"></div>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo"><div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="nc">SEO×AIO</span>&nbsp;実践カリキュラム</a>
+    <nav class="nav" role="navigation" aria-label="メインナビゲーション"><a href="#curriculum">CURRICULUM</a><a href="#skills">SKILLS</a><a href="#column">COLUMN</a><a href="#start" class="nav-cta">START_</a></nav>
+    <button class="mobile-menu" aria-label="メニュー"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-badge"><span class="hero-badge-dot"></span>8_PHASE // 29_CHAPTERS // PROJECT_BASED</div>
+    <h1><span class="glitch" data-text="ゼロからプロへ。">ゼロからプロへ。</span><br/><span class="hero-grad">設計・実装・SEO・AIO・分析</span><br/>を一気通貫で習得</h1>
+    <p>IT知識ゼロから「設計・実装・公開・SEO・AIO・データ分析・提案」を一気通貫でこなせる超万能型Web人材へ。フェーズごとに異なるWebサイトを0から構築・公開するプロジェクトベース学習。</p>
+    <div class="hero-actions">
+      <a href="#start" class="btn btn-cyber">INITIALIZE_LEARNING<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+      <a href="#curriculum" class="btn btn-ghost">VIEW_CURRICULUM</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container center">
+    <div class="sec-label">DIFFERENTIATION</div>
+    <h2 class="sec-title">何が違うのか？</h2>
+    <p class="sec-sub">従来のWeb講座は技術要素の積み上げ。本カリキュラムはプロジェクトベースで0からWebサイトを構築・公開。データドリブンな分析と2026年AI検索対応が差別化ポイント。</p>
+    <div class="features-grid">
+      <article class="cc reveal"><div class="cc-i" style="color:var(--cyan)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg></div><h3 class="nc">PROJECT_BASED</h3><p>8つの異なるサイトを0から構築・公開。座学では得られない実務経験を積み重ねる。</p></article>
+      <article class="cc reveal rd1"><div class="cc-i" style="color:var(--mag)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div><h3 class="nm">DATA_DRIVEN</h3><p>GA4・BigQuery・Looker Studioで「根拠のあるSEO施策立案」を実現。</p></article>
+      <article class="cc reveal rd2"><div class="cc-i" style="color:var(--yel)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 0-4 4c0 2 1 3 2.5 4.5L12 12l1.5-1.5C15 9 16 8 16 6a4 4 0 0 0-4-4z"/><path d="M12 12v10"/><path d="M4 20h16"/></svg></div><h3 class="ny">AI_SEARCH_2026</h3><p>従来SEOとAIO/LLMO/GEOの両立を学び、AI時代に対応した人材に。</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="curriculum">
+  <div class="container center"><div class="sec-label">ROADMAP</div><h2 class="sec-title">学習ロードマップ</h2><p class="sec-sub">8つのフェーズで段階的にスキルを習得。各フェーズで異なるWebサイトを0から構築・公開し実践力を積む。</p></div>
+  <div class="container">
+    <div class="roadmap">
+      <div class="rm-line" aria-hidden="true"></div>
+      <div class="rm-item p1 reveal"><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_01</div><h3>Web入門</h3><div class="rm-ch">CH.01-04 // ポートフォリオサイト</div><p>HTML/Tailwind CSS、Figma、Git/GitHub。GitHub Pagesで初サイトを公開。</p></div><div class="rm-s"></div></div>
+      <div class="rm-item p2 reveal"><div class="rm-s"></div><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_02</div><h3>初級</h3><div class="rm-ch">CH.05-09 // コーポレートサイト</div><p>JS/TS、サイト構造設計、テクニカルSEO。Vercel＋独自ドメイン。GA4/GSCの基礎。</p></div></div>
+      <div class="rm-item p3 reveal"><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_03</div><h3>中級前半</h3><div class="rm-ch">CH.10-13 // ブログ/メディア</div><p>WordPress×PHP。キーワードリサーチ・E-E-A-T・コンテンツSEO・被リンク戦略。</p></div><div class="rm-s"></div></div>
+      <div class="rm-item p4 reveal"><div class="rm-s"></div><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_04</div><h3>中級後半</h3><div class="rm-ch">CH.14-17 // SaaS Webアプリ</div><p>React/Next.js+TS。API連携、SSR/SSG/ISR、JavaScript SEO、CRO実践。</p></div></div>
+      <div class="rm-item p5 reveal"><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_05</div><h3>上級</h3><div class="rm-ch">CH.18-20 // 大規模EC/ポータル</div><p>DB/SQL/Shopify。ファセットナビ、クロールバジェット、EC SEO、法務対応。</p></div><div class="rm-s"></div></div>
+      <div class="rm-item p6 reveal"><div class="rm-s"></div><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_06</div><h3>AI検索最適化</h3><div class="rm-ch">CH.21-23 // 横断AIO実装</div><p>LLMO/GEO/AEO実装。llms.txt設計、構造化データ再設計、AI可視性計測。</p></div></div>
+      <div class="rm-item p7 reveal"><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_07</div><h3>データ分析深化</h3><div class="rm-ch">CH.24-26 // 多言語サイト+分析</div><p>GA4×BigQuery、Looker Studio、Ahrefs/SEMrush。Next.js i18n多言語対応。</p></div><div class="rm-s"></div></div>
+      <div class="rm-item p8 reveal"><div class="rm-s"></div><div class="rm-c"><span class="rm-dot"></span><div class="rm-ph">Phase_08</div><h3>総合実務</h3><div class="rm-ch">CH.27-29 // SEO監査・提案</div><p>テクニカル/コンテンツ/競合監査。提案書、月次レポート、プレゼンテーション。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container center"><div class="sec-label">OUTPUT</div><h2 class="sec-title">作れるサイト一覧</h2><p class="sec-sub">8つの異なるWebサイト/プロジェクトを実際に構築・公開。</p>
+    <div class="tbl-wrap reveal">
+      <table role="table"><thead><tr><th>PHASE</th><th>TYPE</th><th>STACK</th><th>DEPLOY</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge" style="background:rgba(0,240,255,0.06);color:var(--cyan)">01</span></td><td>ポートフォリオ</td><td>HTML/CSS/Tailwind</td><td>GitHub Pages</td></tr>
+        <tr><td><span class="badge" style="background:rgba(57,255,20,0.05);color:var(--grn)">02</span></td><td>コーポレート</td><td>JS/TS/SEO</td><td>Vercel</td></tr>
+        <tr><td><span class="badge" style="background:rgba(191,90,242,0.06);color:var(--pur)">03</span></td><td>ブログ/メディア</td><td>WordPress/PHP</td><td>レンタルサーバー</td></tr>
+        <tr><td><span class="badge" style="background:rgba(255,45,123,0.06);color:var(--mag)">04</span></td><td>SaaS Webアプリ</td><td>React/Next.js</td><td>Vercel</td></tr>
+        <tr><td><span class="badge" style="background:rgba(224,255,0,0.05);color:var(--yel)">05</span></td><td>大規模EC/ポータル</td><td>Shopify/SQL</td><td>Shopify</td></tr>
+        <tr><td><span class="badge" style="background:rgba(0,255,136,0.05);color:#00ff88">06</span></td><td>横断AIO実装</td><td>AIO/llms.txt</td><td>各サイト追加</td></tr>
+        <tr><td><span class="badge" style="background:rgba(255,136,0,0.05);color:#ff8800">07</span></td><td>多言語サイト</td><td>Next.js i18n</td><td>Vercel</td></tr>
+        <tr><td><span class="badge" style="background:rgba(255,68,204,0.05);color:#ff44cc">08</span></td><td>SEO監査・提案</td><td>分析/レポート</td><td>プレゼン資料</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="column"><div class="container"><div class="col-b reveal"><div><h3>最新コラム</h3><p>SEO・AIOの最新情報や実践ノウハウをコラムで発信中。トレンド、ツールレビュー、テクニカルTips。</p></div><a href="/blog" class="btn btn-ghost">READ_MORE<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></a></div></div></section>
+
+<section class="section" id="skills">
+  <div class="container center"><div class="sec-label">SKILL_TREE</div><h2 class="sec-title">身につくスキル</h2><p class="sec-sub">12カテゴリを体系的に習得。フロントエンドからコンサルタント実務まで即戦力。</p>
+    <div class="skills-grid">
+      <article class="sk reveal"><div class="sk-i" style="color:var(--cyan)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>FRONTEND</h3><p>HTML/CSS/Tailwind、JS/TS、React/Next.js</p></article>
+      <article class="sk reveal rd1"><div class="sk-i" style="color:var(--mag)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div><h3>BACKEND_DB</h3><p>PHP、RDB、SQL、REST API</p></article>
+      <article class="sk reveal rd2"><div class="sk-i" style="color:var(--yel)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div><h3>CMS_EC</h3><p>WordPress、Shopify構築</p></article>
+      <article class="sk reveal rd3"><div class="sk-i" style="color:var(--mag)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/></svg></div><h3>DESIGN_UX</h3><p>Figma、UI/UX、WCAG</p></article>
+      <article class="sk reveal"><div class="sk-i" style="color:var(--yel)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><h3>SEO_ALL</h3><p>テクニカル・コンテンツ・国際SEO</p></article>
+      <article class="sk reveal rd1"><div class="sk-i" style="color:#00ff88"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 0-4 4c0 2 1 3 2.5 4.5L12 12l1.5-1.5C15 9 16 8 16 6a4 4 0 0 0-4-4z"/><path d="M12 12v10"/><path d="M4 20h16"/></svg></div><h3>AIO_OPT</h3><p>LLMO/GEO/AEO、llms.txt</p></article>
+      <article class="sk reveal rd2"><div class="sk-i" style="color:#ff8800"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div><h3>DATA_ANALYSIS</h3><p>GA4/BigQuery/Looker Studio</p></article>
+      <article class="sk reveal rd3"><div class="sk-i" style="color:var(--mag)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>CRO_MKTG</h3><p>CRO、LPO、SNS連携</p></article>
+      <article class="sk reveal"><div class="sk-i" style="color:var(--grn)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></div><h3>CONSULTING</h3><p>SEO監査、提案書、KPI</p></article>
+      <article class="sk reveal rd1"><div class="sk-i" style="color:var(--pur)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div><h3>DEVOPS</h3><p>Git、DNS、Vercel、CI/CD</p></article>
+      <article class="sk reveal rd2"><div class="sk-i" style="color:var(--cyan)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div><h3>AI_TOOLS</h3><p>生成AI活用、コード生成</p></article>
+      <article class="sk reveal rd3"><div class="sk-i" style="color:var(--yel)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg></div><h3>LEGAL</h3><p>著作権、個人情報、特商法</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section"><div class="container center"><div class="sec-label">TARGET</div><h2 class="sec-title">誰が対象？</h2>
+  <div class="tgt-list">
+    <div class="tgt reveal"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>IT知識ゼロからWeb人材として成長したい新卒社員</p></div>
+    <div class="tgt reveal rd1"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>既存スキルを体系化し実務経験を積みたいジュニアWebディベロッパー</p></div>
+    <div class="tgt reveal rd2"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>Web制作×マーケティングを統合できる人材を育成したい企業研修</p></div>
+    <div class="tgt reveal rd3"><div class="tgt-chk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><p>SEO×AI検索の最先端知識を習得したい個人学習者</p></div>
+  </div>
+</div></section>
+
+<section class="section" id="start"><div class="container"><div class="cta-box reveal">
+  <h2>今すぐ学習を始めましょう</h2>
+  <p>全章無料公開中。チェックリストで進捗管理しながら、自分のペースで。</p>
+  <a href="/chapters/1" class="btn btn-cyber">EXECUTE: CH.01<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></a>
+</div></div></section>
+</main>
+
+<footer class="footer"><div class="container">
+  <div class="fgrid">
+    <div class="footer-brand"><div class="logo" style="margin-bottom:16px"><div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span class="nc">SEO×AIO</span>&nbsp;実践カリキュラム</div><p>AI検索時代のデータドリブンWeb人材育成プログラム。</p></div>
+    <div><h4>NAV</h4><ul><li><a href="/">トップ</a></li><li><a href="/chapters">章一覧</a></li><li><a href="/blog">コラム</a></li><li><a href="/privacy">プライバシーポリシー</a></li></ul></div>
+    <div><h4>PHASES</h4><ul><li><a href="#">01: Web入門</a></li><li><a href="#">02: 初級</a></li><li><a href="#">03: 中級前半</a></li><li><a href="#">04: 中級後半</a></li><li><a href="#">05: 上級</a></li><li><a href="#">06: AI検索最適化</a></li><li><a href="#">07: データ分析深化</a></li><li><a href="#">08: 総合実務</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">&copy; 2025 SEO×AIO 実践カリキュラム // ALL_RIGHTS_RESERVED</div>
+</div></footer>
+
+<script>
+/* ===== Three.js 3D Scene ===== */
+(function(){
+  const canvas=document.getElementById('three-bg');
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setSize(innerWidth,innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,1000);
+  camera.position.set(0,0,30);
+
+  const objects=[];
+  const neonColors=[0x00f0ff,0xff2d7b,0xbf5af2,0xe0ff00,0x39ff14];
+
+  /* Wireframe Icosahedron (large, center-left) */
+  const ico=new THREE.IcosahedronGeometry(5,0);
+  const icoMat=new THREE.MeshBasicMaterial({color:0x00f0ff,wireframe:true,transparent:true,opacity:0.12});
+  const icoMesh=new THREE.Mesh(ico,icoMat);
+  icoMesh.position.set(-14,4,0);
+  scene.add(icoMesh);
+  objects.push({mesh:icoMesh,rotSpeed:{x:0.003,y:0.005},floatSpeed:0.5,floatAmp:1.5,baseY:4});
+
+  /* Wireframe Octahedron (right side) */
+  const oct=new THREE.OctahedronGeometry(3.5,0);
+  const octMat=new THREE.MeshBasicMaterial({color:0xff2d7b,wireframe:true,transparent:true,opacity:0.1});
+  const octMesh=new THREE.Mesh(oct,octMat);
+  octMesh.position.set(16,-2,2);
+  scene.add(octMesh);
+  objects.push({mesh:octMesh,rotSpeed:{x:0.004,y:-0.003},floatSpeed:0.7,floatAmp:1.2,baseY:-2});
+
+  /* Wireframe Dodecahedron (bottom-left) */
+  const dod=new THREE.DodecahedronGeometry(2.8,0);
+  const dodMat=new THREE.MeshBasicMaterial({color:0xbf5af2,wireframe:true,transparent:true,opacity:0.08});
+  const dodMesh=new THREE.Mesh(dod,dodMat);
+  dodMesh.position.set(-18,-10,-5);
+  scene.add(dodMesh);
+  objects.push({mesh:dodMesh,rotSpeed:{x:-0.002,y:0.004},floatSpeed:0.4,floatAmp:2,baseY:-10});
+
+  /* Wireframe Torus (top-right) */
+  const tor=new THREE.TorusGeometry(3,0.8,8,24);
+  const torMat=new THREE.MeshBasicMaterial({color:0xe0ff00,wireframe:true,transparent:true,opacity:0.06});
+  const torMesh=new THREE.Mesh(tor,torMat);
+  torMesh.position.set(12,12,-8);
+  scene.add(torMesh);
+  objects.push({mesh:torMesh,rotSpeed:{x:0.002,y:0.003},floatSpeed:0.3,floatAmp:1.8,baseY:12});
+
+  /* Small Tetrahedrons scattered */
+  for(let i=0;i<8;i++){
+    const g=new THREE.TetrahedronGeometry(Math.random()*1+0.5,0);
+    const m=new THREE.MeshBasicMaterial({color:neonColors[i%neonColors.length],wireframe:true,transparent:true,opacity:0.06});
+    const mesh=new THREE.Mesh(g,m);
+    const x=(Math.random()-0.5)*40;
+    const y=(Math.random()-0.5)*30;
+    const z=(Math.random()-0.5)*20-5;
+    mesh.position.set(x,y,z);
+    scene.add(mesh);
+    objects.push({mesh,rotSpeed:{x:(Math.random()-0.5)*0.01,y:(Math.random()-0.5)*0.01},floatSpeed:Math.random()*0.5+0.2,floatAmp:Math.random()*2+0.5,baseY:y});
+  }
+
+  /* Particle field (tiny dots for depth) */
+  const pGeo=new THREE.BufferGeometry();
+  const pCount=300;
+  const pPos=new Float32Array(pCount*3);
+  for(let i=0;i<pCount*3;i+=3){
+    pPos[i]=(Math.random()-0.5)*80;
+    pPos[i+1]=(Math.random()-0.5)*60;
+    pPos[i+2]=(Math.random()-0.5)*40-10;
+  }
+  pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+  const pMat=new THREE.PointsMaterial({color:0x00f0ff,size:0.08,transparent:true,opacity:0.4});
+  const points=new THREE.Points(pGeo,pMat);
+  scene.add(points);
+
+  /* Mouse tracking */
+  let mouseX=0,mouseY=0;
+  document.addEventListener('mousemove',e=>{
+    mouseX=(e.clientX/innerWidth-0.5)*2;
+    mouseY=(e.clientY/innerHeight-0.5)*2;
+  });
+
+  /* Scroll tracking */
+  let scrollY=0;
+  window.addEventListener('scroll',()=>{scrollY=window.pageYOffset});
+
+  /* Resize */
+  window.addEventListener('resize',()=>{
+    camera.aspect=innerWidth/innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth,innerHeight);
+  });
+
+  /* Animation loop */
+  const clock=new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+
+    objects.forEach(o=>{
+      o.mesh.rotation.x+=o.rotSpeed.x;
+      o.mesh.rotation.y+=o.rotSpeed.y;
+      o.mesh.position.y=o.baseY+Math.sin(t*o.floatSpeed)*o.floatAmp;
+    });
+
+    /* Parallax: camera follows mouse gently */
+    camera.position.x+=(mouseX*3-camera.position.x)*0.02;
+    camera.position.y+=(-mouseY*2-camera.position.y)*0.02;
+
+    /* Scroll: shift camera down */
+    camera.position.y+=(-(scrollY*0.005)-camera.position.y)*0.03;
+
+    /* Points slow rotation */
+    points.rotation.y=t*0.02;
+
+    camera.lookAt(0,0,0);
+    renderer.render(scene,camera);
+  }
+  animate();
+})();
+
+/* ===== Scroll Reveal ===== */
+(function(){
+  const o=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('vis');o.unobserve(el.target)}})},{threshold:0.08,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>o.observe(el));
+})();
+</script>
+</body>
+</html>

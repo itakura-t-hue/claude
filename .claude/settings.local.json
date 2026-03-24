@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:scale-basics.com)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(pip install:*)",
+      "Bash(python -m markitdown \"C:\\\\Users\\\\itakura-t\\\\Documents\\\\担当\\\\ケアリッツ\\\\【2026年03月定例】株式会社ケアリッツ＆パートナーズ御中_SEOレポート.pptx\")",
+      "Bash(python -m markitdown \"C:/Users/itakura-t/Documents/担当/ケアリッツ/【2026年03月定例】株式会社ケアリッツ＆パートナーズ御中_SEOレポート.pptx\")",
+      "Bash(python -c \":*)",
+      "Bash(python3 -c \":*)",
+      "Bash(pip show:*)",
+      "Bash(/c/Users/itakura-t/AppData/Local/Programs/Python/Python313/python.exe -c \":*)",
+      "Bash(where python:*)",
+      "Bash(python -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(ls /c/Python* /c/Users/itakura-t/AppData/Local/anaconda3/python.exe /c/ProgramData/anaconda3/python.exe /c/Users/itakura-t/miniconda3/python.exe)",
+      "Read(//c/Users/itakura-t/AppData/Local/**)",
+      "Bash(cmd.exe /c \"where python\")",
+      "Bash(node -e \":*)",
+      "Bash(npm --version)",
+      "Bash(cd /tmp)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:www.careritz.co.jp)",
+      "WebFetch(domain:pagespeed.web.dev)"
+    ]
+  }
+}
