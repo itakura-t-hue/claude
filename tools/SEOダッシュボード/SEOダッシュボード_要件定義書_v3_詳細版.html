@@ -1094,7 +1094,7 @@
   <a href="#s16" onclick="closeMobileMenu()"><span class="nav-num">16</span>データ分析基盤 + BigQuery</a>
   <a href="#s17" onclick="closeMobileMenu()"><span class="nav-num">13</span>ロードマップ</a>
   <a href="#s18" onclick="closeMobileMenu()"><span class="nav-num">14</span>費用対効果</a>
-  <a href="#s19" onclick="closeMobileMenu()"><span class="nav-num">19</span>エンジニア確認事項</a>
+  <a href="#s19" onclick="closeMobileMenu()"><span class="nav-num">19</span>エンジニア確認事項・技術仕様補足</a>
   <a href="#s20" onclick="closeMobileMenu()"><span class="nav-num">20</span>リスクと対策</a>
   <a href="#s21" onclick="closeMobileMenu()"><span class="nav-num">21</span>用語集</a>
 </div>
@@ -1167,7 +1167,7 @@
     <li><a href="#s16"><span class="toc-num">16</span>データ分析基盤強化 + BigQuery連携</a></li>
     <li><a href="#s17"><span class="toc-num">17</span>開発ロードマップ・工数見積</a></li>
     <li><a href="#s18"><span class="toc-num">18</span>費用対効果・ROI試算</a></li>
-    <li><a href="#s19"><span class="toc-num">19</span>エンジニア確認事項（未決定）</a></li>
+    <li><a href="#s19"><span class="toc-num">19</span>エンジニア確認事項・技術仕様補足</a></li>
     <li><a href="#s20"><span class="toc-num">20</span>リスクと対策</a></li>
     <li><a href="#s21"><span class="toc-num">21</span>用語集</a></li>
   </ol>
@@ -5294,31 +5294,540 @@ POST https://analyticsdata.googleapis.com/v1beta
 
 
 <!-- ============================================================ -->
-<!-- 19. エンジニア確認事項 -->
+<!-- 19. エンジニア確認事項・技術仕様補足 -->
 <!-- ============================================================ -->
 <hr>
-<h2 class="h1" id="s19"><span class="h1-num">19</span>エンジニア確認事項（未決定）</h2>
+<h2 class="h1" id="s19"><span class="h1-num">19</span>エンジニア確認事項・技術仕様補足</h2>
 
 <div class="callout callout-warn">
-  <div class="callout-title">&#9888; 開発開始前に確認が必要な事項</div>
-  <p>以下の2点はエンジニアとの協議で決定する必要があります。</p>
+  <div class="callout-title">&#9888;&#65039; 本セクションは開発着手前にエンジニアチームでレビュー・決定が必要な事項をまとめたものです。</div>
+  <p>優先度は <strong>P0（着手前に必須）/ P1（Phase 2までに必須）/ P2（Phase 3までに必須）/ P3（全Phase横断）</strong> で分類。</p>
 </div>
 
+<!-- P0: Phase 1着手前に決定必須 -->
+<div class="h2">P0: Phase 1着手前に決定必須</div>
+
+<div class="h3">P0-1. OAuthフローの設計（2種類の認証の分離）</div>
+
+<p>本システムには <strong>2つの異なるOAuth用途</strong> が存在する。仕様上「OAuth 2.0」と一括りにされているが、実装は全く別物。</p>
+
+<div class="table-wrap">
 <table>
-  <thead><tr><th>#</th><th>確認事項</th><th>詳細</th></tr></thead>
+  <thead><tr><th>用途</th><th>目的</th><th>アカウント</th><th>スコープ</th></tr></thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td><strong>DB格納先（PostgreSQL vs BigQuery）</strong></td>
-      <td>以下のテーブルの格納先を決定する必要がある：<code>RankHistory</code>、<code>TrafficSnapshot</code>、<code>BacklinkSnapshot</code>、<code>ContentTrafficHistory</code>。データ量が大きくなるため、PostgreSQLに置くかBigQueryに置くかで設計が変わる</td>
+      <td><strong>ユーザーログイン</strong></td>
+      <td>ダッシュボードへのログイン認証</td>
+      <td>各ユーザーの個人Googleアカウント</td>
+      <td><code>openid</code>, <code>email</code>, <code>profile</code></td>
     </tr>
     <tr>
-      <td>2</td>
-      <td><strong>ContractPlan enumの区別</strong></td>
-      <td>現在の<code>ContractPlan</code> enumでは保守ライト（MAINTENANCE_LITE）と保守プロ（MAINTENANCE_PRO）を区別できない。enum値の追加またはテーブル設計の見直しが必要</td>
+      <td><strong>データ取得</strong></td>
+      <td>GSC/GA4 APIからのデータ同期</td>
+      <td>共有用Gmailアカウント（クライアントから権限付与済み）</td>
+      <td><code>webmasters.readonly</code>, <code>analytics.readonly</code></td>
     </tr>
   </tbody>
 </table>
+</div>
+
+<p><strong>決定が必要な事項:</strong></p>
+<ul>
+  <li><strong>(A)</strong> 共有Gmail 1アカウントで全クライアントのGSC/GA4にアクセスする方式 → トークンはグローバルに1つ。Projectモデルの <code>googleAccessToken</code> / <code>googleRefreshToken</code> は不要（削除 or 別テーブルへ移動）</li>
+  <li><strong>(B)</strong> クライアントごとに別のGoogleアカウントで認証する方式 → Projectモデルのトークンフィールドをそのまま使用</li>
+  <li><strong>(C)</strong> GCPサービスアカウント + ドメイン全体の委任方式 → OAuthトークン管理が不要になるが、クライアント側の設定負荷が増える</li>
+</ul>
+
+<p><strong>補足:</strong> 現行運用は「共有Gmail 1アカウント」でGSC/GA4に閲覧者権限を付与してもらう方式（セクション1.6参照）。この場合は <strong>(A)</strong> が整合するが、リフレッシュトークン失効時の再認証フロー（管理者が手動で共有Gmailで再ログイン）を設計に含める必要がある。</p>
+
+<div class="h3">P0-2. クライアント・ライターの招待・認証フロー</div>
+
+<p>現仕様ではGoogle OAuthのみだが、以下のケースで不足する:</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ユーザー種別</th><th>課題</th><th>検討すべき代替手段</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>クライアント担当者</strong></td>
+      <td>Googleアカウントを業務で使っていない企業がある</td>
+      <td>メール+パスワード認証、マジックリンク（メールOTP）</td>
+    </tr>
+    <tr>
+      <td><strong>外部ライター</strong></td>
+      <td>クラウドワークス経由の都度公募。Google強制は摩擦が大きい</td>
+      <td>マジックリンク、招待URLトークン</td>
+    </tr>
+    <tr>
+      <td><strong>フリーランス</strong></td>
+      <td>案件終了後のアカウント無効化フローが未定義</td>
+      <td>有効期限付きアクセストークン、プロジェクト単位の有効/無効切替</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>決定が必要な事項:</strong></p>
+<ul>
+  <li>Google OAuth以外の認証手段を追加するか（NextAuth.jsはEmail Provider対応可）</li>
+  <li>ユーザー招待フロー: 管理者が招待メール送信 → 受信者がリンクからアカウント作成、の設計</li>
+  <li>ライターのライフサイクル管理: 招待 → アサイン → 案件完了 → アクセス無効化</li>
+</ul>
+
+<div class="h3">P0-3. API共通仕様</div>
+
+<p>全APIエンドポイントに適用する共通仕様が未定義。Phase 1のAPI実装前に以下を確定する必要がある。</p>
+
+<p><strong>ページネーション:</strong></p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>方式</th><th>候補</th><th>適用先</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Cursor-based</strong></td>
+      <td><code>?cursor=xxx&amp;limit=50</code></td>
+      <td>チャットメッセージ、監査ログ等の時系列データ</td>
+    </tr>
+    <tr>
+      <td><strong>Offset-based</strong></td>
+      <td><code>?page=1&amp;per_page=50</code></td>
+      <td>クライアント一覧、KW一覧等の一覧系</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>デフォルトページサイズ: 50件、最大ページサイズ: 200件（要決定）</p>
+
+<p><strong>レスポンス形式:</strong></p>
+
+<pre><code style="background:#1e293b;color:#e2e8f0;display:block;padding:1em;border-radius:8px;overflow-x:auto;">// 成功時
+{
+  "data": T | T[],
+  "meta": {
+    "total": number,       // 総件数（一覧系のみ）
+    "page": number,        // 現在ページ（offset-based）
+    "per_page": number,
+    "next_cursor": string  // 次カーソル（cursor-based）
+  }
+}
+
+// エラー時
+{
+  "error": {
+    "code": string,        // "UNAUTHORIZED" | "FORBIDDEN" | "NOT_FOUND" | "VALIDATION_ERROR" | "RATE_LIMITED" | "INTERNAL"
+    "message": string,     // 人間可読なメッセージ
+    "details": object      // バリデーションエラーの詳細等（任意）
+  }
+}</code></pre>
+
+<p><strong>レートリミット:</strong></p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ロール</th><th>制限</th><th>実装方式</th></tr></thead>
+  <tbody>
+    <tr><td>社内ユーザー</td><td>600 req/min</td><td>Redis Token Bucket</td></tr>
+    <tr><td>クライアント</td><td>120 req/min</td><td>同上</td></tr>
+    <tr><td>ライター</td><td>60 req/min</td><td>同上</td></tr>
+    <tr><td>Webhook</td><td>30 req/min（クライアントごと）</td><td>同上</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>レスポンスヘッダー: <code>X-RateLimit-Limit</code>, <code>X-RateLimit-Remaining</code>, <code>X-RateLimit-Reset</code></p>
+
+<div class="h3">P0-4. 時系列データの格納先（PostgreSQL vs BigQuery）</div>
+
+<p>本書ではRankHistory, TrafficSnapshot, BacklinkSnapshot, ContentTrafficHistoryについて、以下の2箇所で異なる記述があります。</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>箇所</th><th>記述</th></tr></thead>
+  <tbody>
+    <tr><td>セクション5冒頭</td><td>BigQueryに格納（日付パーティション、追記専用）</td></tr>
+    <tr><td>セクション5 Prisma Schema</td><td>PostgreSQLモデルとして定義</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>決定が必要な選択肢:</strong></p>
+<ul>
+  <li><strong>(A)</strong> BigQueryのみ — Prisma SchemaからRankHistory等を削除。アプリからはBigQuery APIで取得</li>
+  <li><strong>(B)</strong> PostgreSQLのみ — Phase 1-3はPostgreSQLで運用。BigQueryはPhase 4で分析用の二次ストアとして導入</li>
+  <li><strong>(C)</strong> デュアルライト — PostgreSQLをリアルタイム表示用、BigQueryを長期分析用。バッチ処理で両方にINSERT</li>
+</ul>
+
+<div class="h3">P0-5. ContractPlan enumの保守プラン区分</div>
+
+<p>現在、保守プランには「ライト（&yen;50,000/月）」と「プロ（&yen;80,000/月）」の2段階がありますが、DB定義上の整合が取れていません。</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>enum</th><th>値</th><th>問題点</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>ToolStatus</code>（セクション4）</td>
+      <td><code>MAINTENANCE_LITE</code> / <code>MAINTENANCE_PRO</code></td>
+      <td>2段階を区別</td>
+    </tr>
+    <tr>
+      <td><code>ContractPlan</code>（DB定義）</td>
+      <td><code>MAINTENANCE</code> のみ</td>
+      <td>ライト/プロの区別なし</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>決定が必要な選択肢:</strong></p>
+<ul>
+  <li><strong>(A)</strong> ContractPlan enumにLITE/PROを追加し、ToolStatusは廃止して統合</li>
+  <li><strong>(B)</strong> ContractPlanはそのまま、Clientモデルに <code>maintenanceTier</code> カラムを追加して区別</li>
+</ul>
+
+<!-- P1: Phase 2開始前に決定必須 -->
+<div class="h2">P1: Phase 2開始前に決定必須</div>
+
+<div class="h3">P1-1. バッチジョブの実行基盤</div>
+
+<p>BullMQ (Redis-backed) をジョブキューとして使用する設計だが、ワーカープロセスの実行環境が未定義。</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>選択肢</th><th>メリット</th><th>デメリット</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>(A) Cloud Run（min instance=1で常駐）</strong></td>
+      <td>インフラ統一、デプロイ簡単</td>
+      <td>常時課金（月$30-50程度）、Cloud Runのタイムアウト制限</td>
+    </tr>
+    <tr>
+      <td><strong>(B) Cloud Run Jobs</strong></td>
+      <td>ジョブ単位のスケーリング、コスト最適</td>
+      <td>BullMQとの統合が複雑、Cloud Schedulerとの連携が必要</td>
+    </tr>
+    <tr>
+      <td><strong>(C) Compute Engine（小型VM常駐）</strong></td>
+      <td>自由度が高い</td>
+      <td>インフラ管理コスト増</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>推奨:</strong> (A) がシンプル。Cloud Schedulerで定刻にHTTPリクエストを送信 → Cloud RunのAPIがBullMQにジョブを投入 → 同一インスタンス内のワーカーが処理。</p>
+
+<div class="h3">P1-2. バッチジョブの部分失敗ハンドリング</div>
+
+<p>以下のケースに対する挙動を定義する必要がある:</p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ケース</th><th>現状の仕様</th><th>決定が必要な事項</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>120社中50社目でAPIレートリミット</td>
+      <td>「次バッチに延期」</td>
+      <td>残り70社は翌日に持ち越し？即時リトライ待ち？優先度はどうなる？</td>
+    </tr>
+    <tr>
+      <td>1社の同期が途中失敗（GSCは成功、GA4が失敗）</td>
+      <td>SyncLog <code>partial</code></td>
+      <td>次回実行時に差分取得？全件再取得？ partial状態のデータは表示に使うか？</td>
+    </tr>
+    <tr>
+      <td>リトライ3回全失敗</td>
+      <td>記載なし</td>
+      <td>管理者通知のみ？手動再実行ボタン？自動的に翌日キューに入れる？</td>
+    </tr>
+    <tr>
+      <td>バッチジョブ間の依存（rewrite-scoreがsync-gsc完了前に実行）</td>
+      <td>時刻ベース</td>
+      <td>イベントドリブン（前ジョブ完了をトリガー）に変更すべきか？</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>冪等性の設計:</strong><br>
+全バッチジョブはべき等（何度実行しても同じ結果）であること。<code>@@unique([keywordId, date])</code> 等のユニーク制約でUPSERTを使用する。</p>
+
+<div class="h3">P1-3. GA4 APIクォータの検証</div>
+
+<p>GA4 Data APIの制約:</p>
+<ul>
+  <li>プロパティあたり: 同時10リクエスト、<strong>日10,000トークン</strong></li>
+  <li>トークン消費量はクエリの複雑さに依存（ディメンション数、日付範囲等）</li>
+</ul>
+
+<p><strong>検証が必要:</strong></p>
+<ul>
+  <li>1社あたり5レポート（R1-R5）のbatchRunReportsで消費するトークン数の実測</li>
+  <li>120社で日次トークン上限（10,000 &times; 120 = 1,200,000トークン？ or プロジェクト全体で共有？）</li>
+  <li>GCPプロジェクトレベルのグローバルクォータの確認</li>
+</ul>
+
+<p><strong>推奨:</strong> Phase 2開始前にパイロット5社でトークン消費量を実測すること。</p>
+
+<div class="h3">P1-4. Pusherの同時接続数</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>ユーザー種別</th><th>最大人数</th><th>同時接続見込み</th></tr></thead>
+  <tbody>
+    <tr><td>社内スタッフ</td><td>25-30名</td><td>20名（業務時間中ほぼ常時）</td></tr>
+    <tr><td>クライアント担当者</td><td>120-360名</td><td>30-50名（ポータルを開いている間）</td></tr>
+    <tr><td>ライター</td><td>50名+</td><td>10名</td></tr>
+    <tr><td><strong>合計</strong></td><td></td><td><strong>60-80名（通常）、最大150名（ピーク）</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Startup plan（200同時接続）でピーク時はカバー可能だが、クライアントポータルの普及率次第で超過リスクあり。</p>
+
+<p><strong>決定が必要な事項:</strong> 接続数の監視アラート設定、超過時のプランアップグレード判断基準</p>
+
+<div class="h3">P1-5. ダッシュボードのキャッシュ・事前集計戦略</div>
+
+<p>全案件ダッシュボード（<code>/dashboard</code>）は120+社の複合指標を表示する。リアルタイムに計算すると3秒以内の表示は困難。</p>
+
+<p><strong>推奨設計:</strong></p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>指標</th><th>更新タイミング</th><th>格納先</th></tr></thead>
+  <tbody>
+    <tr><td>ヘルススコア</td><td><code>check-alerts</code>バッチ（06:00）で全社一括計算</td><td>Redis or PostgreSQL集計テーブル</td></tr>
+    <tr><td>オーガニックSS/CV</td><td><code>sync-ga4</code>バッチ完了時に更新</td><td>TrafficSnapshot（既存）</td></tr>
+    <tr><td>未読チャット数</td><td>メッセージ送信時にインクリメント、既読更新時にリセット</td><td>Redis</td></tr>
+    <tr><td>要対応フラグ</td><td><code>check-alerts</code>バッチで更新</td><td>Redis or PostgreSQL</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>フロントエンドは事前集計済みデータを取得するだけで、重い集計クエリを実行しない設計とする。</p>
+
+<!-- P2: Phase 3開始前に決定必須 -->
+<div class="h2">P2: Phase 3開始前に決定必須</div>
+
+<div class="h3">P2-1. PPTX内グラフ描画の技術選定</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>選択肢</th><th>メリット</th><th>デメリット</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>(A) pptxgenjsネイティブチャート</strong></td>
+      <td>追加依存なし、軽量</td>
+      <td>グラフの見た目がRechartsと異なる、カスタマイズ性が低い</td>
+    </tr>
+    <tr>
+      <td><strong>(B) Puppeteer + Rechartsスクリーンショット</strong></td>
+      <td>ダッシュボードと同じ見た目</td>
+      <td>Cloud Runでヘッドレスブラウザ運用のオーバーヘッド、生成速度が遅い</td>
+    </tr>
+    <tr>
+      <td><strong>(C) Chart.js + canvas → PNG → PPTX埋め込み</strong></td>
+      <td>サーバーサイドCanvas描画、中間の選択肢</td>
+      <td>Chart.jsの追加学習コスト</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>推奨:</strong> Phase 3開始前に、現行レポートの1スライドを各方式でPoC実施し、品質・速度・工数を比較。</p>
+
+<div class="h3">P2-2. Claude API所感生成の設計</div>
+
+<p><strong>プロンプト設計（要プロトタイプ）:</strong></p>
+
+<pre><code style="background:#1e293b;color:#e2e8f0;display:block;padding:1em;border-radius:8px;overflow-x:auto;">入力コンテキスト（1社あたり）:
+- 当月/前月/前年のKPI数値（SS, CV, ユーザー数）
+- KWフォーカスデータ（TOP変動5件）
+- コンテンツ進捗状況
+- 前月レポートの所感（トーンの一貫性のため）
+
+出力:
+- スライドごとの所感テキスト（200-400文字/スライド）
+- JSON形式で構造化</code></pre>
+
+<p><strong>コスト試算の検証が必要:</strong></p>
+<ul>
+  <li>1社あたりの入力トークン数（推定 2,000-4,000トークン）</li>
+  <li>1社あたりの出力トークン数（推定 3,000-5,000トークン）</li>
+  <li>120社 &times; 月1回 = 月120回。claude-sonnet-4-6の料金で月額を再計算</li>
+</ul>
+
+<p><strong>失敗時のフォールバック:</strong></p>
+<ul>
+  <li>Claude API障害時: 所感欄を「AI所感の生成に失敗しました。手動で入力してください。」として空欄で先に進む</li>
+  <li>不適切な出力時: テンプレートベースのフォールバック所感を表示（「前月比でオーガニックSSが{diff}%{増加/減少}しました。」等）</li>
+</ul>
+
+<div class="h3">P2-3. ナレッジベースの類似検索方式</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>選択肢</th><th>実装コスト</th><th>精度</th><th>備考</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>(A) PostgreSQL全文検索（pg_trgm）</strong></td>
+      <td>低</td>
+      <td>中</td>
+      <td>日本語の形態素解析が弱い</td>
+    </tr>
+    <tr>
+      <td><strong>(B) pgvector + Embedding</strong></td>
+      <td>中</td>
+      <td>高</td>
+      <td>Claude/OpenAI Embeddingで意味検索が可能</td>
+    </tr>
+    <tr>
+      <td><strong>(C) 外部検索サービス（Algolia等）</strong></td>
+      <td>高</td>
+      <td>高</td>
+      <td>追加コスト・依存</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>推奨:</strong> Phase 3時点では <strong>(A)</strong> でMVP。レコード数が増加し検索精度が課題になった時点で <strong>(B)</strong> に移行。</p>
+
+<!-- P3: 全Phase横断の技術課題 -->
+<div class="h2">P3: 全Phase横断の技術課題</div>
+
+<div class="h3">P3-1. マルチテナント分離の実装パターン</div>
+
+<p>Prismaミドルウェアの制限:</p>
+<ul>
+  <li><code>$queryRaw</code> / <code>$executeRaw</code> には適用されない</li>
+  <li>BigQueryクエリには一切効かない</li>
+  <li><code>User</code> テーブル等、<code>projectId</code> を持たないテーブルには適用不可</li>
+</ul>
+
+<p><strong>推奨設計:</strong></p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>レイヤー</th><th>分離方式</th></tr></thead>
+  <tbody>
+    <tr><td>PostgreSQL（Prisma経由）</td><td>Prismaミドルウェア + <code>@@index([projectId])</code></td></tr>
+    <tr><td>PostgreSQL（生SQL）</td><td>使用禁止。全クエリをPrisma経由に限定</td></tr>
+    <tr><td>BigQuery</td><td>クエリに必ず <code>WHERE project_id = @projectId</code> を含める。共通ユーティリティ関数で強制</td></tr>
+    <tr><td>API層</td><td>全エンドポイントで <code>requireProjectAccess(userId, projectId)</code> ミドルウェアを適用</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>テスト戦略:</strong></p>
+<ul>
+  <li>E2Eテストで「ユーザーAがプロジェクトBのデータにアクセスできないこと」を全主要エンドポイントで検証</li>
+  <li>テストシードに2テナント分のデータを投入し、クロステナントアクセスの防止を網羅的にテスト</li>
+</ul>
+
+<div class="h3">P3-2. ログ・監視基盤</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>要素</th><th>推奨</th><th>用途</th></tr></thead>
+  <tbody>
+    <tr><td><strong>構造化ログ</strong></td><td>Cloud Logging（Cloud Run標準出力で自動連携）</td><td>API応答時間、バッチジョブの進捗・エラー</td></tr>
+    <tr><td><strong>エラートラッキング</strong></td><td>Sentry（既定）</td><td>未ハンドルの例外、フロントエンドエラー</td></tr>
+    <tr><td><strong>死活監視</strong></td><td>UptimeRobot（既定）</td><td>エンドポイントの応答確認</td></tr>
+    <tr><td><strong>メトリクス</strong></td><td>Cloud Monitoring</td><td>CPU/メモリ使用率、DB接続数、キューの滞留数</td></tr>
+    <tr><td><strong>ログ保持期間</strong></td><td>30日（Cloud Logging標準）</td><td>要件次第で延長</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="h3">P3-3. DBマイグレーション戦略</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>項目</th><th>方針</th></tr></thead>
+  <tbody>
+    <tr><td><strong>ツール</strong></td><td>Prisma Migrate</td></tr>
+    <tr><td><strong>本番適用</strong></td><td>GitHub Actionsのデプロイパイプラインに組み込み。<code>prisma migrate deploy</code> を自動実行</td></tr>
+    <tr><td><strong>ロールバック</strong></td><td>Prisma Migrateはロールバック非対応。破壊的変更は「新カラム追加 → データ移行 → 旧カラム削除」の3ステップで段階的に実施</td></tr>
+    <tr><td><strong>ダウンタイム</strong></td><td>原則ゼロダウンタイム。テーブルロックが発生するALTER TABLE（大テーブルへのカラム追加等）は深夜メンテナンスウィンドウで実施</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="h3">P3-4. デプロイ戦略</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>項目</th><th>方針</th></tr></thead>
+  <tbody>
+    <tr><td><strong>デプロイ方式</strong></td><td>Cloud Runのローリングデプロイ（デフォルト）</td></tr>
+    <tr><td><strong>ロールバック</strong></td><td>Cloud Runのリビジョン切り戻し（<code>gcloud run services update-traffic</code>）</td></tr>
+    <tr><td><strong>バッチジョブ</strong></td><td>アプリケーションと同一コンテナ内。Cloud Schedulerからの定刻HTTPリクエストでトリガー</td></tr>
+    <tr><td><strong>環境</strong></td><td>staging（ステージング）+ production（本番）の2環境。mainブランチ → staging自動デプロイ → 手動承認で本番デプロイ</td></tr>
+    <tr><td><strong>フィーチャーフラグ</strong></td><td>Phase間の段階リリースに使用。環境変数 or DBベースのフラグ管理</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="h3">P3-5. フロントエンド技術選定の補足</div>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>要素</th><th>推奨</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>データフェッチ</strong></td>
+      <td>TanStack Query (React Query)</td>
+      <td>キャッシュ管理、楽観的更新、リアルタイムデータとの統合が容易</td>
+    </tr>
+    <tr>
+      <td><strong>クライアント状態</strong></td>
+      <td>Zustand（軽量）or Context API</td>
+      <td>カンバンD&amp;D状態、フィルタ条件等のUI状態管理</td>
+    </tr>
+    <tr>
+      <td><strong>リアルタイム統合</strong></td>
+      <td>Pusherイベント受信 → TanStack Queryのキャッシュを手動更新</td>
+      <td>APIキャッシュとリアルタイムデータの一貫性を保つ</td>
+    </tr>
+    <tr>
+      <td><strong>テーブル</strong></td>
+      <td>TanStack Table</td>
+      <td>120+社のソート/フィルタ/仮想スクロール対応</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>RSC（React Server Components）とクライアントコンポーネントの境界:</strong></p>
+<ul>
+  <li>サーバーコンポーネント: ページレイアウト、初期データフェッチ、SEOメタ</li>
+  <li>クライアントコンポーネント: チャート、カンバン、チャット、フィルタ付きテーブル、リアルタイム更新が必要なUI</li>
+</ul>
+
+<div class="h3">P3-6. 非同期ジョブのステータス管理（レポート生成等）</div>
+
+<p>レポート生成（<code>POST /api/clients/[id]/reports/generate</code>）等の非同期処理に対するステータス確認APIが必要。</p>
+
+<p><strong>追加エンドポイント:</strong></p>
+
+<div class="table-wrap">
+<table>
+  <thead><tr><th>メソッド</th><th>エンドポイント</th><th>説明</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>GET</code></td>
+      <td><code>/api/jobs/[jobId]</code></td>
+      <td>ジョブの進捗確認（<code>queued</code> / <code>processing</code> / <code>completed</code> / <code>failed</code>）</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>完了通知:</strong> Pusherで <code>job:completed</code> イベントを送信。フロントエンドはPolling不要。</p>
 
 
 <!-- ============================================================ -->
