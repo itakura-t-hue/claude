@@ -1,4 +1,13 @@
-node_modules/
-.~lock.*
-clients/
-skills/
+
+# 全て除外
+*
+
+# SEOダッシュボードだけ許可
+!tools/
+!tools/SEOダッシュボード/
+!tools/SEOダッシュボード/**
+
+# gitignore自体と.claudeは残す
+!.gitignore
+!.claude/
+!.claude/**
