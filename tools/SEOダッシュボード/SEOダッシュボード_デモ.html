@@ -777,26 +777,116 @@ body.portal-mode .chat-msg.self .chat-bubble { background: rgba(139, 92, 246, 0.
 .chat-send-btn:hover { background: #2563eb; }
 
 /* Reports */
-.slides-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-.slide-thumb {
+.report-section-card {
   background: #fff;
-  border-radius: 8px;
-  aspect-ratio: 16/9;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.report-section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.report-section-badge {
+  width: 32px; height: 32px;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
-  font-size: 10px;
-  color: #334155;
-  text-align: center;
-  font-weight: 500;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  line-height: 1.5;
-  border: 2px solid transparent;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
-.slide-thumb:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2); border-color: #3b82f6; }
-.slide-thumb.active { border-color: #3b82f6; background: #eff6ff; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); transform: scale(1.03); }
+.report-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.report-two-col {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 20px;
+}
+.looker-placeholder {
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+.looker-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.looker-label svg { width: 18px; height: 18px; }
+.looker-inner { width: 100%; flex: 1; display: flex; align-items: center; justify-content: center; }
+.ai-commentary-panel {
+  display: flex;
+  flex-direction: column;
+}
+.ai-commentary-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ai-commentary-textarea {
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #334155;
+  background: #fff;
+  resize: vertical;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.ai-commentary-textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.15); }
+.ai-commentary-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.report-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Print styles */
+@media print {
+  .sidebar, .topbar, .report-action-bar, .ai-commentary-actions,
+  .mobile-menu-toggle, .nav-item, .breadcrumb { display: none !important; }
+  .main-content { margin-left: 0 !important; padding: 0 !important; }
+  .report-section-card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; margin-bottom: 14px; }
+  .report-two-col { grid-template-columns: 55% 45%; gap: 12px; }
+  .ai-commentary-textarea { border: 1px solid #ccc; min-height: auto; }
+  body { background: #fff !important; }
+}
 .ai-draft-section {
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -1093,9 +1183,9 @@ body.portal-mode .btn-primary:hover { background: #7c3aed; }
   .chat-send { font-size: 11px; padding: 8px 12px; }
 
   /* --- Report --- */
-  .slides-grid { grid-template-columns: repeat(3, 1fr); }
-  .slide-thumb { padding: 8px; font-size: 9px; }
-  .ai-draft-textarea { font-size: 12px; min-height: 100px; }
+  .report-two-col { grid-template-columns: 1fr; }
+  .ai-commentary-textarea { font-size: 12px; min-height: 120px; }
+  .report-section-card { padding: 16px; }
   .btn-row { flex-wrap: wrap; gap: 6px; }
   .btn-primary, .btn-secondary { font-size: 12px; padding: 8px 14px; flex: 1; text-align: center; }
 
@@ -3149,226 +3239,197 @@ function renderChat(id, isPortal) {
   `;
 }
 
-// Report slide data (based on actual クライアントA社 monthly report)
-const REPORT_SLIDES = [
-  { id:'s1', num:1, title:'表紙', short:'表紙', type:'cover',
-    content:`<div style="text-align:center;padding:40px 20px;">
-      <div style="font-size:11px;color:#94a3b8;margin-bottom:8px;">2026年3月15日</div>
-      <div style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:4px;">2月次 SEO成果状況報告レポート</div>
-      <div style="font-size:14px;color:#64748b;">株式会社クライアントA社 御中</div>
-    </div>` },
-  { id:'s4', num:2, title:'全体概要', short:'全体概要', type:'text',
-    comment:'2月は季節性による就職需要の高まりを背景に、コーポレートページ（TOP・企業情報・採用ページ等）への流入が大きく増加しました。一方で、コラム記事（/column/配下）の流入は若干の減少傾向にあり、月間日数の差（1月31日→2月28日）が主要因と考えられます。3月に向けては、引き続きコラム施策による潜在層の獲得と、実装項目の進捗管理を両輪で進めてまいります。',
-    content:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
-      <div style="background:#eff6ff;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">総セッション</div><div style="font-size:22px;font-weight:800;color:#2563eb;">87,466</div><div style="font-size:11px;color:#10b981;">前年比 172%</div></div>
-      <div style="background:#f0fdf4;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">オーガニックセッション</div><div style="font-size:22px;font-weight:800;color:#059669;">40,600</div><div style="font-size:11px;color:#10b981;">前年比 220%</div></div>
-      <div style="background:#fefce8;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">CV数</div><div style="font-size:22px;font-weight:800;color:#d97706;">157件</div><div style="font-size:11px;color:#10b981;">前月比 215%</div></div>
-      <div style="background:#faf5ff;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">被リンク</div><div style="font-size:22px;font-weight:800;color:#7c3aed;">21,762</div><div style="font-size:11px;color:#10b981;">前月比 133%</div></div>
-    </div>` },
-  { id:'s6', num:3, title:'コラムコンテンツ状況', short:'コンテンツ状況', type:'text',
-    comment:'11月～1月分の記事は公開済みで、2月分は執筆中、3月分は企画作成中と、制作パイプラインは順調に進行しております。4月分についてもご承認をいただき次第で着手できる体制を整えておりますので、引き続きスムーズな進行にご協力いただけますと幸いです。',
-    content:`<div style="display:flex;gap:6px;margin-bottom:12px;">
-      <div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:8px;text-align:center;font-size:11px;"><div style="font-weight:700;color:#059669;">公開済み</div>11月〜1月</div>
-      <div style="flex:1;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:8px;text-align:center;font-size:11px;"><div style="font-weight:700;color:#2563eb;">執筆中</div>2月分</div>
-      <div style="flex:1;background:#fefce8;border:1px solid #fde68a;border-radius:6px;padding:8px;text-align:center;font-size:11px;"><div style="font-weight:700;color:#d97706;">企画中</div>3月分</div>
-      <div style="flex:1;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:8px;text-align:center;font-size:11px;"><div style="font-weight:700;color:#94a3b8;">未着手</div>4月分</div>
-    </div>` },
-  { id:'s7', num:4, title:'サービスページ改善施策', short:'改善施策', type:'text',
-    comment:'内部実装項目の全体進捗率は39.5％となっております。「CTAの強化＿コラム部分について」はテスト環境下で実装済みとなりましたので、本番環境への反映を進めることで成果への寄与が期待できます。',
-    content:`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>全体進捗率</span><span style="font-weight:700;">39.5%</span></div><div style="height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden;"><div style="width:39.5%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:5px;"></div></div></div>` },
-  { id:'s9', num:5, title:'チャンネル別流入数', short:'チャンネル別', type:'chart',
-    comment:'2月の総セッション数は87,466で、昨年同月（50,757）対比で約172％と大幅に増加しました。チャンネル別ではOrganic Searchが40,969（昨年18,798比 約218％）と引き続き最大の流入源となっております。Paid Searchも16,834、Paid Socialも12,785と、有料施策との相乗効果もみられます。',
-    content:`<div style="font-size:12px;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:10px;height:10px;border-radius:2px;background:#3b82f6;"></div><span>Organic Search</span><span style="margin-left:auto;font-weight:700;">40,969</span><span style="color:#10b981;font-size:11px;">218%</span></div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:10px;height:10px;border-radius:2px;background:#8b5cf6;"></div><span>Paid Search</span><span style="margin-left:auto;font-weight:700;">16,834</span></div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:10px;height:10px;border-radius:2px;background:#10b981;"></div><span>Paid Social</span><span style="margin-left:auto;font-weight:700;">12,785</span></div>
-      <div style="display:flex;align-items:center;gap:8px;"><div style="width:10px;height:10px;border-radius:2px;background:#f59e0b;"></div><span>Direct</span><span style="margin-left:auto;font-weight:700;">9,245</span></div>
-    </div>` },
-  { id:'s10', num:6, title:'オーガニックセッション推移', short:'オーガニックセッション', type:'chart',
-    comment:'オーガニックセッション数は2月で40,600となり、昨月（40,371）対比101％、昨年同月（18,456）対比220％と、前月比・前年比ともに伸長しました。コラム記事での流入は月間日数の差などにより若干減少したものの、季節性による就職需要の高まりでコラム以外のコーポレートページからの流入増加がそれを補っている状況です。',
-    content:'__SS_CHART__' },
-  { id:'s11', num:7, title:'magazine配下 vs magazine以外', short:'セグメント別', type:'chart',
-    comment:'/column/配下のセッション数は2月で19,789（昨月21,132から減少）となりました。一方、/column/以外のセッション数は21,736（昨月20,225から増加）と伸長しています。コラムの減少は主に月間日数差（31日→28日）によるものと考えられ、日次ベースでは大きな落ち込みはございません。',
-    content:`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>/column/ 配下</span><span style="font-weight:700;">19,789</span></div><div style="height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden;"><div style="width:47.7%;height:100%;background:#3b82f6;border-radius:5px;"></div></div></div>
-    <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>その他ページ</span><span style="font-weight:700;">21,736</span></div><div style="height:10px;background:#f1f5f9;border-radius:5px;overflow:hidden;"><div style="width:52.3%;height:100%;background:#10b981;border-radius:5px;"></div></div></div>` },
-  { id:'s12', num:8, title:'ユーザー数推移', short:'ユーザー数', type:'text',
-    comment:'総ユーザー数は2月で27,476（昨月27,822からほぼ横ばい）となりました。昨年同月（10,560）対比では約260％と大幅増を維持しております。',
-    content:`<div style="text-align:center;padding:10px;"><div style="font-size:11px;color:#64748b;">総ユーザー数</div><div style="font-size:28px;font-weight:800;color:#0f172a;">27,476</div><div style="font-size:12px;color:#10b981;">前年比 260%</div></div>` },
-  { id:'s13', num:9, title:'入口ページランキングTOP10', short:'LP TOP10', type:'table',
-    comment:'TOPページ（9,918セッション、+1.7％）および企業情報ページ（1,066セッション、+21.8％）が上位を維持し、季節性による就職需要の増加を反映しています。コラム記事では「サンプル記事タイトルA」（812セッション）、「サンプルKW_B」（749セッション）などが安定した流入を獲得しております。',
-    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">1</td><td>TOPページ</td><td style="text-align:right;font-weight:600;">9,918</td><td style="text-align:right;color:#10b981;">+1.7%</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">2</td><td>企業情報</td><td style="text-align:right;font-weight:600;">1,066</td><td style="text-align:right;color:#10b981;">+21.8%</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">3</td><td>サンプル記事タイトルA</td><td style="text-align:right;font-weight:600;">812</td><td style="text-align:right;color:#64748b;">-</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">4</td><td>サンプルKW_B</td><td style="text-align:right;font-weight:600;">749</td><td style="text-align:right;color:#64748b;">-</td></tr>
-      <tr><td style="padding:4px 6px;font-weight:600;">5</td><td>採用情報</td><td style="text-align:right;font-weight:600;">680</td><td style="text-align:right;color:#10b981;">+8.2%</td></tr>
-    </table>` },
-  { id:'s14', num:10, title:'アクセスランキングTOP20', short:'アクセスTOP20', type:'table',
-    comment:'アクセス数ランキングでは、TOPページ（15,230PV）が引き続き1位を維持。コラム記事「サンプル記事タイトルA」（4,120PV）、「サンプルKW_B」（3,890PV）が2位・3位と安定した集客力を発揮しております。',
-    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">1</td><td>TOPページ</td><td style="text-align:right;font-weight:600;">15,230 PV</td><td style="text-align:right;color:#10b981;">+5.2%</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">2</td><td>サンプル記事タイトルA</td><td style="text-align:right;font-weight:600;">4,120 PV</td><td style="text-align:right;color:#64748b;">-1.2%</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">3</td><td>サンプルKW_B</td><td style="text-align:right;font-weight:600;">3,890 PV</td><td style="text-align:right;color:#10b981;">+3.8%</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">4</td><td>企業情報</td><td style="text-align:right;font-weight:600;">2,340 PV</td><td style="text-align:right;color:#10b981;">+18.5%</td></tr>
-      <tr><td style="padding:4px 6px;font-weight:600;">5</td><td>採用情報</td><td style="text-align:right;font-weight:600;">1,890 PV</td><td style="text-align:right;color:#10b981;">+12.1%</td></tr>
-    </table>` },
-  { id:'s15', num:11, title:'CV数推移', short:'CV推移', type:'chart',
-    comment:'2月のオーガニックCV総数は157件（昨月73件から大幅増、昨年同月146件対比でも増加）となりました。特にsample_cv_event_1が133件と、昨月（65件）から倍増しております。季節性による就職需要の高まりが大きな要因ですが、SEO施策による自然検索流入の底上げが、CV数の伸びにしっかり結びついている結果です。',
-    content:`<div style="text-align:center;padding:8px;"><div style="font-size:11px;color:#64748b;">オーガニックCV合計</div><div style="font-size:28px;font-weight:800;color:#059669;">157件</div><div style="font-size:12px;color:#10b981;">前月比 215%</div></div>
-    <div style="font-size:11px;margin-top:8px;">
-      <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span>介護職応募（kaigo_timestamp）</span><span style="font-weight:700;">133件</span></div>
-      <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span>問い合わせフォーム</span><span style="font-weight:700;">15件</span></div>
-      <div style="display:flex;justify-content:space-between;padding:4px 0;"><span>資料ダウンロード</span><span style="font-weight:700;">9件</span></div>
-    </div>` },
-  { id:'s18', num:12, title:'KWフォーカス（前年プラス）', short:'KW前年+', type:'table',
-    comment:'「クライアントA社」（+297）、「クライアントA社アンドパートナーズ」（+290）など指名検索ワードが大きく伸長。「サンプルKW_A」（+174）、「サンプルKW_B（ロングテール）」（+95）など、コラム施策で新規に獲得した記事系KWも堅調に推移しております。',
-    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">クライアントA社</td><td style="text-align:right;color:#10b981;font-weight:700;">+297</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">クライアントA社アンドパートナーズ</td><td style="text-align:right;color:#10b981;font-weight:700;">+290</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_A</td><td style="text-align:right;color:#10b981;font-weight:700;">+174</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプル記事タイトルA</td><td style="text-align:right;color:#10b981;font-weight:700;">+151</td></tr>
-      <tr><td style="padding:3px 6px;">サンプルKW_B（ロングテール）</td><td style="text-align:right;color:#10b981;font-weight:700;">+95</td></tr>
-    </table>` },
-  { id:'s19', num:13, title:'KWフォーカス（前年マイナス）', short:'KW前年-', type:'table',
-    comment:'前年比でマイナスとなったKWはごくわずかですが、「サンプルKW_C」（-180）は競合サイトの台頭により順位を落とした影響です。「サンプルKW_G」（-45）はAI Overviewの拡大による影響と推察されます。',
-    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_C</td><td style="text-align:right;color:#ef4444;font-weight:700;">-180</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_G <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-45</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_D</td><td style="text-align:right;color:#ef4444;font-weight:700;">-32</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_E</td><td style="text-align:right;color:#ef4444;font-weight:700;">-18</td></tr>
-      <tr><td style="padding:3px 6px;">サンプルKW_F</td><td style="text-align:right;color:#ef4444;font-weight:700;">-12</td></tr>
-    </table>` },
-  { id:'s20b', num:14, title:'KWフォーカス（前月プラス）', short:'KW前月+', type:'table',
-    comment:'前月比では「サンプルKW_K」（+89）が大きく伸長。新規公開記事の初月流入が好調です。「クライアントA社」（+45）は季節性による採用需要の増加が寄与しています。',
-    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_K</td><td style="text-align:right;color:#10b981;font-weight:700;">+89</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">クライアントA社</td><td style="text-align:right;color:#10b981;font-weight:700;">+45</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_J</td><td style="text-align:right;color:#10b981;font-weight:700;">+38</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_B（ロングテール）</td><td style="text-align:right;color:#10b981;font-weight:700;">+22</td></tr>
-      <tr><td style="padding:3px 6px;">サンプルKW_N</td><td style="text-align:right;color:#10b981;font-weight:700;">+15</td></tr>
-    </table>` },
-  { id:'s20', num:15, title:'KWフォーカス（前月マイナス）', short:'KW前月-', type:'table',
-    comment:'「サンプル記事タイトルA」（-58）、「サンプルKW_A」（-47）は月間日数差の影響。「サンプルKW_D」や「サンプルKW_G」では順位上昇にもかかわらず表示回数が大幅減少しており、AIO（AI Overview）によるゼロクリック検索の影響が推察されます。今後のAIO対策の重要性を示唆するデータです。',
-    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプル記事タイトルA</td><td style="text-align:right;color:#ef4444;font-weight:700;">-58</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_A</td><td style="text-align:right;color:#ef4444;font-weight:700;">-47</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_C</td><td style="text-align:right;color:#ef4444;font-weight:700;">-35</td></tr>
-      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_D <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-28</td></tr>
-      <tr><td style="padding:3px 6px;">サンプルKW_G <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-22</td></tr>
-    </table>` },
-  { id:'s22', num:16, title:'外部リンク数の推移', short:'被リンク', type:'chart',
-    comment:'2月の被リンク数は21,762と、直近で最大値を記録しました（昨月16,370から約33％増）。獲得元ドメインも計189サイトに達しており、example-referer-1.jp（4,847件）、example-referer-2.jp（3,163件）、example-referer-3.jp（2,385件）といった権威性の高いドメインからのリンクが安定しております。',
-    content:`<div style="text-align:center;padding:8px;"><div style="font-size:11px;color:#64748b;">被リンク数</div><div style="font-size:28px;font-weight:800;color:#7c3aed;">21,762</div><div style="font-size:12px;color:#10b981;">前月比 +33%</div></div>
-    <div style="font-size:11px;margin-top:8px;">
-      <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f1f5f9;"><span>example-referer-1.jp</span><span style="font-weight:600;">4,847件</span></div>
-      <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f1f5f9;"><span>example-referer-2.jp</span><span style="font-weight:600;">3,163件</span></div>
-      <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>example-referer-3.jp</span><span style="font-weight:600;">2,385件</span></div>
-    </div>` },
-  { id:'s25', num:17, title:'次月アクションプラン', short:'次月計画', type:'text',
-    comment:'3月の重点施策として、以下の4項目を計画しております。特にコアアップデートへの対応として、E-E-A-Tシグナルの強化を優先的に進めてまいります。',
-    content:`<div style="font-size:12px;line-height:1.8;">
-      <div style="padding:10px;background:#eff6ff;border-radius:8px;margin-bottom:8px;">
-        <div style="font-weight:700;color:#2563eb;margin-bottom:4px;">1. コンテンツ施策</div>
-        <div style="color:#64748b;">・サンプルKW_H/サンプルKW_I 新規記事公開（4月）<br>・サンプルKW_C リライト実施（優先度スコア92）<br>・リライト候補3記事の企画策定</div>
-      </div>
-      <div style="padding:10px;background:#f0fdf4;border-radius:8px;margin-bottom:8px;">
-        <div style="font-weight:700;color:#059669;margin-bottom:4px;">2. テクニカルSEO</div>
-        <div style="color:#64748b;">・FAQスキーマ構造化データ実装<br>・CTA配置A/Bテスト実施<br>・内部リンク最適化</div>
-      </div>
-      <div style="padding:10px;background:#faf5ff;border-radius:8px;margin-bottom:8px;">
-        <div style="font-weight:700;color:#7c3aed;margin-bottom:4px;">3. 外部リンク施策</div>
-        <div style="color:#64748b;">・被リンク獲得キャンペーン企画立案<br>・業界メディアへの寄稿記事準備</div>
-      </div>
-      <div style="padding:10px;background:#fefce8;border-radius:8px;">
-        <div style="font-weight:700;color:#d97706;margin-bottom:4px;">4. モニタリング</div>
-        <div style="color:#64748b;">・3月コアアップデート影響の継続観察<br>・AI Overview対策の検討</div>
-      </div>
-    </div>` },
+// Report section data (Looker Studio + AI commentary layout)
+const REPORT_SECTIONS = [
+  { num:1, title:'全体概要サマリー', type:'text',
+    comment:'2月は季節性による就職需要の高まりを背景に、コーポレートページ（TOP・企業情報・採用ページ等）への流入が大きく増加しました。一方で、コラム記事（/column/配下）の流入は若干の減少傾向にあり、月間日数の差（1月31日→2月28日）が主要因と考えられます。3月に向けては、引き続きコラム施策による潜在層の獲得と、実装項目の進捗管理を両輪で進めてまいります。' },
+  { num:2, title:'コラムコンテンツ状況', type:'text',
+    comment:'11月〜1月分の記事は公開済みで、2月分は執筆中、3月分は企画作成中と、制作パイプラインは順調に進行しております。4月分についてもご承認をいただき次第で着手できる体制を整えておりますので、引き続きスムーズな進行にご協力いただけますと幸いです。' },
+  { num:3, title:'サービスページ改善施策', type:'text',
+    comment:'内部実装項目の全体進捗率は39.5％となっております。「CTAの強化＿コラム部分について」はテスト環境下で実装済みとなりましたので、本番環境への反映を進めることで成果への寄与が期待できます。' },
+  { num:4, title:'チャンネル別流入数', type:'chart',
+    comment:'2月の総セッション数は87,466で、昨年同月（50,757）対比で約172％と大幅に増加しました。チャンネル別ではOrganic Searchが40,969（昨年18,798比 約218％）と引き続き最大の流入源となっております。Paid Searchも16,834、Paid Socialも12,785と、有料施策との相乗効果もみられます。' },
+  { num:5, title:'オーガニックセッション推移', type:'chart',
+    comment:'オーガニックセッション数は2月で40,600となり、昨月（40,371）対比101％、昨年同月（18,456）対比220％と、前月比・前年比ともに伸長しました。コラム記事での流入は月間日数の差などにより若干減少したものの、季節性による就職需要の高まりでコラム以外のコーポレートページからの流入増加がそれを補っている状況です。' },
+  { num:6, title:'magazine配下 vs その他', type:'chart',
+    comment:'/column/配下のセッション数は2月で19,789（昨月21,132から減少）となりました。一方、/column/以外のセッション数は21,736（昨月20,225から増加）と伸長しています。コラムの減少は主に月間日数差（31日→28日）によるものと考えられ、日次ベースでは大きな落ち込みはございません。' },
+  { num:7, title:'ユーザー数推移', type:'chart',
+    comment:'総ユーザー数は2月で27,476（昨月27,822からほぼ横ばい）となりました。昨年同月（10,560）対比では約260％と大幅増を維持しております。' },
+  { num:8, title:'入口ページランキングTOP20', type:'table',
+    comment:'TOPページ（9,918セッション、+1.7％）および企業情報ページ（1,066セッション、+21.8％）が上位を維持し、季節性による就職需要の増加を反映しています。コラム記事では「サンプル記事タイトルA」（812セッション）、「サンプルKW_B」（749セッション）などが安定した流入を獲得しております。' },
+  { num:9, title:'アクセスランキングTOP20', type:'table',
+    comment:'アクセス数ランキングでは、TOPページ（15,230PV）が引き続き1位を維持。コラム記事「サンプル記事タイトルA」（4,120PV）、「サンプルKW_B」（3,890PV）が2位・3位と安定した集客力を発揮しております。' },
+  { num:10, title:'CV数推移', type:'chart',
+    comment:'2月のオーガニックCV総数は157件（昨月73件から大幅増、昨年同月146件対比でも増加）となりました。特にsample_cv_event_1が133件と、昨月（65件）から倍増しております。季節性による就職需要の高まりが大きな要因ですが、SEO施策による自然検索流入の底上げが、CV数の伸びにしっかり結びついている結果です。' },
+  { num:11, title:'KWフォーカス（前年プラス）', type:'table',
+    comment:'「クライアントA社」（+297）、「クライアントA社アンドパートナーズ」（+290）など指名検索ワードが大きく伸長。「サンプルKW_A」（+174）、「サンプルKW_B（ロングテール）」（+95）など、コラム施策で新規に獲得した記事系KWも堅調に推移しております。' },
+  { num:12, title:'KWフォーカス（前年マイナス）', type:'table',
+    comment:'前年比でマイナスとなったKWはごくわずかですが、「サンプルKW_C」（-180）は競合サイトの台頭により順位を落とした影響です。「サンプルKW_G」（-45）はAI Overviewの拡大による影響と推察されます。' },
+  { num:13, title:'KWフォーカス（前月プラス）', type:'table',
+    comment:'前月比では「サンプルKW_K」（+89）が大きく伸長。新規公開記事の初月流入が好調です。「クライアントA社」（+45）は季節性による採用需要の増加が寄与しています。' },
+  { num:14, title:'KWフォーカス（前月マイナス）', type:'table',
+    comment:'「サンプル記事タイトルA」（-58）、「サンプルKW_A」（-47）は月間日数差の影響。「サンプルKW_D」や「サンプルKW_G」では順位上昇にもかかわらず表示回数が大幅減少しており、AIO（AI Overview）によるゼロクリック検索の影響が推察されます。今後のAIO対策の重要性を示唆するデータです。' },
+  { num:15, title:'外部リンク数推移', type:'chart',
+    comment:'2月の被リンク数は21,762と、直近で最大値を記録しました（昨月16,370から約33％増）。獲得元ドメインも計189サイトに達しており、example-referer-1.jp（4,847件）、example-referer-2.jp（3,163件）、example-referer-3.jp（2,385件）といった権威性の高いドメインからのリンクが安定しております。' },
+  { num:16, title:'改善施策の進捗', type:'text',
+    comment:'内部実装項目の全体進捗率は39.5％となっております。「CTAの強化＿コラム部分について」はテスト環境下で実装済みとなりましたので、本番環境への反映を進めることで成果への寄与が期待できます。優先度の高い残課題として、FAQスキーマ実装と内部リンク最適化を3月中に完了予定です。' },
+  { num:17, title:'次月アクションプラン', type:'text',
+    comment:'3月の重点施策として、以下の4項目を計画しております。特にコアアップデートへの対応として、E-E-A-Tシグナルの強化を優先的に進めてまいります。コンテンツ施策ではサンプルKW_H/サンプルKW_I 新規記事公開、テクニカルSEOではFAQスキーマ実装とCTA A/Bテストを実施予定です。' },
 ];
+
+// Backward compat alias
+const REPORT_SLIDES = REPORT_SECTIONS;
+
+function buildLookerMockContent(section) {
+  const lookerIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 17V13M12 17V9M17 17V7"/></svg>';
+
+  if (section.type === 'chart') {
+    // Mock line/bar chart SVG
+    return `<div class="looker-placeholder">
+      <div class="looker-label">${lookerIcon} Looker Studio</div>
+      <div class="looker-inner">
+        <svg width="100%" height="160" viewBox="0 0 360 160" style="max-width:360px;">
+          <defs><linearGradient id="lg${section.num}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.2"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0.02"/></linearGradient></defs>
+          <line x1="30" y1="140" x2="350" y2="140" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="30" y1="105" x2="350" y2="105" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="4"/>
+          <line x1="30" y1="70" x2="350" y2="70" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="4"/>
+          <line x1="30" y1="35" x2="350" y2="35" stroke="#f1f5f9" stroke-width="1" stroke-dasharray="4"/>
+          <path d="M30,120 L70,110 L110,95 L150,100 L190,85 L230,70 L270,55 L310,45 L350,40" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M30,120 L70,110 L110,95 L150,100 L190,85 L230,70 L270,55 L310,45 L350,40 L350,140 L30,140Z" fill="url(#lg${section.num})"/>
+          ${[30,70,110,150,190,230,270,310,350].map((x,i) => `<circle cx="${x}" cy="${[120,110,95,100,85,70,55,45,40][i]}" r="3" fill="#3b82f6"/>`).join('')}
+          <text x="30" y="155" font-size="9" fill="#94a3b8">4月</text><text x="110" y="155" font-size="9" fill="#94a3b8">7月</text><text x="190" y="155" font-size="9" fill="#94a3b8">10月</text><text x="270" y="155" font-size="9" fill="#94a3b8">1月</text><text x="340" y="155" font-size="9" fill="#94a3b8">3月</text>
+        </svg>
+      </div>
+    </div>`;
+  }
+  if (section.type === 'table') {
+    // Mock table
+    // rows: [name, value, change_text, color]
+    const rows = section.num === 8 ? [
+      ['TOPページ','9,918','+1.7%','#10b981'],['企業情報','1,066','+21.8%','#10b981'],['サンプル記事A','812','-','#64748b'],['採用情報','680','+8.2%','#10b981']
+    ] : section.num === 9 ? [
+      ['TOPページ','15,230 PV','+5.2%','#10b981'],['サンプル記事A','4,120 PV','-1.2%','#ef4444'],['サンプルKW_B','3,890 PV','+3.8%','#10b981'],['企業情報','2,340 PV','+18.5%','#10b981']
+    ] : section.num === 11 ? [
+      ['クライアントA社','1,245','+297','#10b981'],['A社アンドパートナーズ','890','+290','#10b981'],['サンプルKW_A','612','+174','#10b981'],['サンプルKW_B','389','+95','#10b981']
+    ] : section.num === 12 ? [
+      ['サンプルKW_C','320','-180','#ef4444'],['サンプルKW_G','85','-45','#ef4444'],['サンプルKW_D','148','-32','#ef4444'],['サンプルKW_E','92','-18','#ef4444']
+    ] : section.num === 13 ? [
+      ['サンプルKW_K','245','+89','#10b981'],['クライアントA社','1,245','+45','#10b981'],['サンプルKW_J','178','+38','#10b981'],['サンプルKW_N','95','+15','#10b981']
+    ] : [
+      ['サンプル記事A','754','-58','#ef4444'],['サンプルKW_A','565','-47','#ef4444'],['サンプルKW_C','285','-35','#ef4444'],['サンプルKW_D','120','-28','#ef4444']
+    ];
+    return `<div class="looker-placeholder">
+      <div class="looker-label">${lookerIcon} Looker Studio</div>
+      <div class="looker-inner" style="width:100%;align-items:flex-start;">
+        <table style="width:100%;font-size:12px;border-collapse:collapse;">
+          <thead><tr style="border-bottom:2px solid #e2e8f0;"><th style="text-align:left;padding:6px 8px;font-weight:600;color:#64748b;font-size:11px;">項目</th><th style="text-align:right;padding:6px 8px;font-weight:600;color:#64748b;font-size:11px;">数値</th><th style="text-align:right;padding:6px 8px;font-weight:600;color:#64748b;font-size:11px;">変化</th></tr></thead>
+          <tbody>${rows.map(r => `<tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:6px 8px;">${r[0]}</td><td style="text-align:right;padding:6px 8px;font-weight:600;">${r[1]}</td><td style="text-align:right;padding:6px 8px;color:${r[3]};font-weight:600;">${r[2]}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`;
+  }
+  // text type - mock bullet points
+  const bullets = section.num === 1 ? [
+    '総セッション: 87,466（前年比 172%）',
+    'オーガニックセッション: 40,600（前年比 220%）',
+    'CV数: 157件（前月比 215%）',
+    '被リンク: 21,762（前月比 133%）'
+  ] : section.num === 2 ? [
+    '11月〜1月分: 公開済み',
+    '2月分: 執筆中（3本）',
+    '3月分: 企画作成中',
+    '4月分: 承認待ち'
+  ] : section.num === 3 ? [
+    '全体進捗率: 39.5%',
+    'CTA強化（コラム部分）: テスト環境実装済み',
+    'FAQスキーマ: 実装準備中',
+    '内部リンク最適化: 3月着手予定'
+  ] : section.num === 16 ? [
+    '全体進捗率: 39.5%（前月 32.1%から改善）',
+    '完了: CTA強化、メタ情報最適化',
+    '進行中: FAQスキーマ実装、内部リンク最適化',
+    '未着手: ページ速度改善、画像最適化'
+  ] : [
+    'コンテンツ: KW_H/KW_I 新規記事公開',
+    'テクニカル: FAQスキーマ・CTA A/Bテスト',
+    '外部リンク: 被リンク獲得キャンペーン企画',
+    'モニタリング: コアアップデート影響観察'
+  ];
+  return `<div class="looker-placeholder">
+    <div class="looker-label">${lookerIcon} Looker Studio</div>
+    <div class="looker-inner" style="width:100%;align-items:flex-start;">
+      <ul style="list-style:none;padding:0;margin:0;width:100;">
+        ${bullets.map(b => `<li style="padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px;color:#334155;display:flex;align-items:center;gap:8px;"><span style="width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0;"></span>${b}</li>`).join('')}
+      </ul>
+    </div>
+  </div>`;
+}
 
 function renderReports(id, isPortal) {
   const clientNames = { 1: 'クライアントA社', 2: 'クライアントB社', 3: 'クライアントC社' };
-  const title = isPortal ? 'レポート' : `${clientNames[id]} - レポート`;
+  const clientName = clientNames[id] || 'クライアントA社';
 
   if (isPortal) {
     return `
-      <h1 class="page-title">${title}</h1>
+      <h1 class="page-title">レポート</h1>
       <div class="report-list-item">
         <div>
           <div class="report-list-title">2月次 SEO成果状況報告レポート</div>
           <div class="report-list-date">2026年3月15日</div>
         </div>
-        <button class="btn-primary" style="font-size:12px;padding:8px 14px;">PDF ダウンロード</button>
+        <button class="btn-primary" style="font-size:12px;padding:8px 14px;" onclick="window.print()">PDF ダウンロード</button>
       </div>
       <div class="report-list-item">
         <div>
           <div class="report-list-title">1月次 SEO成果状況報告レポート</div>
           <div class="report-list-date">2026年2月14日</div>
         </div>
-        <button class="btn-primary" style="font-size:12px;padding:8px 14px;">PDF ダウンロード</button>
+        <button class="btn-primary" style="font-size:12px;padding:8px 14px;" onclick="window.print()">PDF ダウンロード</button>
       </div>
       <div class="report-list-item">
         <div>
           <div class="report-list-title">12月次 SEO成果状況報告レポート</div>
           <div class="report-list-date">2026年1月17日</div>
         </div>
-        <button class="btn-primary" style="font-size:12px;padding:8px 14px;">PDF ダウンロード</button>
+        <button class="btn-primary" style="font-size:12px;padding:8px 14px;" onclick="window.print()">PDF ダウンロード</button>
       </div>
     `;
   }
 
-  // SS chart for slide 6
-  const ssChartData = [28500,30200,31800,33400,35000,34200,36100,37800,38500,39200,40100,40600];
-  const ssLabels = ['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'];
-  const ssChart = lineChartSVG(ssChartData, 320, 140, '#3b82f6', '#3b82f6', ssLabels);
+  const sectionsHtml = REPORT_SECTIONS.map(s => `
+    <div class="report-section-card" id="report-sec-${s.num}">
+      <div class="report-section-header">
+        <div class="report-section-badge">${s.num}</div>
+        <div class="report-section-title">${s.title}</div>
+      </div>
+      <div class="report-two-col">
+        <div>${buildLookerMockContent(s)}</div>
+        <div class="ai-commentary-panel">
+          <div class="ai-commentary-label">AI所感ドラフト</div>
+          <textarea class="ai-commentary-textarea" id="commentary-${s.num}">${s.comment}</textarea>
+          <div class="ai-commentary-actions">
+            <button class="btn-secondary" style="font-size:11px;padding:4px 10px;">AI再生成</button>
+            <button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="document.getElementById('commentary-${s.num}').value=''">クリア</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
 
   return `
-    <h1 class="page-title">${title}</h1>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-      <div style="font-size:14px;font-weight:600;color:#334155;">2月次レポート　<span style="font-size:11px;color:#94a3b8;font-weight:400;">全${REPORT_SLIDES.length}セクション</span></div>
-      <div class="btn-row" style="margin:0;">
-        <button class="btn-primary" style="font-size:12px;padding:6px 14px;">PDF出力</button>
+    <h1 class="page-title">${clientName} - 月次レポート（2026年2月）</h1>
+    <div class="report-action-bar">
+      <div style="font-size:14px;font-weight:600;color:#334155;">全${REPORT_SECTIONS.length}セクション</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <select class="btn-secondary" style="font-size:12px;padding:6px 12px;cursor:pointer;">
+          <option>2026年2月</option>
+          <option>2026年1月</option>
+          <option>2025年12月</option>
+        </select>
+        <button class="btn-primary" style="font-size:12px;padding:6px 14px;" onclick="window.print()">PDF出力</button>
       </div>
     </div>
-
-    <!-- セクションナビゲーション（横スクロールストリップ） -->
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
-      <button class="btn-secondary" style="padding:6px 10px;font-size:14px;flex-shrink:0;" onclick="navigateSlide(-1)">&#8249;</button>
-      <div style="flex:1;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;" id="slidesStrip">
-        <div style="display:flex;gap:6px;padding:2px 0;" id="slidesThumbs">
-          ${REPORT_SLIDES.map((s, i) => `
-            <div class="slide-thumb ${i === 0 ? 'active' : ''}" data-slide="${i}" onclick="selectSlide(${i})" style="min-width:80px;max-width:80px;aspect-ratio:16/10;padding:6px;font-size:9px;">
-              <div>
-                <div style="font-size:7px;color:#94a3b8;margin-bottom:1px;">P.${s.num}</div>
-                <div style="font-size:9px;font-weight:600;line-height:1.3;">${s.short}</div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-      <button class="btn-secondary" style="padding:6px 10px;font-size:14px;flex-shrink:0;" onclick="navigateSlide(1)">&#8250;</button>
-    </div>
-
-    <!-- メインエリア：Looker Studio埋め込み + セクション内容 -->
-    <div class="chart-container" style="margin-bottom:16px;min-height:280px;" id="slideContent">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-        <div style="font-size:18px;font-weight:700;color:#0f172a;" id="slideTitle">P.1 表紙</div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="font-size:11px;color:#94a3b8;" id="slideNav">1 / ${REPORT_SLIDES.length}</span>
-        </div>
-      </div>
-      <div id="slideBody" style="font-size:13px;">${REPORT_SLIDES[0].content}</div>
-    </div>
-
-    <!-- AI所感 -->
-    <div class="chart-container" style="margin-bottom:0;">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
-        <span style="font-size:14px;">🤖</span>
-        <span style="font-size:14px;font-weight:600;color:#334155;">AI所感ドラフト</span>
-        <span style="font-size:10px;color:#94a3b8;margin-left:auto;">このセクションに対するコメント・所感を編集できます</span>
-      </div>
-      <textarea class="ai-draft-textarea" id="slideComment" style="min-height:120px;font-size:13px;line-height:1.8;">${REPORT_SLIDES[0].comment || '（表紙にはコメントはありません）'}</textarea>
-    </div>
+    ${sectionsHtml}
   `;
 }
 
@@ -4108,46 +4169,11 @@ function closeSidebar() {
   });
 })();
 
-// ============ REPORT SLIDE NAVIGATION ============
+// ============ REPORT SECTION (no slide navigation needed - scrollable list) ============
+// Legacy stubs for backward compatibility
 let currentSlide = 0;
-
-function selectSlide(idx) {
-  currentSlide = idx;
-  const s = REPORT_SLIDES[idx];
-  const titleEl = $('#slideTitle');
-  const navEl = $('#slideNav');
-  const bodyEl = $('#slideBody');
-  const commentEl = $('#slideComment');
-  if (!titleEl) return;
-
-  titleEl.textContent = `P.${s.num} ${s.title}`;
-  if (navEl) navEl.textContent = `${idx + 1} / ${REPORT_SLIDES.length}`;
-
-  // Handle chart slide
-  let content = s.content;
-  if (content === '__SS_CHART__') {
-    const ssData = [28500,30200,31800,33400,35000,34200,36100,37800,38500,39200,40100,40600];
-    const ssLabels = ['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'];
-    content = lineChartSVG(ssData, 380, 160, '#3b82f6', '#3b82f6', ssLabels);
-  }
-  bodyEl.innerHTML = content;
-  commentEl.value = s.comment || '（このセクションにはコメントはありません）';
-
-  // Update thumb active
-  $$('#slidesThumbs .slide-thumb').forEach((t, i) => {
-    t.classList.toggle('active', i === idx);
-  });
-}
-
-function navigateSlide(dir) {
-  let next = currentSlide + dir;
-  if (next < 0) next = REPORT_SLIDES.length - 1;
-  if (next >= REPORT_SLIDES.length) next = 0;
-  selectSlide(next);
-  // Scroll thumb into view
-  const thumb = $$('#slidesThumbs .slide-thumb')[next];
-  if (thumb) thumb.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' });
-}
+function selectSlide(idx) {}
+function navigateSlide(dir) {}
 
 // ============ PAGE RANK POPUP ============
 let activePopup = null;
