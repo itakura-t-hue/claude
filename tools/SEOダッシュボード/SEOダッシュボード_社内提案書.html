@@ -35,14 +35,11 @@
   /* ── Slide base (A4 landscape: 297×210mm) ── */
   .slide {
     background: var(--white);
-    width: 1123px;
-    min-width: 1123px;
+    aspect-ratio: 297 / 210; /* A4横向き */
+    width: 100%;
     max-width: 1123px;
-    height: 794px;
-    min-height: 794px;
-    max-height: 794px;
     padding: 32px 40px;
-    margin-bottom: 2px;
+    margin: 0 auto 2px;
     position: relative;
     display: block;
     box-shadow: 0 1px 4px rgba(0,0,0,.06);
@@ -1063,8 +1060,10 @@
     const vh = window.innerHeight - navH;
     const vw = window.innerWidth - 40;
     slides.forEach(s => {
-      const scaleH = vh / 794;
-      const scaleW = vw / 1123;
+      const slideW = slides[0].offsetWidth;
+      const slideH = slides[0].offsetHeight;
+      const scaleH = vh / slideH;
+      const scaleW = vw / slideW;
       const scale = Math.min(scaleH, scaleW, 1);
       s.style.transform = 'scale(' + scale + ')';
     });
