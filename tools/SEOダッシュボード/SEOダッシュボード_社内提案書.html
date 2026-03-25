@@ -20,7 +20,7 @@
     --red-bg: #fdf0ee;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: 12.5px; }
+  html { font-size: 14px; }
   body {
     font-family: 'メイリオ', Meiryo, sans-serif;
     color: var(--text);
@@ -30,14 +30,14 @@
   }
 
   /* ── Container ── */
-  .deck { max-width: 794px; margin: 0 auto; } /* A4 width at 96dpi ≈ 794px */
+  .deck { max-width: 1123px; margin: 0 auto; } /* A4 landscape width at 96dpi */
 
-  /* ── Slide base (A4 ratio: 210×297mm) ── */
+  /* ── Slide base (A4 landscape: 297×210mm) ── */
   .slide {
     background: var(--white);
-    width: 794px;
-    height: 1123px; /* 794 × 1.414 = A4 ratio */
-    padding: 48px 56px;
+    width: 1123px;
+    height: 794px;
+    padding: 40px 56px;
     margin-bottom: 2px;
     position: relative;
     display: flex;
@@ -628,7 +628,7 @@
       box-shadow: none;
       width: 100%;
       height: auto;
-      max-height: 277mm; /* A4 minus margins */
+      max-height: 190mm; /* A4 landscape minus margins */
       padding: 32px 40px;
       page-break-after: always;
       page-break-inside: avoid;
@@ -639,11 +639,11 @@
     .slide:last-of-type { page-break-after: auto; }
     .slide-nav { display: none !important; }
     .footer-bar { display: flex !important; }
-    @page { margin: 10mm; size: A4 portrait; }
+    @page { margin: 10mm; size: A4 landscape; }
   }
 
   /* ── Responsive ── */
-  @media (max-width: 840px) {
+  @media (max-width: 1160px) {
     .slide { width: 100%; height: auto; min-height: 0; padding: 32px 24px; overflow: visible; }
     .pillars, .features, .two-col { grid-template-columns: 1fr; }
     .stats { flex-direction: column; }
@@ -1074,8 +1074,8 @@
     const vh = window.innerHeight - navH;
     const vw = window.innerWidth - 40;
     slides.forEach(s => {
-      const scaleH = vh / 1123;
-      const scaleW = vw / 794;
+      const scaleH = vh / 794;
+      const scaleW = vw / 1123;
       const scale = Math.min(scaleH, scaleW, 1);
       s.style.transform = 'scale(' + scale + ')';
     });
