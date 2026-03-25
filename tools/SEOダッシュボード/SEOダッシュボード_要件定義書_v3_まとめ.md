@@ -1318,7 +1318,7 @@ Looker Studio埋め込み（左） + AI所感編集エリア（右）（全17セ
 | 16 | 外部リンク数推移 | スライド22 | Ahrefs BacklinkSnapshot | 自動生成 |
 | 17 | 次月アクションプラン | - | Task + Content | 手動入力 |
 
-> **🔧 レポート表示方式:** Looker StudioをBigQueryに接続し、各セクションをiframeで埋め込み表示。AI所感は Claude API (`claude-sonnet-4-6`) で生成し、各セクション横のテキストエリアに表示。コンサルタントが編集後、`@media print` CSS + `window.print()` でPDF出力。
+> **🔧 レポート表示方式:** Looker StudioをBigQueryに接続し、各セクションをiframeで埋め込み表示。AI所感はAI API（モデル選定中。セクション19 P2-2参照）で生成し、各セクション横のテキストエリアに表示。コンサルタントが編集後、`@media print` CSS + `window.print()` でPDF出力。
 
 ### AI改善提案の自動生成（月2案）
 
