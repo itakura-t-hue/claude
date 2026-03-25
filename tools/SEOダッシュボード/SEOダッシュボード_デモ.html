@@ -1896,7 +1896,7 @@ function renderDashboard() {
           <thead>
             <tr>
               <th>会社名</th><th>担当者</th><th>HS</th><th>プラン</th>
-              <th>オーガニックSS</th><th>CV</th><th>契約更新日</th><th>未読</th><th>要対応</th>
+              <th>オーガニックセッション</th><th>CV</th><th>契約更新日</th><th>未読</th><th>要対応</th>
             </tr>
           </thead>
           <tbody>
@@ -1906,7 +1906,7 @@ function renderDashboard() {
                 <td data-label="担当者">${c.person}</td>
                 <td data-label="HS">${hsRing(c.hs)}</td>
                 <td data-label="プラン">${planBadge(c.plan)}</td>
-                <td data-label="オーガニックSS">${c.ss} ${momBadge(c.ssMom)}</td>
+                <td data-label="オーガニックセッション">${c.ss} ${momBadge(c.ssMom)}</td>
                 <td data-label="CV">${c.cv} ${momBadge(c.cvMom)}</td>
                 <td data-label="更新日">${renewalWarning(c.renewal)}</td>
                 <td data-label="未読">${c.unread > 0 ? '<span class="badge-count">'+c.unread+'</span>' : '-'}</td>
@@ -1986,7 +1986,7 @@ const CLIENT_CHART_DATA = {
 };
 
 const METRIC_CONFIG = {
-  ss:    { label:'オーガニックSS', color:'#3b82f6', unit:'' },
+  ss:    { label:'オーガニックセッション', color:'#3b82f6', unit:'' },
   users: { label:'ユーザー数',     color:'#8b5cf6', unit:'' },
   cv:    { label:'CV数',           color:'#10b981', unit:'' },
   bl:    { label:'被リンク数',     color:'#f59e0b', unit:'' },
@@ -2488,7 +2488,7 @@ function renderContents(id) {
         <div class="chart-title">リライト提案一覧</div>
         <div class="data-table-scroll">
           <table class="content-list-table">
-            <thead><tr><th>記事タイトル</th><th>現在順位</th><th>月間SS</th><th>SS変化</th><th>リライトスコア</th><th>推奨アクション</th></tr></thead>
+            <thead><tr><th>記事タイトル</th><th>現在順位</th><th>月間セッション</th><th>セッション変化</th><th>リライトスコア</th><th>推奨アクション</th></tr></thead>
             <tbody>
               ${contents.filter(c => c.rewriteScore || (c.ssChange && c.ssChange < 0)).map(c => `<tr>
                 <td style="font-weight:500;">${c.title}</td>
@@ -2496,7 +2496,7 @@ function renderContents(id) {
                 <td>${c.ss ? formatNum(c.ss) : '-'}</td>
                 <td>${c.ssChange ? '<span class="change-pill '+(c.ssChange>0?'up':'down')+'">'+(c.ssChange>0?'+':'')+c.ssChange+'</span>' : '-'}</td>
                 <td>${c.rewriteScore ? '<div style="display:flex;align-items:center;gap:6px;"><strong style="color:'+(c.rewriteScore>=80?'#ef4444':c.rewriteScore>=50?'#f59e0b':'#64748b')+'">'+c.rewriteScore+'</strong><div class="rewrite-score-bar" style="width:60px;"><div class="rewrite-score-fill" style="width:'+c.rewriteScore+'%;background:'+(c.rewriteScore>=80?'#ef4444':c.rewriteScore>=50?'#f59e0b':'#94a3b8')+';"></div></div></div>' : '-'}</td>
-                <td style="font-size:12px;color:#64748b;">${c.rewriteScore >= 80 ? 'タイトル改善 + コンテンツ更新' : c.rewriteScore >= 50 ? 'コンテンツ部分更新' : 'SS低下の継続監視'}</td>
+                <td style="font-size:12px;color:#64748b;">${c.rewriteScore >= 80 ? 'タイトル改善 + コンテンツ更新' : c.rewriteScore >= 50 ? 'コンテンツ部分更新' : 'セッション低下の継続監視'}</td>
               </tr>`).join('')}
             </tbody>
           </table>
@@ -2538,14 +2538,14 @@ function renderContents(id) {
                   <div class="kanban-card-title">${card.title}</div>
                   <div class="kanban-card-meta">
                     ${card.rank ? `<span class="meta-tag ${card.rankChange > 0 ? 'green' : card.rankChange < 0 ? 'red' : ''}">${card.rank}位${card.rankChange > 0 ? '▲'+card.rankChange : card.rankChange < 0 ? '▼'+Math.abs(card.rankChange) : ''}</span>` : `<span class="meta-tag">Vol:${formatNum(card.vol)}</span>`}
-                    ${card.ss ? `<span class="meta-tag">${formatNum(card.ss)}SS</span>` : ''}
+                    ${card.ss ? `<span class="meta-tag">${formatNum(card.ss)}セッション</span>` : ''}
                     ${card.rewriteScore ? `<span class="meta-tag orange">優先度${card.rewriteScore}</span>` : ''}
                     ${card.deadline && (card.status==='writing'||card.status==='reviewing') ? `<span class="meta-tag orange">${card.deadline.replace('2026-','').replace('-','/')}〆切</span>` : ''}
                   </div>
                   ${card.ssHistory ? `
                   <div class="kanban-card-charts">
                     <div class="spark-row">
-                      <span class="spark-label">SS</span>
+                      <span class="spark-label">セッション</span>
                       ${sparklineSVG(card.ssHistory, 80, 20, card.ssChange >= 0 ? '#10b981' : '#ef4444', false)}
                       <span class="spark-val ${card.ssChange >= 0 ? 'up' : 'down'}">${card.ssChange >= 0 ? '+' : ''}${card.ssChange}</span>
                     </div>
@@ -2556,7 +2556,7 @@ function renderContents(id) {
                     </div>
                     <div class="kanban-card-kpis">
                       <div class="mini-kpi">
-                        <div class="mini-kpi-label">月間SS</div>
+                        <div class="mini-kpi-label">月間セッション</div>
                         <div class="mini-kpi-val">${formatNum(card.ss)}</div>
                       </div>
                       <div class="mini-kpi">
@@ -2633,7 +2633,7 @@ function renderContentDetail(clientId, contentId) {
           </div>
         </div>
         <div class="cd-kpi">
-          <div class="cd-kpi-label">月間SS</div>
+          <div class="cd-kpi-label">月間セッション</div>
           <div class="cd-kpi-val">${formatNum(c.ss)}</div>
           <div class="cd-kpi-change ${c.ssChange > 0 ? 'up' : c.ssChange < 0 ? 'down' : ''}">
             ${c.ssChange > 0 ? '▲'+c.ssChange : c.ssChange < 0 ? '▼'+Math.abs(c.ssChange) : '→'} 前月比
@@ -3161,7 +3161,7 @@ const REPORT_SLIDES = [
     comment:'2月は季節性による就職需要の高まりを背景に、コーポレートページ（TOP・企業情報・採用ページ等）への流入が大きく増加しました。一方で、コラム記事（/column/配下）の流入は若干の減少傾向にあり、月間日数の差（1月31日→2月28日）が主要因と考えられます。3月に向けては、引き続きコラム施策による潜在層の獲得と、実装項目の進捗管理を両輪で進めてまいります。',
     content:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
       <div style="background:#eff6ff;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">総セッション</div><div style="font-size:22px;font-weight:800;color:#2563eb;">87,466</div><div style="font-size:11px;color:#10b981;">前年比 172%</div></div>
-      <div style="background:#f0fdf4;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">オーガニックSS</div><div style="font-size:22px;font-weight:800;color:#059669;">40,600</div><div style="font-size:11px;color:#10b981;">前年比 220%</div></div>
+      <div style="background:#f0fdf4;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">オーガニックセッション</div><div style="font-size:22px;font-weight:800;color:#059669;">40,600</div><div style="font-size:11px;color:#10b981;">前年比 220%</div></div>
       <div style="background:#fefce8;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">CV数</div><div style="font-size:22px;font-weight:800;color:#d97706;">157件</div><div style="font-size:11px;color:#10b981;">前月比 215%</div></div>
       <div style="background:#faf5ff;border-radius:8px;padding:14px;text-align:center;"><div style="font-size:10px;color:#64748b;">被リンク</div><div style="font-size:22px;font-weight:800;color:#7c3aed;">21,762</div><div style="font-size:11px;color:#10b981;">前月比 133%</div></div>
     </div>` },
@@ -3184,7 +3184,7 @@ const REPORT_SLIDES = [
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:10px;height:10px;border-radius:2px;background:#10b981;"></div><span>Paid Social</span><span style="margin-left:auto;font-weight:700;">12,785</span></div>
       <div style="display:flex;align-items:center;gap:8px;"><div style="width:10px;height:10px;border-radius:2px;background:#f59e0b;"></div><span>Direct</span><span style="margin-left:auto;font-weight:700;">9,245</span></div>
     </div>` },
-  { id:'s10', num:6, title:'オーガニックセッション推移', short:'オーガニックSS', type:'chart',
+  { id:'s10', num:6, title:'オーガニックセッション推移', short:'オーガニックセッション', type:'chart',
     comment:'オーガニックセッション数は2月で40,600となり、昨月（40,371）対比101％、昨年同月（18,456）対比220％と、前月比・前年比ともに伸長しました。コラム記事での流入は月間日数の差などにより若干減少したものの、季節性による就職需要の高まりでコラム以外のコーポレートページからの流入増加がそれを補っている状況です。',
     content:'__SS_CHART__' },
   { id:'s11', num:7, title:'magazine配下 vs magazine以外', short:'セグメント別', type:'chart',

@@ -1377,7 +1377,7 @@
 
 <div class="callout callout-point">
   <div class="callout-title">&#127919; GA4ローデータ蓄積のメリット（コンサルの提案幅が大幅拡大）</div>
-  <p>GA4 Data API（集計データ）だけでは「2月のSSは40,600」止まりです。BigQueryにローデータを蓄積すると：</p>
+  <p>GA4 Data API（集計データ）だけでは「2月のセッションは40,600」止まりです。BigQueryにローデータを蓄積すると：</p>
   <ul>
     <li><strong>CVユーザーの行動パス分析</strong> — どの記事→どのサービスページ→CVした？</li>
     <li><strong>コンテンツ品質の定量評価</strong> — ページ滞在時間×スクロール深度で「ちゃんと読まれてる記事」を特定</li>
@@ -1711,7 +1711,7 @@ WEB事業部
       <td><strong>ページ別パフォーマンス</strong></td>
       <td><code>dimensions: ['page']</code></td>
       <td>ランディングページTOP20、アクセスランキング</td>
-      <td>全ページを取得、SS数降順ソート</td>
+      <td>全ページを取得、セッション数降順ソート</td>
     </tr>
     <tr>
       <td><strong>クエリ×ページ</strong></td>
@@ -1770,7 +1770,7 @@ POST https://www.googleapis.com/webmasters/v3
 <div class="callout callout-biz">
   <div class="callout-title">&#128188; ひとことで言うと</div>
   <p>サイトに来た人の行動データです。「何人来たか」「どのページを見たか」「お問い合わせ（CV）は何件か」がわかります。<br>
-  <strong>現在の業務での使い方</strong>：月次レポートのスライド9「チャンネル別流入数」、スライド10「オーガニックSS推移」、スライド15「CV数推移」で使っている数値です。</p>
+  <strong>現在の業務での使い方</strong>：月次レポートのスライド9「チャンネル別流入数」、スライド10「オーガニックセッション推移」、スライド15「CV数推移」で使っている数値です。</p>
 </div>
 
 <div class="callout callout-warn">
@@ -2993,7 +2993,7 @@ POST https://analyticsdata.googleapis.com/v1beta
           <td>昇順（危険な案件が上）</td>
         </tr>
         <tr>
-          <td><strong>オーガニックSS</strong></td>
+          <td><strong>オーガニックセッション</strong></td>
           <td>当月値 + 前月比%</td>
           <td><code>TrafficSnapshot</code></td>
           <td>数値</td>
@@ -3168,7 +3168,7 @@ POST https://analyticsdata.googleapis.com/v1beta
           <td><strong>指標切替タブ（KPIカード兼用）× 4</strong></td>
           <td>
             4つのタブをクリックすると、下のグラフが切り替わる。各タブには現在値と前月比を表示：<br>
-            (1) オーガニックSS（青） (2) ユーザー数（紫） (3) CV数（緑） (4) 被リンク数（黄）
+            (1) オーガニックセッション（青） (2) ユーザー数（紫） (3) CV数（緑） (4) 被リンク数（黄）
           </td>
           <td>(1)(2)(3) GA4 <code>TrafficSnapshot</code><br>(4) Ahrefs <code>BacklinkSnapshot</code></td>
           <td>スライド9,10,12,15,22</td>
@@ -3225,7 +3225,7 @@ POST https://analyticsdata.googleapis.com/v1beta
         <div class="m-topbar"><div class="m-dots"><span></span><span></span><span></span></div><div class="m-url">seo-dash.app/clients/client-a</div><div style="width:40px"></div></div>
         <div class="m-body">
           <div class="m-kpi-row">
-            <div class="m-kpi"><div class="m-kpi-label">オーガニックSS <span class="m-src m-src-ga4">GA4</span></div><div class="m-kpi-val">40,600</div><div class="m-kpi-change up">&#9650; 前月比 101%</div></div>
+            <div class="m-kpi"><div class="m-kpi-label">オーガニックセッション <span class="m-src m-src-ga4">GA4</span></div><div class="m-kpi-val">40,600</div><div class="m-kpi-change up">&#9650; 前月比 101%</div></div>
             <div class="m-kpi"><div class="m-kpi-label">総ユーザー数 <span class="m-src m-src-ga4">GA4</span></div><div class="m-kpi-val">27,476</div><div class="m-kpi-change down">&#9660; 前月比 99%</div></div>
             <div class="m-kpi"><div class="m-kpi-label">CV数 <span class="m-src m-src-ga4">GA4</span></div><div class="m-kpi-val">157</div><div class="m-kpi-change up">&#9650; 前月比 215%</div></div>
             <div class="m-kpi"><div class="m-kpi-label">被リンク数 <span class="m-src m-src-ah">Ahrefs</span></div><div class="m-kpi-val">21,762</div><div class="m-kpi-change up">&#9650; 前月比 133%</div></div>
@@ -3419,9 +3419,9 @@ POST https://analyticsdata.googleapis.com/v1beta
         <tr><td>〆切日 + 残日数</td><td><code>Content.deadline</code>（残3日以内は赤色表示）</td></tr>
         <tr><td>現在の検索順位（公開済みのみ）</td><td><code>RankHistory</code>（最新日の順位）</td></tr>
         <tr><td>月間セッション数（公開済みのみ）</td><td><code>ContentTrafficHistory</code>（当月合計）</td></tr>
-        <tr><td><strong>SS推移スパークライン（公開済み/リライト候補のみ）</strong></td><td>12ヶ月分のセッション推移をミニ折れ線グラフ（80×20px）で表示。増加傾向=緑、減少=赤。<code>ContentTrafficHistory</code>の月次集計</td></tr>
+        <tr><td><strong>セッション推移スパークライン（公開済み/リライト候補のみ）</strong></td><td>12ヶ月分のセッション推移をミニ折れ線グラフ（80×20px）で表示。増加傾向=緑、減少=赤。<code>ContentTrafficHistory</code>の月次集計</td></tr>
         <tr><td><strong>順位推移スパークライン（同上）</strong></td><td>12ヶ月分の順位変動をミニ折れ線グラフで表示。Y軸反転（1位が上）。改善=緑、悪化=赤。<code>RankHistory</code>の月次平均</td></tr>
-        <tr><td><strong>ミニKPIカード（同上）</strong></td><td>月間SS / KW順位 / CV数 の3値を小さなカードで横並び表示。順位は色分け（1-3位=緑, 4-10位=青, 11位以上=黄）</td></tr>
+        <tr><td><strong>ミニKPIカード（同上）</strong></td><td>月間セッション / KW順位 / CV数 の3値を小さなカードで横並び表示。順位は色分け（1-3位=緑, 4-10位=青, 11位以上=黄）</td></tr>
       </tbody>
     </table>
 
@@ -3474,7 +3474,7 @@ POST https://analyticsdata.googleapis.com/v1beta
       <tbody>
         <tr><td>順位停滞（11-20位）</td><td><code>RankHistory</code>最新30日の平均順位が11-20位 & 変動幅5位以内</td><td><code>rank_stagnant</code></td></tr>
         <tr><td>順位急落</td><td><code>RankHistory</code>前月平均との差が+5以上（順位悪化）</td><td><code>rank_drop</code></td></tr>
-        <tr><td>経年劣化</td><td><code>Content.publishedAt</code>から6ヶ月以上 & 過去3ヶ月のSSが減少傾向</td><td><code>aged</code></td></tr>
+        <tr><td>経年劣化</td><td><code>Content.publishedAt</code>から6ヶ月以上 & 過去3ヶ月のセッションが減少傾向</td><td><code>aged</code></td></tr>
         <tr><td>CTR低下</td><td>表示回数 > 1000 & CTR < 同順位帯の平均CTRの70%</td><td><code>low_ctr</code></td></tr>
         <tr><td>AIO影響</td><td>順位改善 or 横ばい & 表示回数 or クリック数が20%以上減少</td><td><code>aio_impact</code></td></tr>
       </tbody>
@@ -3521,8 +3521,8 @@ POST https://analyticsdata.googleapis.com/v1beta
             </div>
             <div class="m-kan-col">
               <div class="m-kan-header">公開済み <span class="m-kan-cnt">2</span></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">サンプル記事タイトルA</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">2位 &#9650;1</div><div class="m-kan-meta"><span>2024/11/15</span><span style="color:#10b981;font-weight:600">812 SS</span></div></div>
-              <div class="m-kan-card"><div class="m-kan-card-title">サンプルKW_B</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">1位 &#9650;2</div><div class="m-kan-meta"><span>2024/12/01</span><span style="color:#10b981;font-weight:600">749 SS</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプル記事タイトルA</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">2位 &#9650;1</div><div class="m-kan-meta"><span>2024/11/15</span><span style="color:#10b981;font-weight:600">812 セッション</span></div></div>
+              <div class="m-kan-card"><div class="m-kan-card-title">サンプルKW_B</div><div class="m-kan-kw" style="background:rgba(16,185,129,0.1);color:#10b981">1位 &#9650;2</div><div class="m-kan-meta"><span>2024/12/01</span><span style="color:#10b981;font-weight:600">749 セッション</span></div></div>
             </div>
             <div class="m-kan-col" style="border-color:rgba(245,158,11,0.3)">
               <div class="m-kan-header" style="color:#f59e0b">リライト候補 <span class="m-kan-cnt">2</span></div>
@@ -3639,7 +3639,7 @@ POST https://analyticsdata.googleapis.com/v1beta
           <td><strong>記事メタ情報 + KPIカード</strong></td>
           <td>
             左: タイトル、ステータスバッジ（企画作成中/執筆中/校正中/公開済み/リライト候補）、対象KW、検索Vol、担当者、〆切/公開日、URL、文字数<br>
-            右（公開済みのみ）: KPIカード3枚（現在順位+前月比 / 月間SS+前月比 / 月間CV）
+            右（公開済みのみ）: KPIカード3枚（現在順位+前月比 / 月間セッション+前月比 / 月間CV）
           </td>
           <td><code>Content</code> + <code>RankHistory</code>(最新) + <code>ContentTrafficHistory</code>(当月)</td>
         </tr>
@@ -3702,12 +3702,12 @@ POST https://analyticsdata.googleapis.com/v1beta
             </div>
             <div style="display:flex;gap:8px">
               <div class="m-kpi" style="min-width:100px;text-align:center"><div class="m-kpi-label" style="justify-content:center">現在順位</div><div class="m-kpi-val" style="color:#10b981;font-size:28px">2<span style="font-size:12px;color:#64748b">位</span></div><div class="m-kpi-change up">&#9650;1 前月比</div></div>
-              <div class="m-kpi" style="min-width:100px;text-align:center"><div class="m-kpi-label" style="justify-content:center">月間SS</div><div class="m-kpi-val" style="font-size:24px">812</div><div class="m-kpi-change down">&#9660;58 前月比</div></div>
+              <div class="m-kpi" style="min-width:100px;text-align:center"><div class="m-kpi-label" style="justify-content:center">月間セッション</div><div class="m-kpi-val" style="font-size:24px">812</div><div class="m-kpi-change down">&#9660;58 前月比</div></div>
               <div class="m-kpi" style="min-width:100px;text-align:center"><div class="m-kpi-label" style="justify-content:center">月間CV</div><div class="m-kpi-val" style="font-size:24px">3</div><div class="m-kpi-change up">&#9650;1 前月比</div></div>
             </div>
           </div>
 
-          <!-- SS推移グラフ -->
+          <!-- セッション推移グラフ -->
           <div class="m-chart">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
               <div class="m-chart-title" style="margin:0">セッション数推移（公開日からの推移）</div>
@@ -4035,7 +4035,7 @@ POST https://analyticsdata.googleapis.com/v1beta
           <td>
             選択中スライドの内容をフル幅で大きく表示。スライド番号とタイトルをヘッダーに表示。<br>
             <strong>実際のレポートスライド構成（クライアントA社様準拠、全14スライド）:</strong><br>
-            P.1 表紙 / P.2 全体概要（4指標KPI）/ P.3 コラムコンテンツ状況（パイプライン進捗）/ P.4 サービスページ改善施策（進捗率バー）/ P.5 チャンネル別流入数 / P.6 オーガニックSS推移（折れ線グラフ）/ P.7 magazine配下 vs その他 / P.8 ユーザー数推移 / P.9 入口ページTOP10（テーブル）/ P.10 CV数推移（イベント別内訳）/ P.11 KWフォーカス前年プラス / P.12 KWフォーカス前月マイナス（AIOタグ付き）/ P.13 外部リンク推移（参照ドメインTOP3）/ P.14 改善施策進捗（ブロッカー表示）
+            P.1 表紙 / P.2 全体概要（4指標KPI）/ P.3 コラムコンテンツ状況（パイプライン進捗）/ P.4 サービスページ改善施策（進捗率バー）/ P.5 チャンネル別流入数 / P.6 オーガニックセッション推移（折れ線グラフ）/ P.7 magazine配下 vs その他 / P.8 ユーザー数推移 / P.9 入口ページTOP10（テーブル）/ P.10 CV数推移（イベント別内訳）/ P.11 KWフォーカス前年プラス / P.12 KWフォーカス前月マイナス（AIOタグ付き）/ P.13 外部リンク推移（参照ドメインTOP3）/ P.14 改善施策進捗（ブロッカー表示）
           </td>
         </tr>
         <tr>
@@ -4067,7 +4067,7 @@ POST https://analyticsdata.googleapis.com/v1beta
                 <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">表紙</div><div style="width:60%;height:2px;background:#3b82f6;border-radius:1px;margin-top:3px"></div></div>
                 <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">全体概要</div><div style="width:60%;height:2px;background:#3b82f6;border-radius:1px;margin-top:3px"></div></div>
                 <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">チャンネル別</div><div style="width:60%;height:2px;background:#10b981;border-radius:1px;margin-top:3px"></div></div>
-                <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">SS推移</div><div style="width:60%;height:2px;background:#10b981;border-radius:1px;margin-top:3px"></div></div>
+                <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">セッション推移</div><div style="width:60%;height:2px;background:#10b981;border-radius:1px;margin-top:3px"></div></div>
                 <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">CV推移</div><div style="width:60%;height:2px;background:#10b981;border-radius:1px;margin-top:3px"></div></div>
                 <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">KWフォーカス</div><div style="width:60%;height:2px;background:#10b981;border-radius:1px;margin-top:3px"></div></div>
                 <div style="background:#fff;border-radius:4px;padding:6px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-size:6px;font-weight:700;color:#1e293b">外部リンク</div><div style="width:60%;height:2px;background:#10b981;border-radius:1px;margin-top:3px"></div></div>
@@ -4146,8 +4146,8 @@ POST https://analyticsdata.googleapis.com/v1beta
     <table class="spec-table">
       <tr><td><strong>表示コンポーネント</strong></td><td>
         (1) ウェルカムヘッダー（会社名、最終更新日時）<br>
-        (2) KPIカード（今月オーガニックSS、今月CV数、コンテンツ進捗）<br>
-        (3) オーガニックSS推移グラフ（簡易版、6ヶ月分）<br>
+        (2) KPIカード（今月オーガニックセッション、今月CV数、コンテンツ進捗）<br>
+        (3) オーガニックセッション推移グラフ（簡易版、6ヶ月分）<br>
         (4) 承認待ちコンテンツ企画一覧（承認/差し戻しボタン付き）<br>
         (5) 月次レポートアーカイブ（PDF/PPTXダウンロード）
       </td></tr>
@@ -4244,8 +4244,8 @@ POST https://analyticsdata.googleapis.com/v1beta
         <tr>
           <td><code>#content:</code></td>
           <td>コンテンツ記事</td>
-          <td><span style="background:rgba(16,185,129,0.1);color:#059669;padding:2px 8px;border-radius:4px;font-size:12px">&#128196; サンプル記事タイトルA（2位 / 812SS）</span></td>
-          <td>コンテンツ詳細画面へ遷移。現在の順位・SS数も表示</td>
+          <td><span style="background:rgba(16,185,129,0.1);color:#059669;padding:2px 8px;border-radius:4px;font-size:12px">&#128196; サンプル記事タイトルA（2位 / 812セッション）</span></td>
+          <td>コンテンツ詳細画面へ遷移。現在の順位・セッション数も表示</td>
         </tr>
         <tr>
           <td><code>#report:</code></td>
@@ -4735,7 +4735,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     </tr>
     <tr>
       <td><strong>流入急減</strong></td>
-      <td>日次オーガニックSSが過去7日平均の70%以下<br><code>WHERE today_sessions < avg_7d * 0.7</code></td>
+      <td>日次オーガニックセッションが過去7日平均の70%以下<br><code>WHERE today_sessions < avg_7d * 0.7</code></td>
       <td style="color:var(--red)">Critical</td>
       <td>Slack即時</td>
     </tr>
@@ -4830,7 +4830,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td>3</td><td>コラムコンテンツ状況（パイプライン）</td><td>スライド6</td><td>Content (status集計)</td><td>自動生成</td></tr>
     <tr><td>4</td><td>サービスページ改善施策（進捗率）</td><td>スライド7</td><td>Task (TECHNICAL集計)</td><td>自動生成</td></tr>
     <tr><td>5</td><td>チャンネル別流入数</td><td>スライド9</td><td>GA4 channelBreakdown</td><td>自動生成</td></tr>
-    <tr><td>6</td><td>オーガニックSS推移</td><td>スライド10</td><td>GA4 organicSessions</td><td>自動生成</td></tr>
+    <tr><td>6</td><td>オーガニックセッション推移</td><td>スライド10</td><td>GA4 organicSessions</td><td>自動生成</td></tr>
     <tr><td>7</td><td>magazine配下 vs その他</td><td>スライド11</td><td>GA4 セグメント</td><td>自動生成</td></tr>
     <tr><td>8</td><td>ユーザー数推移</td><td>スライド12</td><td>GA4 totalUsers/newUsers</td><td>自動生成</td></tr>
     <tr><td>9</td><td>入口ページランキングTOP20</td><td>スライド13</td><td>GA4 landingPage</td><td>自動生成</td></tr>
@@ -5168,7 +5168,7 @@ POST https://analyticsdata.googleapis.com/v1beta
 <table>
   <thead><tr><th>項目</th><th>仕様</th></tr></thead>
   <tbody>
-    <tr><td><strong>対象</strong></td><td>全画面の全SVGチャート（概要の推移グラフ、技術SEOのパフォーマンス推移、コンテンツ詳細のSS推移・順位推移）</td></tr>
+    <tr><td><strong>対象</strong></td><td>全画面の全SVGチャート（概要の推移グラフ、技術SEOのパフォーマンス推移、コンテンツ詳細のセッション推移・順位推移）</td></tr>
     <tr><td><strong>トリガー</strong></td><td>データポイント（SVG circle要素）へのマウスホバー。透明な拡大ヒットエリア（半径14px）を設けて小さなドットでも確実にホバー可能</td></tr>
     <tr><td><strong>表示内容</strong></td><td>ラベル（月名・日付等）+ 数値（カンマ区切り）。例: 「2月 / 40,600」「3月 / 78点」「12月 / 2位」</td></tr>
     <tr><td><strong>表示位置</strong></td><td>ドットの真上に<code>position:fixed</code>で表示（SVG座標→ビューポート座標変換）。画面端では自動位置調整</td></tr>
@@ -5760,7 +5760,7 @@ POST https://analyticsdata.googleapis.com/v1beta
   <thead><tr><th>指標</th><th>更新タイミング</th><th>格納先</th></tr></thead>
   <tbody>
     <tr><td>ヘルススコア</td><td><code>check-alerts</code>バッチ（06:00）で全社一括計算</td><td>Redis or PostgreSQL集計テーブル</td></tr>
-    <tr><td>オーガニックSS/CV</td><td><code>sync-ga4</code>バッチ完了時に更新</td><td>TrafficSnapshot（既存）</td></tr>
+    <tr><td>オーガニックセッション/CV</td><td><code>sync-ga4</code>バッチ完了時に更新</td><td>TrafficSnapshot（既存）</td></tr>
     <tr><td>未読チャット数</td><td>メッセージ送信時にインクリメント、既読更新時にリセット</td><td>Redis</td></tr>
     <tr><td>要対応フラグ</td><td><code>check-alerts</code>バッチで更新</td><td>Redis or PostgreSQL</td></tr>
   </tbody>
@@ -5804,7 +5804,7 @@ POST https://analyticsdata.googleapis.com/v1beta
 <p><strong>プロンプト設計（要プロトタイプ）:</strong></p>
 
 <pre><code style="background:#1e293b;color:#e2e8f0;display:block;padding:1em;border-radius:8px;overflow-x:auto;">入力コンテキスト（1社あたり）:
-- 当月/前月/前年のKPI数値（SS, CV, ユーザー数）
+- 当月/前月/前年のKPI数値（セッション, CV, ユーザー数）
 - KWフォーカスデータ（TOP変動5件）
 - コンテンツ進捗状況
 - 前月レポートの所感（トーンの一貫性のため）
@@ -5823,7 +5823,7 @@ POST https://analyticsdata.googleapis.com/v1beta
 <p><strong>失敗時のフォールバック:</strong></p>
 <ul>
   <li>Claude API障害時: 所感欄を「AI所感の生成に失敗しました。手動で入力してください。」として空欄で先に進む</li>
-  <li>不適切な出力時: テンプレートベースのフォールバック所感を表示（「前月比でオーガニックSSが{diff}%{増加/減少}しました。」等）</li>
+  <li>不適切な出力時: テンプレートベースのフォールバック所感を表示（「前月比でオーガニックセッションが{diff}%{増加/減少}しました。」等）</li>
 </ul>
 
 <div class="h3">P2-3. ナレッジベースの類似検索方式</div>
@@ -6105,7 +6105,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>AIO</strong></td><td>AI Overview</td><td>Google検索結果の上部に表示されるAI要約。クリック数を奪う可能性がある</td></tr>
     <tr><td><strong>CTR</strong></td><td>Click Through Rate</td><td>検索結果に表示された回数のうち、実際にクリックされた割合</td></tr>
     <tr><td><strong>CV / CVR</strong></td><td>Conversion / Conversion Rate</td><td>お問い合わせや応募などの成果 / その発生率</td></tr>
-    <tr><td><strong>SS</strong></td><td>Sessions（セッション）</td><td>サイトへの訪問回数。1人が2回訪問すれば2セッション</td></tr>
+    <tr><td><strong>セッション</strong></td><td>Sessions</td><td>サイトへの訪問回数。1人が2回訪問すれば2セッション</td></tr>
     <tr><td><strong>LP</strong></td><td>Landing Page</td><td>ユーザーが最初にアクセスしたページ（入口ページ）</td></tr>
     <tr><td><strong>OAuth</strong></td><td>Open Authorization</td><td>Googleアカウントでログインできるようにする仕組み</td></tr>
     <tr><td><strong>RBAC</strong></td><td>Role-Based Access Control</td><td>「管理者」「ディレクター」「エンジニア」など役割ごとに操作権限を分ける仕組み</td></tr>
