@@ -827,9 +827,108 @@
     </div>
   </div>
 
-  <!-- ===== 3. サービスパッケージ + データロックイン ===== -->
+  <!-- ===== 3. アップデート分析 ===== -->
   <div class="slide" data-page="03">
     <div class="sec-num">Section 03</div>
+    <h2>アップデート分析機能</h2>
+
+    <p style="font-size:12px; color:var(--text-sub); margin-bottom:14px;">
+      Googleは年に数回の公式アップデートに加え、未公表の変動（シークレットアップデート）を頻繁に実施。
+      <strong style="color:var(--primary);">全案件のデータを横断分析</strong>することで、業界全体の変動を自動検知し、初動対応を早めます。
+    </p>
+
+    <!-- System Flow Diagram -->
+    <div style="display:flex; align-items:stretch; gap:0; margin-bottom:16px;">
+
+      <!-- Step 1: Data Collection -->
+      <div style="flex:1; background:var(--primary); color:#fff; border-radius:4px 0 0 4px; padding:12px 14px; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-size:9px; font-weight:700; letter-spacing:.1em; opacity:.6; margin-bottom:4px;">STEP 1</div>
+        <div style="font-size:13px; font-weight:700; margin-bottom:6px;">データ収集</div>
+        <div style="font-size:10px; line-height:1.5; opacity:.85;">
+          GSC API（日次）<br>
+          haveツール（Yahoo日次）<br>
+          GA4 Data API（日次）<br>
+          Ahrefs API（日次/週次）
+        </div>
+        <div style="font-size:9px; opacity:.5; margin-top:6px;">毎日 03:00-04:30 JST 自動実行</div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="width:24px; display:flex; align-items:center; justify-content:center; background:var(--primary-pale);">
+        <span style="font-size:18px; color:var(--primary);">&#9654;</span>
+      </div>
+
+      <!-- Step 2: Cross-client Analysis -->
+      <div style="flex:1.2; background:var(--primary-pale); padding:12px 14px; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-size:9px; font-weight:700; letter-spacing:.1em; color:var(--accent); margin-bottom:4px;">STEP 2</div>
+        <div style="font-size:13px; font-weight:700; color:var(--primary); margin-bottom:6px;">横断分析エンジン</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">
+          120社の順位・流入データを<strong>同時に分析</strong><br><br>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <div style="flex:1; background:#fff; border:1px solid var(--border); border-radius:3px; padding:6px 8px; text-align:center;">
+            <div style="font-size:9px; font-weight:700; color:var(--primary);">順位変動率</div>
+            <div style="font-size:10px; color:var(--text-sub);">全KWの20%以上が±3位変動？</div>
+          </div>
+          <div style="flex:1; background:#fff; border:1px solid var(--border); border-radius:3px; padding:6px 8px; text-align:center;">
+            <div style="font-size:9px; font-weight:700; color:var(--primary);">影響範囲</div>
+            <div style="font-size:10px; color:var(--text-sub);">10社以上で同時発生？</div>
+          </div>
+          <div style="flex:1; background:#fff; border:1px solid var(--border); border-radius:3px; padding:6px 8px; text-align:center;">
+            <div style="font-size:9px; font-weight:700; color:var(--primary);">方向性</div>
+            <div style="font-size:10px; color:var(--text-sub);">70%以上が同方向の変動？</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div style="width:24px; display:flex; align-items:center; justify-content:center; background:var(--primary-pale);">
+        <span style="font-size:18px; color:var(--primary);">&#9654;</span>
+      </div>
+
+      <!-- Step 3: Output -->
+      <div style="flex:1; background:var(--bg-section); border:1px solid var(--border); border-radius:0 4px 4px 0; padding:12px 14px; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-size:9px; font-weight:700; letter-spacing:.1em; color:var(--accent); margin-bottom:4px;">STEP 3</div>
+        <div style="font-size:13px; font-weight:700; color:var(--primary); margin-bottom:6px;">検知・通知・レポート</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.6;">
+          <span style="display:inline-block; background:var(--red); color:#fff; font-size:9px; font-weight:700; padding:1px 6px; border-radius:2px; margin-right:4px;">Critical</span>Slack即時通知＋メール<br>
+          <span style="display:inline-block; background:var(--accent); color:#fff; font-size:9px; font-weight:700; padding:1px 6px; border-radius:2px; margin-right:4px;">Weekly</span>週次トレンドレポート<br>
+          <span style="display:inline-block; background:var(--primary); color:#fff; font-size:9px; font-weight:700; padding:1px 6px; border-radius:2px; margin-right:4px;">Report</span>影響度ヒートマップ
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: 3 output examples -->
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px;">
+      <div style="border:1px solid var(--border); border-radius:4px; padding:10px 12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--red); margin-bottom:4px;">シークレットアップデート検知</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">
+          3条件（変動率20%超 / 10社同時 / 方向70%偏り）を満たした場合に自動検知。
+          Slack即時通知で全コンサルタントにアラート。
+          <strong>業界で最も早い初動対応</strong>を実現。
+        </div>
+      </div>
+      <div style="border:1px solid var(--border); border-radius:4px; padding:10px 12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:4px;">影響度ヒートマップ</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">
+          アップデート前後の全案件の順位・流入変動をクライアント×KWのマトリクスで可視化。
+          赤=悪影響 / 緑=好影響 / グレー=変動なし。
+          <strong>影響を受けた案件を一目で特定。</strong>
+        </div>
+      </div>
+      <div style="border:1px solid var(--border); border-radius:4px; padding:10px 12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--accent); margin-bottom:4px;">1次情報としての発信</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">
+          120社の匿名集計データに基づく<strong>独自のアップデート影響レポート</strong>を作成・発信。
+          SEO業界への1次情報提供でブランディングと新規リード獲得に直結。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 4. サービスパッケージ + データロックイン ===== -->
+  <div class="slide" data-page="04">
+    <div class="sec-num">Section 04</div>
     <h2>サービスパッケージ</h2>
 
     <h3 style="margin:6px 0 4px;">コンサルティングプラン</h3>
@@ -881,9 +980,9 @@
     <p class="muted" style="margin-top:6px; font-size:10px;">保守プランは月額5-8万でも年間60-96万の売上維持に貢献。データ蓄積が進むほど解約コストが上昇する構造。</p>
   </div>
 
-  <!-- ===== 4. 開発ロードマップ + 技術構成 ===== -->
-  <div class="slide" data-page="04">
-    <div class="sec-num">Section 04</div>
+  <!-- ===== 5. 開発ロードマップ + 技術構成 ===== -->
+  <div class="slide" data-page="05">
+    <div class="sec-num">Section 05</div>
     <h2>開発ロードマップ</h2>
 
     <div class="timeline">
@@ -950,9 +1049,9 @@
     </div>
   </div>
 
-  <!-- ===== 5. 費用と効果 + 前提条件 ===== -->
-  <div class="slide" data-page="05">
-    <div class="sec-num">Section 05</div>
+  <!-- ===== 6. 費用と効果 + 前提条件 ===== -->
+  <div class="slide" data-page="06">
+    <div class="sec-num">Section 06</div>
     <h2>費用と効果</h2>
 
     <div class="two-col" style="gap:12px;">
