@@ -5068,7 +5068,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>データベース（分析系）</strong></td><td>BigQuery</td><td>-</td><td>分析・履歴データ（順位履歴、トラフィックスナップショット、CV履歴、被リンク履歴）。全て自社GCP内で管理。120社x100KWx365日=年438万件を数秒で集計。クライアント側GCPには非依存</td></tr>
     <tr><td><strong>キャッシュ</strong></td><td>Redis (Memorystore)</td><td>7.x</td><td>キャッシュ + ジョブキューバックエンド</td></tr>
     <tr><td><strong>ファイルストレージ</strong></td><td>Cloud Storage (GCS)</td><td>-</td><td>レポートPDFの保存</td></tr>
-    <tr><td><strong>AI</strong></td><td>Claude API (Anthropic)</td><td>claude-sonnet-4-6</td><td>所感ドラフト生成。日本語品質が高い</td></tr>
+    <tr><td><strong>AI</strong></td><td>AI API（所感・提案生成）</td><td>検討中</td><td>所感ドラフト・改善提案生成。Gemini Flash〜Claude Sonnetを検討中（下記P2-2参照）</td></tr>
     <tr><td><strong>レポート可視化</strong></td><td>Looker Studio</td><td>-</td><td>BQ連携レポート可視化。iframeでダッシュボードに埋め込み</td></tr>
     <tr><td><strong>リアルタイム通信</strong></td><td>Pusher</td><td>-</td><td>WebSocketによるリアルタイムチャット。Startup plan（200同時接続対応）</td></tr>
     <tr><td><strong>ホスティング</strong></td><td>GCP Cloud Run</td><td>-</td><td>オートスケーリング対応。コンテナベースでデプロイ容易</td></tr>
@@ -5391,13 +5391,13 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td>BigQuery</td><td>&yen;3,000-10,000</td><td>ストレージ: GA4ローデータ含め年間50-200GB（¥1,000-4,000/月）。クエリ: 月1TB以内（¥2,000-6,000/月）。自社GCP内で完結。90日未アクセスデータは自動で長期保存料金（半額）に移行</td></tr>
     <tr><td>Ahrefs API専用アカウント（Advanced）</td><td>&yen;67,000</td><td>$449/月。ツール専用に新規契約が必要（後述）</td></tr>
     <tr><td>Google Ads API（Keyword Planner）</td><td>&yen;0</td><td>既存Adsアカウントで無料利用可</td></tr>
-    <tr><td>Claude API（AI所感・提案生成）</td><td>&yen;15,000-30,000</td><td>120社&times;月1レポート+月2提案 &cong; 4,000リクエスト</td></tr>
+    <tr><td>AI API（所感・提案生成）</td><td>&yen;1,000-5,000</td><td>モデル選定中（Gemini Flash〜Claude Sonnet）。120社&times;月1レポート+月2提案</td></tr>
     <tr><td>Pusher（リアルタイムチャット）</td><td>&yen;8,000</td><td>Startup plan $49/月、200同時接続対応</td></tr>
     <tr><td>Cloud Storage（レポートファイル）</td><td>&yen;1,000</td><td>レポートPDF保存</td></tr>
     <tr><td>Looker Studio</td><td>&yen;0</td><td>Googleアカウントがあれば無料。BQ連携レポート埋め込みに使用</td></tr>
     <tr><td>Sentry + 監視</td><td>&yen;5,000</td><td>エラー監視 + 死活監視</td></tr>
-    <tr><td colspan="2" style="font-weight:700">インフラ月額合計</td><td style="font-weight:700">&yen;139,000-181,000</td></tr>
-    <tr><td colspan="2" style="font-weight:700">インフラ年額</td><td style="font-weight:700">&yen;1,668,000-2,172,000</td></tr>
+    <tr><td colspan="2" style="font-weight:700">インフラ月額合計</td><td style="font-weight:700">&yen;125,000-156,000</td></tr>
+    <tr><td colspan="2" style="font-weight:700">インフラ年額</td><td style="font-weight:700">&yen;1,500,000-1,872,000</td></tr>
   </tbody>
 </table>
 
@@ -5440,11 +5440,11 @@ POST https://analyticsdata.googleapis.com/v1beta
 <div class="callout callout-point">
   <div class="callout-title">&#127919; ROIまとめ</div>
   <p><strong>開発投資</strong>: &yen;9,200,000-11,200,000（一時費用）<br>
-  <strong>年間インフラコスト</strong>: &yen;1,700,000-2,230,000<br>
+  <strong>年間インフラコスト</strong>: &yen;1,500,000-1,872,000<br>
   <strong>年間効果（解約防止+保守転換+工数削減）</strong>: &yen;30,960,000<br>
-  <strong>初年度ROI</strong>: (30,960,000 - 2,230,000 - 11,200,000) / 11,200,000 = <strong style="color:var(--green); font-size:16px;">156%</strong><br>
+  <strong>初年度ROI</strong>: (30,960,000 - 1,872,000 - 11,200,000) / 11,200,000 = <strong style="color:var(--green); font-size:16px;">159%</strong><br>
   <strong style="color:var(--green); font-size:16px;">投資回収期間: 4-5ヶ月</strong><br>
-  2年目以降は年間&yen;28,700,000以上の純効果</p>
+  2年目以降は年間&yen;29,000,000以上の純効果</p>
 </div>
 
 <div class="callout callout-biz">
@@ -5812,7 +5812,30 @@ POST https://analyticsdata.googleapis.com/v1beta
   <li>Looker Studioテンプレートの作成・管理フロー</li>
 </ul>
 
-<div class="h3">P2-2. Claude API所感生成の設計</div>
+<div class="h3">P2-2. AI基盤の選定（検討中）</div>
+
+<p><strong>モデル比較（120社&times;月1レポート+月2提案 &cong; 480リクエスト基準）:</strong></p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>モデル</th><th>月額目安</th><th>特徴</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Gemini 2.5 Flash</td><td>&yen;660</td><td>GCPネイティブ。低コスト・高速。日本語品質は要検証</td></tr>
+    <tr><td>Gemini 2.5 Pro</td><td>&yen;2,680</td><td>GCPネイティブ。高品質だがFlash比で4倍コスト</td></tr>
+    <tr><td>Claude Sonnet 4.6</td><td>&yen;5,050</td><td>日本語品質が高い。外部API連携が必要</td></tr>
+    <tr><td>Claude Haiku 4.5</td><td>&yen;1,680</td><td>低コスト。Sonnet比で品質がやや劣る可能性</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>検討ポイント:</strong></p>
+<ul>
+  <li><strong>GCPネイティブの優位性</strong>: Gemini系はVertex AI経由でGCP内完結。認証・ネットワーク・運用がシンプル</li>
+  <li><strong>ハイブリッドアプローチ</strong>: 定型所感はGemini Flash（低コスト）、改善提案はClaude Sonnet（高品質）の併用も選択肢</li>
+  <li><strong>コスト差は小さい</strong>: 最安&yen;660〜最高&yen;5,050。インフラ全体（月&yen;125,000-156,000）に対し3-4%程度の差であり、品質優先で選定可能</li>
+</ul>
 
 <p><strong>プロンプト設計（要プロトタイプ）:</strong></p>
 
@@ -5826,16 +5849,9 @@ POST https://analyticsdata.googleapis.com/v1beta
 - セクションごとの所感テキスト（200-400文字/セクション）
 - JSON形式で構造化</code></pre>
 
-<p><strong>コスト試算の検証が必要:</strong></p>
-<ul>
-  <li>1社あたりの入力トークン数（推定 2,000-4,000トークン）</li>
-  <li>1社あたりの出力トークン数（推定 3,000-5,000トークン）</li>
-  <li>120社 &times; 月1回 = 月120回。claude-sonnet-4-6の料金で月額を再計算</li>
-</ul>
-
 <p><strong>失敗時のフォールバック:</strong></p>
 <ul>
-  <li>Claude API障害時: 所感欄を「AI所感の生成に失敗しました。手動で入力してください。」として空欄で先に進む</li>
+  <li>AI API障害時: 所感欄を「AI所感の生成に失敗しました。手動で入力してください。」として空欄で先に進む</li>
   <li>不適切な出力時: テンプレートベースのフォールバック所感を表示（「前月比でオーガニックセッションが{diff}%{増加/減少}しました。」等）</li>
 </ul>
 
