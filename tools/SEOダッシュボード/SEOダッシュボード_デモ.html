@@ -3325,14 +3325,13 @@ function renderReports(id, isPortal) {
   return `
     <h1 class="page-title">${title}</h1>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-      <div style="font-size:14px;font-weight:600;color:#334155;">2月次レポート　<span style="font-size:11px;color:#94a3b8;font-weight:400;">全${REPORT_SLIDES.length}スライド</span></div>
+      <div style="font-size:14px;font-weight:600;color:#334155;">2月次レポート　<span style="font-size:11px;color:#94a3b8;font-weight:400;">全${REPORT_SLIDES.length}セクション</span></div>
       <div class="btn-row" style="margin:0;">
-        <button class="btn-primary" style="font-size:12px;padding:6px 14px;">PPTX ダウンロード</button>
-        <button class="btn-secondary" style="font-size:12px;padding:6px 14px;">PDF ダウンロード</button>
+        <button class="btn-primary" style="font-size:12px;padding:6px 14px;">PDF出力</button>
       </div>
     </div>
 
-    <!-- スライドサムネイル（横スクロールストリップ） -->
+    <!-- セクションナビゲーション（横スクロールストリップ） -->
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
       <button class="btn-secondary" style="padding:6px 10px;font-size:14px;flex-shrink:0;" onclick="navigateSlide(-1)">&#8249;</button>
       <div style="flex:1;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;" id="slidesStrip">
@@ -3350,7 +3349,7 @@ function renderReports(id, isPortal) {
       <button class="btn-secondary" style="padding:6px 10px;font-size:14px;flex-shrink:0;" onclick="navigateSlide(1)">&#8250;</button>
     </div>
 
-    <!-- メインエリア：スライド内容（大きく表示） -->
+    <!-- メインエリア：Looker Studio埋め込み + セクション内容 -->
     <div class="chart-container" style="margin-bottom:16px;min-height:280px;" id="slideContent">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <div style="font-size:18px;font-weight:700;color:#0f172a;" id="slideTitle">P.1 表紙</div>
@@ -3366,7 +3365,7 @@ function renderReports(id, isPortal) {
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
         <span style="font-size:14px;">🤖</span>
         <span style="font-size:14px;font-weight:600;color:#334155;">AI所感ドラフト</span>
-        <span style="font-size:10px;color:#94a3b8;margin-left:auto;">このスライドに対するコメント・所感を編集できます</span>
+        <span style="font-size:10px;color:#94a3b8;margin-left:auto;">このセクションに対するコメント・所感を編集できます</span>
       </div>
       <textarea class="ai-draft-textarea" id="slideComment" style="min-height:120px;font-size:13px;line-height:1.8;">${REPORT_SLIDES[0].comment || '（表紙にはコメントはありません）'}</textarea>
     </div>
@@ -4132,7 +4131,7 @@ function selectSlide(idx) {
     content = lineChartSVG(ssData, 380, 160, '#3b82f6', '#3b82f6', ssLabels);
   }
   bodyEl.innerHTML = content;
-  commentEl.value = s.comment || '（このスライドにはコメントはありません）';
+  commentEl.value = s.comment || '（このセクションにはコメントはありません）';
 
   // Update thumb active
   $$('#slidesThumbs .slide-thumb').forEach((t, i) => {

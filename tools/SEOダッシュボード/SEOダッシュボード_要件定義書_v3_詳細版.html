@@ -1254,7 +1254,7 @@
       <td>6</td>
       <td><strong>BPOへの手作業委託コスト</strong></td>
       <td>ベトナム事業所にLooker Studioスクショ→PPTX貼付作業を月5万円で委託。手作業のため品質にばらつき</td>
-      <td>レポート自動生成で完全自動化。BPOコスト月5万円を削減</td>
+      <td>Looker Studio埋め込み + AI所感 + PDF出力で完全自動化。BPOコスト月5万円を削減</td>
     </tr>
   </tbody>
 </table>
@@ -1778,7 +1778,7 @@ POST https://www.googleapis.com/webmasters/v3
   <p>現在、GA4のデータ閲覧は<strong>Looker Studio（旧Googleデータポータル）</strong>を使用しています。本ダッシュボードでは<strong>GA4 Data APIから直接データを取得</strong>する方式を採用します。これにより以下のメリットがあります：</p>
   <ul>
     <li><strong>データの一元管理</strong>：Looker Studioでは他のデータソース（GSC、Ahrefs、CMS）と統合できないが、本ダッシュボードではすべてを1画面で確認可能</li>
-    <li><strong>自動レポート生成</strong>：Looker StudioはPPTX出力に非対応。本ダッシュボードでは既存のPPTXフォーマットに合わせた自動生成が可能</li>
+    <li><strong>自動レポート生成</strong>：Looker Studioのグラフをiframeで埋め込み、AI所感を付加してPDF出力が可能。レポートセクションごとにLooker embed + 所感テキストで構成</li>
     <li><strong>アラート機能</strong>：Looker Studioにはアラート機能がないが、本ダッシュボードでは流入急減・CV異常を自動検知してSlack通知</li>
     <li><strong>リライト提案</strong>：GA4の流入データ × GSCの順位データ × Google Keyword Plannerの検索Volをクロスで分析し、リライト優先度を自動算出</li>
   </ul>
@@ -4024,27 +4024,28 @@ POST https://analyticsdata.googleapis.com/v1beta
       <tbody>
         <tr>
           <td><strong>ヘッダー</strong></td>
-          <td>レポートタイトル（「2月次レポート 全14スライド」）+ PPTX/PDFダウンロードボタン</td>
+          <td>レポートタイトル（「2月次レポート 全17セクション」）+ PDF出力ボタン</td>
         </tr>
         <tr>
-          <td><strong>スライドサムネイルストリップ</strong></td>
-          <td>横スクロールの小さなサムネイルリスト + 左右ナビボタン（‹ ›）。選択中のスライドが青ハイライト。クリックで下のプレビューが切り替わる</td>
+          <td><strong>セクションナビゲーション</strong></td>
+          <td>セクション一覧リスト。選択中のセクションが青ハイライト。クリックで右のプレビューが切り替わる</td>
         </tr>
         <tr>
-          <td><strong>スライドプレビュー（メインエリア）</strong></td>
+          <td><strong>Looker Studio埋め込み + AI所感編集エリア</strong></td>
           <td>
-            選択中スライドの内容をフル幅で大きく表示。スライド番号とタイトルをヘッダーに表示。<br>
-            <strong>実際のレポートスライド構成（クライアントA社様準拠、全14スライド）:</strong><br>
-            P.1 表紙 / P.2 全体概要（4指標KPI）/ P.3 コラムコンテンツ状況（パイプライン進捗）/ P.4 サービスページ改善施策（進捗率バー）/ P.5 チャンネル別流入数 / P.6 オーガニックセッション推移（折れ線グラフ）/ P.7 magazine配下 vs その他 / P.8 ユーザー数推移 / P.9 入口ページTOP10（テーブル）/ P.10 CV数推移（イベント別内訳）/ P.11 KWフォーカス前年プラス / P.12 KWフォーカス前月マイナス（AIOタグ付き）/ P.13 外部リンク推移（参照ドメインTOP3）/ P.14 改善施策進捗（ブロッカー表示）
+            左側: Looker Studioのiframe埋め込み（`/embed/reporting/...` URL）でグラフ・テーブルを表示。<br>
+            右側: AI所感テキストエリア。Claude APIで生成したドラフトを表示し、コンサルタントが直接編集可能。<br>
+            <strong>レポートセクション構成（全17セクション）:</strong><br>
+            S.1 表紙 / S.2 全体概要（4指標KPI）/ S.3 コラムコンテンツ状況（パイプライン進捗）/ S.4 サービスページ改善施策（進捗率バー）/ S.5 チャンネル別流入数 / S.6 オーガニックセッション推移（折れ線グラフ）/ S.7 magazine配下 vs その他 / S.8 ユーザー数推移 / S.9 入口ページTOP10（テーブル）/ S.10 CV数推移（イベント別内訳）/ S.11 KWフォーカス前年プラス / S.12 KWフォーカス前月マイナス（AIOタグ付き）/ S.13 外部リンク推移（参照ドメインTOP3）/ S.14 改善施策進捗（ブロッカー表示） / S.15-17 追加セクション
           </td>
         </tr>
         <tr>
           <td><strong>AI所感ドラフト</strong></td>
-          <td>選択中スライドに対するAI生成コメント。テキストエリアで直接編集可能。スライド切替に連動して内容が切り替わる</td>
+          <td>選択中セクションに対するAI生成コメント。テキストエリアで直接編集可能。セクション切替に連動して内容が切り替わる</td>
         </tr>
         <tr>
-          <td><strong>スライドナビゲーション</strong></td>
-          <td>「← 前のスライド / 次のスライド →」ボタン。スライド番号表示（例: 3 / 14）</td>
+          <td><strong>PDF出力</strong></td>
+          <td>`@media print` CSSでサイドバー・ヘッダーを非表示にし、`window.print()` でブラウザネイティブPDF出力</td>
         </tr>
       </tbody>
     </table>
@@ -4149,7 +4150,7 @@ POST https://analyticsdata.googleapis.com/v1beta
         (2) KPIカード（今月オーガニックセッション、今月CV数、コンテンツ進捗）<br>
         (3) オーガニックセッション推移グラフ（簡易版、6ヶ月分）<br>
         (4) 承認待ちコンテンツ企画一覧（承認/差し戻しボタン付き）<br>
-        (5) 月次レポートアーカイブ（PDF/PPTXダウンロード）
+        (5) 月次レポートアーカイブ（PDFダウンロード）
       </td></tr>
       <tr><td><strong>権限制御</strong></td><td>自社プロジェクトのデータのみ表示。SQLレベルで<code>WHERE projectId = ?</code>を強制（Prismaミドルウェアで実装）</td></tr>
     </table>
@@ -4504,7 +4505,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td colspan="5" style="background:#f0f4f8; font-weight:700; color:var(--accent-dark);">レポート</td></tr>
     <tr><td><code>POST</code></td><td><code>/api/clients/[id]/reports/generate</code></td><td>月次レポート生成開始（非同期ジョブ）</td><td>MEMBER+</td><td><span class="badge badge-p2">P2</span></td></tr>
     <tr><td><code>GET</code></td><td><code>/api/clients/[id]/reports</code></td><td>生成済みレポート一覧</td><td>アサイン済み</td><td><span class="badge badge-p2">P2</span></td></tr>
-    <tr><td><code>GET</code></td><td><code>/api/clients/[id]/reports/[rid]/download</code></td><td>PPTX/PDFダウンロード</td><td>アサイン済み</td><td><span class="badge badge-p2">P2</span></td></tr>
+    <tr><td><code>GET</code></td><td><code>/api/clients/[id]/reports/[rid]/download</code></td><td>PDF出力URL取得</td><td>アサイン済み</td><td><span class="badge badge-p2">P2</span></td></tr>
 
     <tr><td colspan="5" style="background:#f0f4f8; font-weight:700; color:var(--accent-dark);">アラート</td></tr>
     <tr><td><code>GET</code></td><td><code>/api/alerts</code></td><td>アラート一覧（担当案件分）</td><td>MEMBER+</td><td><span class="badge badge-p2">P2</span></td></tr>
@@ -4808,21 +4809,19 @@ POST https://analyticsdata.googleapis.com/v1beta
 <div class="flow-row">
   <div class="flow-item active">1. 生成ボタン押下</div>
   <div class="flow-arrow-right">→</div>
-  <div class="flow-item">2. DB集計</div>
+  <div class="flow-item">2. AI所感生成</div>
   <div class="flow-arrow-right">→</div>
-  <div class="flow-item">3. AI所感生成</div>
+  <div class="flow-item">3. Looker + 所感プレビュー</div>
   <div class="flow-arrow-right">→</div>
-  <div class="flow-item">4. PPTX組立</div>
+  <div class="flow-item">4. 所感編集</div>
   <div class="flow-arrow-right">→</div>
-  <div class="flow-item">5. 所感レビュー</div>
-  <div class="flow-arrow-right">→</div>
-  <div class="flow-item">6. 確定・DL</div>
+  <div class="flow-item">5. PDF出力</div>
 </div>
 
-<h3 class="h3">スライド構成（現行レポートとの対応）</h3>
+<h3 class="h3">レポートセクション構成（現行レポートとの対応）</h3>
 <table>
   <thead>
-    <tr><th>スライド#</th><th>内容</th><th>現行スライド</th><th>データソース</th><th>AI所感</th></tr>
+    <tr><th>セクション#</th><th>内容</th><th>現行スライド</th><th>データソース（Looker Studio）</th><th>AI所感</th></tr>
   </thead>
   <tbody>
     <tr><td>1</td><td>表紙（クライアント名、対象月、作成日）</td><td>表紙</td><td>Client情報</td><td>-</td></tr>
@@ -4846,8 +4845,8 @@ POST https://analyticsdata.googleapis.com/v1beta
 </table>
 
 <div class="callout callout-eng">
-  <div class="callout-title">&#128736; PPTX生成ライブラリ</div>
-  <p><code>pptxgenjs</code> を使用。テンプレートマスタースライドを用意し、データバインディングでグラフ・テーブル・テキストを動的挿入。AI所感は Claude API (<code>claude-sonnet-4-6</code>) で生成し、プロンプトにデータサマリーを含める。</p>
+  <div class="callout-title">&#128736; レポート表示方式</div>
+  <p>Looker StudioをBigQueryに接続し、各セクションをiframeで埋め込み表示（<code>/embed/reporting/...</code> URL）。AI所感は Claude API (<code>claude-sonnet-4-6</code>) で生成し、各セクション横のテキストエリアに表示。コンサルタントが編集後、<code>@media print</code> CSS + <code>window.print()</code> でPDF出力。Looker Studioテンプレートはレポート種別ごとに1つ作成し、クライアントごとにBQデータセットをパラメータで切り替え。</p>
 </div>
 
 <h3 class="h3">AI改善提案の自動生成（月2案）</h3>
@@ -5068,9 +5067,9 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>データベース（操作系）</strong></td><td>PostgreSQL (Cloud SQL)</td><td>16</td><td>操作データ（ユーザー、クライアント、タスク、コンテンツ、チャット、設定、KWマスタ）。CRUD操作に最適</td></tr>
     <tr><td><strong>データベース（分析系）</strong></td><td>BigQuery</td><td>-</td><td>分析・履歴データ（順位履歴、トラフィックスナップショット、CV履歴、被リンク履歴）。全て自社GCP内で管理。120社x100KWx365日=年438万件を数秒で集計。クライアント側GCPには非依存</td></tr>
     <tr><td><strong>キャッシュ</strong></td><td>Redis (Memorystore)</td><td>7.x</td><td>キャッシュ + ジョブキューバックエンド</td></tr>
-    <tr><td><strong>ファイルストレージ</strong></td><td>Cloud Storage (GCS)</td><td>-</td><td>生成レポート(PPTX/PDF)の保存</td></tr>
+    <tr><td><strong>ファイルストレージ</strong></td><td>Cloud Storage (GCS)</td><td>-</td><td>レポートPDFの保存</td></tr>
     <tr><td><strong>AI</strong></td><td>Claude API (Anthropic)</td><td>claude-sonnet-4-6</td><td>所感ドラフト生成。日本語品質が高い</td></tr>
-    <tr><td><strong>PPTX生成</strong></td><td>pptxgenjs</td><td>3.x</td><td>Node.jsでPowerPoint生成。テンプレート対応</td></tr>
+    <tr><td><strong>レポート可視化</strong></td><td>Looker Studio</td><td>-</td><td>BQ連携レポート可視化。iframeでダッシュボードに埋め込み</td></tr>
     <tr><td><strong>リアルタイム通信</strong></td><td>Pusher</td><td>-</td><td>WebSocketによるリアルタイムチャット。Startup plan（200同時接続対応）</td></tr>
     <tr><td><strong>ホスティング</strong></td><td>GCP Cloud Run</td><td>-</td><td>オートスケーリング対応。コンテナベースでデプロイ容易</td></tr>
     <tr><td><strong>CI/CD</strong></td><td>GitHub Actions</td><td>-</td><td>PR時自動テスト、mainマージ時自動デプロイ</td></tr>
@@ -5110,7 +5109,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>Cloud SQL (PostgreSQL 16)</strong></td><td>操作系データベース</td><td>db-custom-2-4096（2 vCPU, 4GB RAM）</td></tr>
     <tr><td><strong>BigQuery</strong></td><td>分析データウェアハウス</td><td>オンデマンド課金（ストレージ + クエリ量）</td></tr>
     <tr><td><strong>Memorystore (Redis 7)</strong></td><td>キャッシュ + ジョブキュー</td><td>Basic tier, 1GB</td></tr>
-    <tr><td><strong>Cloud Storage</strong></td><td>ファイルストレージ</td><td>Standard class（レポートPPTX/PDF保存）</td></tr>
+    <tr><td><strong>Cloud Storage</strong></td><td>ファイルストレージ</td><td>Standard class（レポートPDF保存）</td></tr>
     <tr><td><strong>Pusher</strong></td><td>リアルタイムWebSocket（チャット）</td><td>Startup plan（$49/月、200同時接続）</td></tr>
   </tbody>
 </table>
@@ -5216,7 +5215,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>ユーザーアバター</strong></td><td>「板」（コンサルタント）</td><td>「客」（クライアント担当者）</td></tr>
     <tr><td><strong>チャット</strong></td><td>全4チャンネル表示、全メッセージ閲覧可</td><td>#general + #report のみ表示、自分のメッセージが右寄せ</td></tr>
     <tr><td><strong>コンテンツ</strong></td><td>カンバン管理（全ステータス）</td><td>承認待ち一覧（承認/差し戻しボタン）</td></tr>
-    <tr><td><strong>レポート</strong></td><td>スライドプレビュー + AI所感編集 + PPTX/PDF生成</td><td>過去レポートのPDFダウンロードのみ</td></tr>
+    <tr><td><strong>レポート</strong></td><td>Looker Studio埋め込み + AI所感編集 + PDF出力</td><td>過去レポートのPDFダウンロードのみ</td></tr>
   </tbody>
 </table>
 
@@ -5340,7 +5339,7 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td></td><td></td><td style="font-weight:700">Phase 2 小計</td><td style="font-weight:700">60人日</td></tr>
 
     <tr><td colspan="4" style="background:var(--cyan-bg); font-weight:700; color:var(--cyan);">Phase 3: ロックイン（W23-30 = 約2ヶ月）― レポート自動化 + AI提案 + 保守プラン + ナレッジベース</td></tr>
-    <tr><td>W23-24</td><td><strong>M11: レポート自動生成</strong></td><td>PPTXテンプレート、データバインディング、生成パイプライン</td><td>12</td></tr>
+    <tr><td>W23-24</td><td><strong>M11: レポート自動生成</strong></td><td>Looker Studioテンプレート作成、iframe埋め込み、所感編集UI、PDF出力</td><td>12</td></tr>
     <tr><td>W25-26</td><td><strong>M12: AI所感 + 改善提案</strong></td><td>Claude API連携、所感ドラフト生成、月2案の改善提案自動生成、リライトスコアリング</td><td>12</td></tr>
     <tr><td>W27-28</td><td><strong>M13: 保守プラン + ヘルススコア</strong></td><td>保守プランUI、解約時比較画面、ヘルススコア算出、contractPlan権限制御</td><td>10</td></tr>
     <tr><td>W29-30</td><td><strong>M14: ナレッジベース</strong></td><td>施策→実施→効果の記録UI、検索・フィルタ、AI提案連携、テスト・バグ修正</td><td>10</td></tr>
@@ -5394,7 +5393,8 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td>Google Ads API（Keyword Planner）</td><td>&yen;0</td><td>既存Adsアカウントで無料利用可</td></tr>
     <tr><td>Claude API（AI所感・提案生成）</td><td>&yen;15,000-30,000</td><td>120社&times;月1レポート+月2提案 &cong; 4,000リクエスト</td></tr>
     <tr><td>Pusher（リアルタイムチャット）</td><td>&yen;8,000</td><td>Startup plan $49/月、200同時接続対応</td></tr>
-    <tr><td>Cloud Storage（レポートファイル）</td><td>&yen;1,000</td><td>PPTX/PDF保存</td></tr>
+    <tr><td>Cloud Storage（レポートファイル）</td><td>&yen;1,000</td><td>レポートPDF保存</td></tr>
+    <tr><td>Looker Studio</td><td>&yen;0</td><td>Googleアカウントがあれば無料。BQ連携レポート埋め込みに使用</td></tr>
     <tr><td>Sentry + 監視</td><td>&yen;5,000</td><td>エラー監視 + 死活監視</td></tr>
     <tr><td colspan="2" style="font-weight:700">インフラ月額合計</td><td style="font-weight:700">&yen;139,000-181,000</td></tr>
     <tr><td colspan="2" style="font-weight:700">インフラ年額</td><td style="font-weight:700">&yen;1,668,000-2,172,000</td></tr>
@@ -5772,32 +5772,45 @@ POST https://analyticsdata.googleapis.com/v1beta
 <!-- P2: Phase 3開始前に決定必須 -->
 <div class="h2">P2: Phase 3開始前に決定必須</div>
 
-<div class="h3">P2-1. PPTX内グラフ描画の技術選定</div>
+<div class="h3">P2-1. Looker Studioレポート埋め込みの設計</div>
+
+<p>Looker StudioをBigQueryに接続し、ダッシュボード内にiframeで埋め込む方式を採用。</p>
+
+<p><strong>レポートセクション構成（1セクション = Looker embed + 所感テキスト）:</strong></p>
 
 <div class="table-wrap">
 <table>
-  <thead><tr><th>選択肢</th><th>メリット</th><th>デメリット</th></tr></thead>
+  <thead><tr><th>要素</th><th>実装</th></tr></thead>
   <tbody>
     <tr>
-      <td><strong>(A) pptxgenjsネイティブチャート</strong></td>
-      <td>追加依存なし、軽量</td>
-      <td>グラフの見た目がRechartsと異なる、カスタマイズ性が低い</td>
+      <td>グラフ表示</td>
+      <td>Looker Studio埋め込み（<code>/embed/reporting/...</code> URL）</td>
     </tr>
     <tr>
-      <td><strong>(B) Puppeteer + Rechartsスクリーンショット</strong></td>
-      <td>ダッシュボードと同じ見た目</td>
-      <td>Cloud Runでヘッドレスブラウザ運用のオーバーヘッド、生成速度が遅い</td>
+      <td>AI所感</td>
+      <td>Claude APIで生成したドラフトをテキストエリアに表示。コンサルタントが編集可能</td>
     </tr>
     <tr>
-      <td><strong>(C) Chart.js + canvas → PNG → PPTX埋め込み</strong></td>
-      <td>サーバーサイドCanvas描画、中間の選択肢</td>
-      <td>Chart.jsの追加学習コスト</td>
+      <td>PDF出力</td>
+      <td><code>@media print</code> CSSでサイドバー・ヘッダー非表示 + <code>window.print()</code></td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<p><strong>推奨:</strong> Phase 3開始前に、現行レポートの1スライドを各方式でPoC実施し、品質・速度・工数を比較。</p>
+<p><strong>Looker Studioテンプレート管理:</strong></p>
+<ul>
+  <li>レポート種別ごとにテンプレートを1つ作成</li>
+  <li>クライアントごとにBQデータセットをパラメータで切り替え</li>
+  <li>埋め込みURLにパラメータを付与してクライアント別表示を実現</li>
+</ul>
+
+<p><strong>決定が必要な事項:</strong></p>
+<ul>
+  <li>Looker Studioの共有設定（組織内共有 or リンク共有）</li>
+  <li>iframeのcross-origin制約への対応（同一Google Workspace内なら問題なし）</li>
+  <li>Looker Studioテンプレートの作成・管理フロー</li>
+</ul>
 
 <div class="h3">P2-2. Claude API所感生成の設計</div>
 
@@ -5810,7 +5823,7 @@ POST https://analyticsdata.googleapis.com/v1beta
 - 前月レポートの所感（トーンの一貫性のため）
 
 出力:
-- スライドごとの所感テキスト（200-400文字/スライド）
+- セクションごとの所感テキスト（200-400文字/セクション）
 - JSON形式で構造化</code></pre>
 
 <p><strong>コスト試算の検証が必要:</strong></p>
@@ -6113,8 +6126,8 @@ POST https://analyticsdata.googleapis.com/v1beta
     <tr><td><strong>バッチ処理</strong></td><td>-</td><td>毎日決まった時間に自動実行される裏方の処理</td></tr>
     <tr><td><strong>カンバン</strong></td><td>-</td><td>付箋を列に並べて進捗を管理する方法。Trelloのようなイメージ</td></tr>
     <tr><td><strong>MVP</strong></td><td>Minimum Viable Product</td><td>最低限使える状態の製品。まずこれを作って、使いながら改善していく</td></tr>
-    <tr><td><strong>PPTX</strong></td><td>-</td><td>PowerPointファイルの形式</td></tr>
-    <tr><td><strong>Looker Studio</strong></td><td>旧Googleデータポータル</td><td>Googleが提供するダッシュボードツール。現在GA4データの閲覧に使用中。本ツール稼働後は段階的に移行予定</td></tr>
+    <tr><td><strong>PPTX</strong></td><td>-</td><td>PowerPointファイルの形式。現行レポートで使用中</td></tr>
+    <tr><td><strong>Looker Studio</strong></td><td>旧Googleデータポータル</td><td>Googleのダッシュボードツール。BigQueryに接続し、レポートセクションをiframeで埋め込み表示。無料（Googleアカウントがあれば利用可能）</td></tr>
   </tbody>
 </table>
 
