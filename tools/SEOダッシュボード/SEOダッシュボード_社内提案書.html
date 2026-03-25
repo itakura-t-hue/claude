@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO統合ダッシュボード 社内提案書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1e3a5f;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --blue-bg: #eff6ff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --green: #059669;
+    --orange: #d97706;
+    --red: #dc2626;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 10px 24px rgba(0,0,0,.06);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; }
+  body {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+    color: var(--gray-900);
+    background: var(--gray-50);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 800px; margin: 0 auto; background: #fff; }
+
+  /* ── Cover ── */
+  .cover {
+    background: linear-gradient(135deg, var(--navy) 0%, #2d5a8e 100%);
+    color: #fff;
+    padding: 100px 60px 80px;
+    text-align: center;
+    page-break-after: always;
+  }
+  .cover h1 { font-size: 2rem; font-weight: 700; letter-spacing: .04em; margin-bottom: 12px; }
+  .cover .subtitle { font-size: 1.1rem; opacity: .85; margin-bottom: 48px; font-weight: 400; }
+  .cover-meta { display: flex; justify-content: center; gap: 40px; font-size: .85rem; opacity: .7; }
+  .cover-meta span { display: inline-flex; align-items: center; gap: 6px; }
+  .cover .status-badge {
+    display: inline-block; margin-top: 28px;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+    padding: 6px 20px; border-radius: 20px; font-size: .8rem; letter-spacing: .06em;
+  }
+
+  /* ── Sections ── */
+  section { padding: 48px 60px; }
+  section + section { border-top: 1px solid var(--gray-200); }
+  .section-num {
+    font-size: .75rem; font-weight: 600; color: var(--blue);
+    text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px;
+  }
+  h2 {
+    font-size: 1.35rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 24px; line-height: 1.4;
+  }
+  h3 {
+    font-size: 1rem; font-weight: 600; color: var(--navy);
+    margin: 28px 0 12px;
+  }
+  p, li { font-size: .9rem; color: var(--gray-700); }
+  p + p { margin-top: 10px; }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; gap: 16px; }
+  .card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .card {
+    background: #fff; border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .card .icon { font-size: 1.6rem; margin-bottom: 10px; }
+  .card .card-title { font-size: .9rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .card .card-desc { font-size: .8rem; color: var(--gray-500); line-height: 1.6; }
+
+  .pillar-card { border-top: 3px solid var(--blue); }
+  .pillar-num { font-size: .7rem; font-weight: 700; color: var(--blue); margin-bottom: 4px; letter-spacing: .08em; }
+
+  .alert-card {
+    border-left: 4px solid var(--red);
+    background: #fef2f2;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .alert-card .card-title { color: var(--red); }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; font-size: .82rem; margin-top: 8px; }
+  th {
+    background: var(--gray-100); color: var(--navy);
+    font-weight: 600; text-align: left;
+    padding: 10px 14px; border-bottom: 2px solid var(--gray-200);
+  }
+  td {
+    padding: 10px 14px; border-bottom: 1px solid var(--gray-200);
+    color: var(--gray-700); vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  .table-wrap { border: 1px solid var(--gray-200); border-radius: 10px; overflow: hidden; }
+
+  /* ── Stats row ── */
+  .stats { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .stat-box {
+    flex: 1; min-width: 110px;
+    background: var(--blue-bg); border-radius: 10px;
+    padding: 16px 18px; text-align: center;
+  }
+  .stat-box .num { font-size: 1.4rem; font-weight: 700; color: var(--navy); }
+  .stat-box .label { font-size: .72rem; color: var(--gray-500); margin-top: 2px; }
+
+  /* ── Timeline ── */
+  .timeline { display: flex; gap: 0; margin: 20px 0; position: relative; }
+  .tl-phase {
+    flex: 1; text-align: center; position: relative; padding-top: 36px;
+  }
+  .tl-phase::before {
+    content: ''; position: absolute; top: 14px; left: 0; right: 0;
+    height: 3px; background: var(--gray-200);
+  }
+  .tl-phase:first-child::before { left: 50%; }
+  .tl-phase:last-child::before { right: 50%; }
+  .tl-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--blue); border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--blue);
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    z-index: 1;
+  }
+  .tl-phase:nth-child(2) .tl-dot { background: #7c3aed; box-shadow: 0 0 0 2px #7c3aed; }
+  .tl-phase:nth-child(3) .tl-dot { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .tl-phase:nth-child(4) .tl-dot { background: var(--orange); box-shadow: 0 0 0 2px var(--orange); }
+  .tl-label { font-size: .7rem; font-weight: 700; color: var(--blue); }
+  .tl-phase:nth-child(2) .tl-label { color: #7c3aed; }
+  .tl-phase:nth-child(3) .tl-label { color: var(--green); }
+  .tl-phase:nth-child(4) .tl-label { color: var(--orange); }
+  .tl-title { font-size: .78rem; font-weight: 600; color: var(--navy); margin: 4px 0 2px; }
+  .tl-sub { font-size: .68rem; color: var(--gray-500); }
+  .tl-weeks { font-size: .65rem; color: var(--gray-500); margin-top: 2px; }
+
+  /* ── Two-column layout ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* ── Highlight box ── */
+  .highlight-box {
+    background: linear-gradient(135deg, var(--navy) 0%, #2d5a8e 100%);
+    color: #fff; border-radius: 12px; padding: 28px 32px;
+    margin-top: 24px;
+  }
+  .highlight-box .hl-row { display: flex; justify-content: space-around; text-align: center; flex-wrap: wrap; gap: 16px; }
+  .highlight-box .hl-num { font-size: 1.6rem; font-weight: 700; }
+  .highlight-box .hl-label { font-size: .75rem; opacity: .8; margin-top: 2px; }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    padding: 12px 16px; border: 1px solid var(--gray-200); border-radius: 8px;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
+    font-size: .85rem;
+  }
+  .checklist .checkbox {
+    width: 18px; height: 18px; border: 2px solid var(--gray-300);
+    border-radius: 4px; flex-shrink: 0;
+  }
+
+  /* ── Feature list ── */
+  .feature-list { display: grid; gap: 12px; }
+  .feature-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 16px 20px; border: 1px solid var(--gray-200);
+    border-radius: 10px; background: #fff;
+  }
+  .feature-item .fi-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 2px; }
+  .feature-item .fi-title { font-size: .85rem; font-weight: 600; color: var(--navy); }
+  .feature-item .fi-desc { font-size: .78rem; color: var(--gray-500); margin-top: 2px; }
+
+  /* ── Demo link ── */
+  .demo-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue); color: #fff; padding: 10px 24px;
+    border-radius: 8px; text-decoration: none; font-size: .85rem;
+    font-weight: 600; margin-top: 16px; transition: background .2s;
+  }
+  .demo-link:hover { background: #1d4ed8; }
+
+  /* ── Footer ── */
+  .footer {
+    background: var(--gray-100); padding: 24px 60px;
+    font-size: .72rem; color: var(--gray-500);
+    border-top: 1px solid var(--gray-200);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+  .footer a { color: var(--blue); text-decoration: none; }
+
+  /* ── Print ── */
+  @media print {
+    html { font-size: 13px; }
+    body { background: #fff; }
+    .container { box-shadow: none; }
+    section { padding: 32px 48px; }
+    .cover { padding: 80px 48px 60px; }
+    .footer { padding: 16px 48px; }
+    .demo-link { border: 1px solid var(--blue); }
+    section { page-break-inside: avoid; }
+    @page { margin: 12mm; size: A4; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    section, .cover, .footer { padding-left: 28px; padding-right: 28px; }
+    .card-grid.cols-3, .two-col { grid-template-columns: 1fr; }
+    .timeline { flex-direction: column; gap: 8px; }
+    .tl-phase { padding-top: 0; padding-left: 36px; text-align: left; min-height: 56px; }
+    .tl-phase::before { top: 0; bottom: 0; left: 14px; right: auto; width: 3px; height: auto; }
+    .tl-phase:first-child::before { top: 14px; }
+    .tl-phase:last-child::before { bottom: auto; height: 14px; }
+    .tl-dot { top: 8px; left: 8px; transform: none; }
+    .cover h1 { font-size: 1.5rem; }
+    .stats { flex-direction: column; }
+    .highlight-box .hl-row { flex-direction: column; }
+  }
+
+  /* ── Plan badge ── */
+  .plan-badge {
+    display: inline-block; font-size: .68rem; font-weight: 600;
+    padding: 2px 10px; border-radius: 12px; margin-right: 4px;
+  }
+  .plan-badge.common { background: var(--blue-light); color: var(--blue); }
+
+  /* ── Bullet list ── */
+  .bullet-list { padding-left: 18px; margin-top: 6px; }
+  .bullet-list li { font-size: .8rem; margin-bottom: 4px; color: var(--gray-700); }
+
+  .text-sm { font-size: .8rem; }
+  .text-muted { color: var(--gray-500); }
+  .mt-12 { margin-top: 12px; }
+  .mb-8 { margin-bottom: 8px; }
+  .fw-600 { font-weight: 600; }
+  .color-navy { color: var(--navy); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== 表紙 ===== -->
+  <div class="cover">
+    <h1>SEO統合ダッシュボード<br>社内提案書</h1>
+    <p class="subtitle">「解約を止める」ための社内ツール開発提案</p>
+    <div class="cover-meta">
+      <span>2026-03-25</span>
+      <span>WEB事業部 SEO事業部</span>
+    </div>
+    <div class="status-badge">承認待ち</div>
+  </div>
+
+  <!-- ===== 1. 背景と課題 ===== -->
+  <section>
+    <div class="section-num">Section 01</div>
+    <h2>背景と課題 ── なぜ必要か</h2>
+
+    <div class="stats">
+      <div class="stat-box">
+        <div class="num">120-180</div>
+        <div class="label">総案件数</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">25+</div>
+        <div class="label">チーム人数</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">1案件</div>
+        <div class="label">プリセールス1+<br>ディレクター1</div>
+      </div>
+    </div>
+
+    <p class="text-sm text-muted mb-8">
+      チーム構成: プリセールス3-4名 / ディレクター6名 / コンテンツ担当5名 / エンジニア3名 / セールス4-6名 / 新卒4名入社予定
+    </p>
+
+    <h3>解約に直結する課題 TOP 3</h3>
+
+    <div class="alert-card">
+      <div class="card-title">1. 案件過多で対応品質低下 → 解約</div>
+      <div class="card-desc text-sm">1人あたりの担当案件が多すぎ、対応遅延・品質低下が発生。コンサルタントの疲弊・離職も加速。</div>
+    </div>
+    <div class="alert-card">
+      <div class="card-title">2. 分析・提案に時間が取れない → 成果不良 → 解約</div>
+      <div class="card-desc text-sm">データ収集・レポート作成に時間を取られ、改善提案の質が低下。成果が出ず解約。</div>
+    </div>
+    <div class="alert-card">
+      <div class="card-title">3. コンテンツ制作の炎上 → 解約</div>
+      <div class="card-desc text-sm">大量記事発注でレビュー対応が回らない。クライアントとのやり取りが散在し、炎上から解約へ。</div>
+    </div>
+
+    <p class="text-sm text-muted mt-12">
+      現状: ベトナムBPOに月5万円で Looker Studio スクリーンショット → PPTX 貼付の手作業を委託中。品質にばらつきあり。
+    </p>
+  </section>
+
+  <!-- ===== 2. 3つの柱 ===== -->
+  <section>
+    <div class="section-num">Section 02</div>
+    <h2>ツールで解決すること ── 3つの柱</h2>
+
+    <div class="card-grid cols-3">
+      <div class="card pillar-card">
+        <div class="pillar-num">PILLAR 1</div>
+        <div class="icon">&#x1F6E1;</div>
+        <div class="card-title">解約阻止</div>
+        <div class="card-desc">コンテンツ進捗をクライアントが直接確認。レビュー・承認ワークフローで炎上を未然に防止。</div>
+      </div>
+      <div class="card pillar-card">
+        <div class="pillar-num">PILLAR 2</div>
+        <div class="icon">&#x26A1;</div>
+        <div class="card-title">効率化</div>
+        <div class="card-desc">レポート自動生成、データ収集ゼロ化。担当可能案件数を30%増加。</div>
+      </div>
+      <div class="card pillar-card">
+        <div class="pillar-num">PILLAR 3</div>
+        <div class="icon">&#x1F512;</div>
+        <div class="card-title">ロックイン</div>
+        <div class="card-desc">データ蓄積で「やめたらもったいない」構造を構築。保守プランで継続課金。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. 誰が使うのか ===== -->
+  <section>
+    <div class="section-num">Section 03</div>
+    <h2>誰が使うのか</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ロール</th><th>人数</th><th>できること</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="fw-600">管理者<br><span class="text-muted text-sm">事業部長</span></td>
+            <td>1名</td>
+            <td>全案件の閲覧・ユーザー管理・設定変更</td>
+          </tr>
+          <tr>
+            <td class="fw-600">メンバー<br><span class="text-muted text-sm">セールス・プリセールス・ディレクター</span></td>
+            <td>13-16名</td>
+            <td>担当案件のデータ閲覧・編集、レポート生成、タスク管理、チャット</td>
+          </tr>
+          <tr>
+            <td class="fw-600">コンテンツ担当</td>
+            <td>5名</td>
+            <td>コンテンツカンバン管理、ライターアサイン・連絡、KW選定支援</td>
+          </tr>
+          <tr>
+            <td class="fw-600">クライアント</td>
+            <td>各社1-3名</td>
+            <td>自社データ閲覧・コンテンツ承認・チャット</td>
+          </tr>
+          <tr>
+            <td class="fw-600">外部ライター</td>
+            <td>案件ごと</td>
+            <td>アサイン記事の閲覧・原稿提出・フィードバック確認</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== 4. 主要機能 ===== -->
+  <section>
+    <div class="section-num">Section 04</div>
+    <h2>主要機能</h2>
+
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="fi-icon">&#x1F4CA;</div>
+        <div>
+          <div class="fi-title">全案件ダッシュボード</div>
+          <div class="fi-desc">120案件を1画面で俯瞰。ヘルススコアで要対応を瞬時に把握。</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">&#x1F4C8;</div>
+        <div>
+          <div class="fi-title">クライアント概要</div>
+          <div class="fi-desc">KPI推移をワンクリックで確認。セッション・CV・順位の月次変動を可視化。</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">&#x1F4DD;</div>
+        <div>
+          <div class="fi-title">コンテンツ管理</div>
+          <div class="fi-desc">カンバンで制作進捗を可視化。クライアント直接承認でレビュー工程を効率化。</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">&#x1F4C4;</div>
+        <div>
+          <div class="fi-title">レポート自動生成</div>
+          <div class="fi-desc">17スライドを自動生成。AI所感ドラフト付きで編集するだけ。</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">&#x1F50D;</div>
+        <div>
+          <div class="fi-title">アップデート分析</div>
+          <div class="fi-desc">アルゴリズム変動を自動検知。全案件横断で影響を分析。</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">&#x1F4AC;</div>
+        <div>
+          <div class="fi-title">チャット</div>
+          <div class="fi-desc">連絡手段を一元化。Chatworkからの段階的な移行を想定。</div>
+        </div>
+      </div>
+    </div>
+
+    <a class="demo-link" href="https://itakura-t-hue.github.io/claude/tools/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89_%E3%83%87%E3%83%A2.html#/dashboard" target="_blank">&#9654; デモを見る</a>
+  </section>
+
+  <!-- ===== 5. サービスパッケージ ===== -->
+  <section>
+    <div class="section-num">Section 05</div>
+    <h2>サービスパッケージ</h2>
+
+    <h3>コンサルティングプラン</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>ミニマム</th><th>ミドル</th><th>LLMO付き</th><th>大型</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="fw-600">月額</td><td>¥300,000</td><td>¥500,000</td><td>¥700,000</td><td>¥800,000〜</td></tr>
+          <tr><td class="fw-600">コンテンツ量</td><td>標準</td><td>中規模</td><td>中規模</td><td>大規模</td></tr>
+          <tr><td class="fw-600">対応優先度</td><td>通常</td><td>優先</td><td>優先</td><td>最優先</td></tr>
+          <tr><td class="fw-600">ダッシュボード</td><td colspan="4" style="text-align:center;"><span class="plan-badge common">全プラン共通：全機能利用可能</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>保守プラン（解約抑止用）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>保守ライト</th><th>保守プロ</th><th>解約</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="fw-600">月額</td><td>¥50,000</td><td>¥80,000</td><td>¥0</td></tr>
+          <tr><td class="fw-600">ダッシュボード</td><td>閲覧可</td><td>閲覧可</td><td style="color:var(--red);">アクセス不可</td></tr>
+          <tr><td class="fw-600">データ同期</td><td>集計データ継続</td><td>集計+ローデータ継続</td><td style="color:var(--red);">全停止</td></tr>
+          <tr><td class="fw-600">蓄積データ</td><td>永久保持</td><td>永久保持</td><td style="color:var(--red);">全データ消失</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-sm text-muted mt-12">
+      ダッシュボード機能は全コンサルティングプランで共通。保守プランは月額5-8万でも年間60-96万の売上維持に貢献し、フルコンサルへの復帰も期待できます。
+    </p>
+  </section>
+
+  <!-- ===== 6. 開発ロードマップ ===== -->
+  <section>
+    <div class="section-num">Section 06</div>
+    <h2>開発ロードマップ</h2>
+
+    <div class="timeline">
+      <div class="tl-phase">
+        <div class="tl-dot"></div>
+        <div class="tl-label">PHASE 1</div>
+        <div class="tl-title">解約阻止</div>
+        <div class="tl-sub">コンテンツ管理<br>クライアントポータル<br>ライターポータル</div>
+        <div class="tl-weeks">W1-10 / 2.5ヶ月 / 56人日</div>
+      </div>
+      <div class="tl-phase">
+        <div class="tl-dot"></div>
+        <div class="tl-label">PHASE 2</div>
+        <div class="tl-title">スケール</div>
+        <div class="tl-sub">データ連携<br>ダッシュボード<br>チャット</div>
+        <div class="tl-weeks">W11-22 / 3ヶ月 / 60人日</div>
+      </div>
+      <div class="tl-phase">
+        <div class="tl-dot"></div>
+        <div class="tl-label">PHASE 3</div>
+        <div class="tl-title">ロックイン</div>
+        <div class="tl-sub">レポート自動生成<br>AI提案<br>保守プラン</div>
+        <div class="tl-weeks">W23-30 / 2ヶ月 / 44人日</div>
+      </div>
+      <div class="tl-phase">
+        <div class="tl-dot"></div>
+        <div class="tl-label">PHASE 4</div>
+        <div class="tl-title">高度分析</div>
+        <div class="tl-sub">Site Audit<br>高度分析<br>ダッシュボード</div>
+        <div class="tl-weeks">W31-34 / 1ヶ月 / 20人日</div>
+      </div>
+    </div>
+
+    <p class="text-sm fw-600 color-navy mt-12" style="text-align:center;">合計: 180人日 / 約8.5ヶ月</p>
+  </section>
+
+  <!-- ===== 7. 費用と効果 ===== -->
+  <section>
+    <div class="section-num">Section 07</div>
+    <h2>費用と効果</h2>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px;">コスト</div>
+        <p class="text-sm fw-600">開発費（一時費用）</p>
+        <p style="font-size:1.2rem; font-weight:700; color:var(--navy); margin:4px 0 12px;">920〜1,120万円</p>
+        <p class="text-sm fw-600">インフラ月額</p>
+        <p style="font-size:1.2rem; font-weight:700; color:var(--navy); margin:4px 0 8px;">約14〜18万円/月</p>
+        <ul class="bullet-list">
+          <li>GCP (Cloud Run + SQL + Redis): 4-6万</li>
+          <li>BigQuery: 0.3-1万</li>
+          <li>Ahrefs専用アカウント: 6.7万 ($449)</li>
+          <li>Claude API: 1.5-3万</li>
+          <li>Pusher / Sentry 等: 1.4万</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px;">効果（年額）</div>
+        <table style="margin:0;">
+          <tr><td class="fw-600">解約防止</td><td style="text-align:right; font-weight:600;">1,800万円</td></tr>
+          <tr><td class="text-sm text-muted" colspan="2">5件 × 月30万 × 12ヶ月</td></tr>
+          <tr><td class="fw-600">保守プラン転換</td><td style="text-align:right; font-weight:600;">372万円</td></tr>
+          <tr><td class="text-sm text-muted" colspan="2">ライト3件 + プロ2件</td></tr>
+          <tr><td class="fw-600">レポート工数削減</td><td style="text-align:right; font-weight:600;">864万円</td></tr>
+          <tr><td class="text-sm text-muted" colspan="2">120社 × 月2h削減</td></tr>
+          <tr><td class="fw-600">BPO削減</td><td style="text-align:right; font-weight:600;">60万円</td></tr>
+          <tr style="border-top:2px solid var(--navy);">
+            <td class="fw-600" style="color:var(--navy);">合計</td>
+            <td style="text-align:right; font-weight:700; font-size:1.1rem; color:var(--navy);">約3,096万円/年</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hl-row">
+        <div>
+          <div class="hl-num">156%</div>
+          <div class="hl-label">初年度ROI</div>
+        </div>
+        <div>
+          <div class="hl-num">4-5ヶ月</div>
+          <div class="hl-label">投資回収期間</div>
+        </div>
+        <div>
+          <div class="hl-num">2,870万円+</div>
+          <div class="hl-label">2年目以降の年間純効果</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 8. 前提条件 ===== -->
+  <section>
+    <div class="section-num">Section 08</div>
+    <h2>前提条件と次のステップ</h2>
+
+    <ul class="checklist">
+      <li><div class="checkbox"></div>Ahrefs Advancedプラン（$449/月）の新規契約</li>
+      <li><div class="checkbox"></div>GCPプロジェクトの作成</li>
+      <li><div class="checkbox"></div>GA4管理者権限の昇格依頼（上位20社から順次）</li>
+      <li><div class="checkbox"></div>本提案書の承認</li>
+    </ul>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <div class="footer">
+    <span>社外秘 &nbsp;|&nbsp; SEO統合ダッシュボード 社内提案書 &nbsp;|&nbsp; 2026-03-25</span>
+    <span>
+      <a href="https://itakura-t-hue.github.io/claude/tools/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89_%E3%83%87%E3%83%A2.html#/dashboard" target="_blank">デモ</a>
+      &nbsp;|&nbsp;
+      <a href="https://itakura-t-hue.github.io/claude/tools/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89_%E8%A6%81%E4%BB%B6%E5%AE%9A%E7%BE%A9%E6%9B%B8_v3_%E8%A9%B3%E7%B4%B0%E7%89%88.html" target="_blank">詳細要件定義書</a>
+    </span>
+  </div>
+
+</div>
+</body>
+</html>
