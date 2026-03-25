@@ -4398,51 +4398,188 @@ POST https://analyticsdata.googleapis.com/v1beta
   <div class="screen-spec-body">
     <table class="spec-table">
       <tr><td><strong>フェーズ</strong></td><td><span class="badge badge-p2">Phase 2</span></td></tr>
-      <tr><td><strong>概要</strong></td><td>Googleアルゴリズムアップデートの検知・影響分析画面。公式アップデートとシークレットアップデートを時系列で表示し、全案件への影響を可視化</td></tr>
+      <tr><td><strong>対応する業務課題</strong></td><td>Googleアルゴリズムアップデート（公式・シークレット）の影響を迅速に把握し、クライアントへの初動対応を早める</td></tr>
     </table>
 
-    <div class="callout callout-biz">
-      <div class="callout-title">&#128188; ビジネス解説：シークレットアップデート検知とは</div>
-      <p>Googleは公式発表なしにアルゴリズムを変更することがあります（シークレットアップデート）。全案件の順位データを横断的に分析し、同時期に多数のクライアントで共通の順位変動が発生した場合、アルゴリズム変動の可能性としてアラートを出します。これにより「なぜ急に順位が下がったのか」への初動対応が早まります。</p>
+    <h3 class="h3">システムフロー（3ステップ）</h3>
+
+    <div style="display:flex; gap:16px; align-items:stretch; margin:24px 0; flex-wrap:wrap;">
+      <div style="flex:1; min-width:220px; background:linear-gradient(135deg,#e8f0fe,#d2e3fc); border:2px solid #4285f4; border-radius:12px; padding:20px;">
+        <div style="font-weight:700; color:#1a73e8; font-size:0.85rem; margin-bottom:8px;">STEP 1</div>
+        <div style="font-weight:700; font-size:1.05rem; margin-bottom:12px;">データ収集</div>
+        <ul style="margin:0; padding-left:18px; font-size:0.88rem; line-height:1.6;">
+          <li>GSC API（日次）</li>
+          <li>have（Yahoo日次）</li>
+          <li>GA4 API（日次）</li>
+          <li>Ahrefs API</li>
+        </ul>
+        <div style="margin-top:12px; font-size:0.8rem; color:#5f6368;">毎日 03:00-04:30 JST 自動実行</div>
+      </div>
+      <div style="display:flex; align-items:center; font-size:1.5rem; color:#4285f4; font-weight:700;">&#9654;</div>
+      <div style="flex:1; min-width:220px; background:linear-gradient(135deg,#fef7e0,#feefc3); border:2px solid #f9ab00; border-radius:12px; padding:20px;">
+        <div style="font-weight:700; color:#e37400; font-size:0.85rem; margin-bottom:8px;">STEP 2</div>
+        <div style="font-weight:700; font-size:1.05rem; margin-bottom:12px;">横断分析エンジン</div>
+        <div style="font-size:0.88rem; line-height:1.6;">120社の順位・流入データを同時分析</div>
+        <div style="margin-top:10px; font-size:0.85rem; line-height:1.6;">3条件で変動判定:<br>&emsp;&#9312; 変動率<br>&emsp;&#9313; 影響範囲<br>&emsp;&#9314; 方向性の偏り</div>
+      </div>
+      <div style="display:flex; align-items:center; font-size:1.5rem; color:#f9ab00; font-weight:700;">&#9654;</div>
+      <div style="flex:1; min-width:220px; background:linear-gradient(135deg,#e6f4ea,#ceead6); border:2px solid #34a853; border-radius:12px; padding:20px;">
+        <div style="font-weight:700; color:#1e8e3e; font-size:0.85rem; margin-bottom:8px;">STEP 3</div>
+        <div style="font-weight:700; font-size:1.05rem; margin-bottom:12px;">検知・通知・レポート</div>
+        <ul style="margin:0; padding-left:18px; font-size:0.88rem; line-height:1.6;">
+          <li>Slack即時通知</li>
+          <li>メールアラート</li>
+          <li>週次トレンド</li>
+          <li>影響度ヒートマップ</li>
+          <li>1次情報レポート</li>
+        </ul>
+      </div>
     </div>
 
-    <h4 class="h4">ページ構成</h4>
+    <h4 class="h4">STEP 1: データ収集</h4>
+    <table>
+      <thead><tr><th>データソース</th><th>取得データ</th><th>頻度</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>GSC API</strong></td>
+          <td>Google検索の順位・クリック・表示回数（全トラッキングKW）</td>
+          <td>日次（03:00 JST）</td>
+        </tr>
+        <tr>
+          <td><strong>haveツール</strong></td>
+          <td>Yahoo検索の日次順位（全登録KW）</td>
+          <td>日次（03:00 JST）</td>
+        </tr>
+        <tr>
+          <td><strong>GA4 Data API</strong></td>
+          <td>オーガニックセッション・ユーザー数・CV数</td>
+          <td>日次（03:30 JST）</td>
+        </tr>
+        <tr>
+          <td><strong>Ahrefs API</strong></td>
+          <td>DR・被リンク数・参照ドメイン数</td>
+          <td>日次/週次</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>全データはBigQueryに蓄積され、横断分析の入力データとなる。</p>
+
+    <h4 class="h4">STEP 2: 横断分析エンジン</h4>
+    <h5 style="font-size:0.95rem; margin:16px 0 8px;">シークレットアップデート検知ロジック（3条件AND判定）</h5>
+    <table>
+      <thead><tr><th>#</th><th>条件</th><th>閾値</th><th>判定対象</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>順位変動率</strong></td>
+          <td>直近3日間で、全トラッキングKWの<strong>20%以上</strong>が&plusmn;3位以上変動</td>
+          <td>全案件のKWを集約して判定</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>影響範囲</strong></td>
+          <td>変動が<strong>10社以上</strong>のクライアントで同時に発生</td>
+          <td>クライアント単位でカウント</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>方向性の偏り</strong></td>
+          <td>変動方向（上昇/下落）に<strong>70%以上の偏り</strong>がある</td>
+          <td>上昇KW数 vs 下落KW数</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>3条件すべてを満たした場合 → <code>AlertHistory</code> に <code>severity='critical'</code>, <code>type='algorithm_update_suspected'</code> で記録。</p>
+
+    <h5 style="font-size:0.95rem; margin:16px 0 8px;">週次トレンド分析（毎週月曜自動実行）</h5>
+    <table>
+      <thead><tr><th>分析項目</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>全案件平均順位変動</strong></td>
+          <td>120社の全KW平均順位の週次推移。急激な変動を可視化</td>
+        </tr>
+        <tr>
+          <td><strong>業界別影響度</strong></td>
+          <td>クライアントの業界カテゴリごとにグルーピングし、業界別の影響差を分析</td>
+        </tr>
+        <tr>
+          <td><strong>Google vs Yahoo比較</strong></td>
+          <td>GSC（Google）とhave（Yahoo）の順位変動を比較。Google単独のアップデートかどうかを判別</td>
+        </tr>
+        <tr>
+          <td><strong>流入影響の遅延分析</strong></td>
+          <td>順位変動から流入変動までのタイムラグを分析。順位は変わらないがAIOの影響でCTRが低下しているケースを検出</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="h4">STEP 3: 検知・通知・レポート</h4>
+    <table>
+      <thead><tr><th>出力</th><th>トリガー</th><th>配信先</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>シークレットアップデートアラート</strong></td>
+          <td>3条件AND判定が成立</td>
+          <td>Slack即時 + 管理者メール</td>
+          <td>「アルゴリズム変動の可能性を検知。影響を受けたクライアント: ○社。主な影響KWカテゴリ: ○○」</td>
+        </tr>
+        <tr>
+          <td><strong>週次トレンドレポート</strong></td>
+          <td>毎週月曜 08:00 JST</td>
+          <td>Slack + メール（全コンサルタント）</td>
+          <td>全案件の週次サマリー。平均順位変動・流入変動・注目すべきクライアントTOP5</td>
+        </tr>
+        <tr>
+          <td><strong>影響度ヒートマップ</strong></td>
+          <td>アップデート検知時に自動生成</td>
+          <td>ダッシュボード画面</td>
+          <td>クライアント&times;KWカテゴリのマトリクス。赤=悪影響 / 緑=好影響 / グレー=変動なし</td>
+        </tr>
+        <tr>
+          <td><strong>1次情報レポート</strong></td>
+          <td>手動トリガー（コンサルタント操作）</td>
+          <td>外部発信用（ブログ・SNS・セミナー）</td>
+          <td>120社の匿名集計データに基づく独自分析レポート。ブランディング・リード獲得に活用</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="h4">画面UI構成</h4>
     <table>
       <thead><tr><th>コンポーネント</th><th>表示内容</th><th>データソース</th></tr></thead>
       <tbody>
         <tr>
           <td><strong>アップデートタイムライン</strong></td>
-          <td>Google公式アップデート（手動登録）+ シークレットアップデート（自動検知）を時系列表示</td>
-          <td>手動登録 + 自動検知</td>
+          <td>Google公式アップデート（手動登録）+ シークレットアップデート（自動検知）を時系列表示。公式は青バッジ、シークレットは赤バッジで区別</td>
+          <td>手動登録 + <code>AlertHistory</code></td>
         </tr>
         <tr>
           <td><strong>影響度ヒートマップ</strong></td>
-          <td>アップデート前後で全案件の順位・流入変動を色分け表示</td>
+          <td>アップデート前後で全案件の順位・流入変動を色分け表示。行=クライアント、列=KWカテゴリ</td>
           <td><code>RankHistory</code>, <code>TrafficSnapshot</code></td>
         </tr>
         <tr>
           <td><strong>週次トレンドチャート</strong></td>
-          <td>全案件の順位変動を集約した「業界平均」推移線</td>
-          <td><code>RankHistory</code>全案件集計</td>
+          <td>全案件の順位変動を集約した「業界平均」推移線。Google/Yahoo別の2本線</td>
+          <td><code>RankHistory</code>（GSC + have）全案件集計</td>
+        </tr>
+        <tr>
+          <td><strong>Google vs Yahooタブ</strong></td>
+          <td>同一KWのGoogle順位（GSC）とYahoo順位（have）の乖離を表示。Google単独アップデートの判別に使用</td>
+          <td><code>RankHistory</code>（source='gsc' vs source='have'）</td>
         </tr>
         <tr>
           <td><strong>アラート履歴</strong></td>
-          <td>シークレットアップデート検知アラートの一覧</td>
+          <td>シークレットアップデート検知アラートの一覧。日時・影響社数・影響KW数・対応ステータス</td>
           <td><code>AlertHistory</code></td>
         </tr>
       </tbody>
     </table>
 
-    <h4 class="h4">シークレットアップデート検知ロジック</h4>
-    <div class="callout callout-eng">
-      <div class="callout-title">&#128736; 検知条件</div>
-      <pre><code>検知条件:
-  - 直近3日間で、全トラッキングKWの20%以上が&plusmn;3位以上変動
-  - かつ、変動が10社以上のクライアントで同時に発生
-  - かつ、変動方向（上昇/下落）に偏りがある（70%以上が同方向）
-
-→ AlertHistory に severity='critical', type='algorithm_update_suspected' で記録
-→ Slack即時通知 + 管理者メール</code></pre>
+    <div class="callout callout-biz">
+      <div class="callout-title">&#128188; ビジネス解説：なぜこの機能が武器になるか</div>
+      <p>通常のSEOコンサル会社は、アルゴリズムアップデートを「SEO系メディアの記事」で知ります。しかし本ツールでは<strong>自社で120社のデータを横断分析し、業界で最も早くアップデートを検知</strong>できます。この速度差がクライアントへの信頼感と「このコンサル会社は他と違う」という差別化に直結します。さらに、匿名集計データに基づく1次情報の発信は、SEO業界でのプレゼンス向上と新規リード獲得に貢献します。</p>
     </div>
 
   </div>
