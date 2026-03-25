@@ -664,213 +664,226 @@
     <div class="sec-num">Section 01</div>
     <h2>背景と課題</h2>
 
-    <div class="stats">
-      <div class="stat">
+    <div class="stats" style="margin-bottom:10px;">
+      <div class="stat" style="padding:10px 8px;">
         <div class="stat-num">120-180</div>
         <div class="stat-label">総案件数</div>
       </div>
-      <div class="stat">
+      <div class="stat" style="padding:10px 8px;">
         <div class="stat-num">25+</div>
         <div class="stat-label">チーム人数</div>
       </div>
-      <div class="stat">
+      <div class="stat" style="padding:10px 8px;">
         <div class="stat-num">1案件</div>
-        <div class="stat-label">プリセールス1名<br>＋ディレクター1名</div>
+        <div class="stat-label">プリセールス1名＋ディレクター1名</div>
       </div>
     </div>
 
-    <p class="muted" style="margin-bottom:20px;">
+    <p class="muted" style="margin-bottom:10px;">
       プリセールス3-4名 / ディレクター6名 / コンテンツ担当5名 / エンジニア3名 / セールス4-6名 / 新卒4名入社予定
     </p>
 
-    <h3>解約に直結する課題</h3>
+    <h3 style="margin:8px 0 4px;">解約に直結する課題</h3>
 
-    <div class="issue">
-      <div class="issue-num">01</div>
+    <div class="issue" style="padding:7px 12px; margin-bottom:4px;">
+      <div class="issue-num" style="font-size:16px;">01</div>
       <div>
-        <div class="issue-title">案件過多で対応品質低下 → 解約</div>
-        <div class="issue-desc">1人あたりの担当案件が多すぎ、対応遅延・品質低下。コンサルタントの疲弊・離職も加速。</div>
+        <div class="issue-title" style="font-size:12px;">案件過多で対応品質低下 → 解約</div>
+        <div class="issue-desc" style="font-size:11px;">1人あたりの担当案件が多すぎ、対応遅延・品質低下。コンサルタントの疲弊・離職も加速。</div>
       </div>
     </div>
-    <div class="issue">
-      <div class="issue-num">02</div>
+    <div class="issue" style="padding:7px 12px; margin-bottom:4px;">
+      <div class="issue-num" style="font-size:16px;">02</div>
       <div>
-        <div class="issue-title">分析・提案に時間が取れない → 成果不良 → 解約</div>
-        <div class="issue-desc">データ収集・レポート作成に時間を取られ、改善提案の質が低下。</div>
+        <div class="issue-title" style="font-size:12px;">分析・提案に時間が取れない → 成果不良 → 解約</div>
+        <div class="issue-desc" style="font-size:11px;">データ収集・レポート作成に時間を取られ、改善提案の質が低下。</div>
       </div>
     </div>
-    <div class="issue">
-      <div class="issue-num">03</div>
+    <div class="issue" style="padding:7px 12px; margin-bottom:4px;">
+      <div class="issue-num" style="font-size:16px;">03</div>
       <div>
-        <div class="issue-title">コンテンツ制作の炎上 → 解約</div>
-        <div class="issue-desc">大量記事発注でレビュー対応が回らない。やり取りが散在し、炎上から解約へ。</div>
+        <div class="issue-title" style="font-size:12px;">コンテンツ制作の炎上 → 解約</div>
+        <div class="issue-desc" style="font-size:11px;">大量記事発注でレビュー対応が回らない。やり取りが散在し、炎上から解約へ。</div>
       </div>
     </div>
 
-    <p class="muted mt-16">
-      現状: ベトナムBPOに月5万円でLooker Studioスクショ→PPTX貼付の手作業を委託中。→ 本ツールで完全自動化。
-    </p>
+    <h3 style="margin:10px 0 6px;">現在のワークフロー課題</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px;">
+      <div style="background:var(--bg-section); border:1px solid var(--border); border-radius:4px; padding:8px 10px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:3px;">データ収集</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">手動でGSC/GA4/Ahrefsからデータ抽出 → <span style="color:var(--red); font-weight:600;">月20時間/人</span></div>
+      </div>
+      <div style="background:var(--bg-section); border:1px solid var(--border); border-radius:4px; padding:8px 10px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:3px;">レポート作成</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">BPOに<span style="color:var(--red); font-weight:600;">月5万円</span>でLookerスクショ→PPTX貼付</div>
+      </div>
+      <div style="background:var(--bg-section); border:1px solid var(--border); border-radius:4px; padding:8px 10px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:3px;">クライアント対応</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">Chatwork/メール/Backlogに分散 → <span style="color:var(--red); font-weight:600;">連絡漏れ</span></div>
+      </div>
+      <div style="background:var(--bg-section); border:1px solid var(--border); border-radius:4px; padding:8px 10px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:3px;">コンテンツ管理</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">スプレッドシートで進捗管理 → <span style="color:var(--red); font-weight:600;">炎上時に状況把握不能</span></div>
+      </div>
+    </div>
   </div>
 
-  <!-- ===== 2. 3つの柱 ===== -->
+  <!-- ===== 2. 解決策（3つの柱 + ユーザーロール + 主要機能） ===== -->
   <div class="slide" data-page="02">
     <div class="sec-num">Section 02</div>
-    <h2>ツールで解決すること</h2>
+    <h2>解決策</h2>
 
-    <div class="pillars">
-      <div class="pillar">
-        <div class="pillar-num">PILLAR 01</div>
-        <div class="pillar-title">解約阻止</div>
-        <div class="pillar-desc">コンテンツ進捗をクライアントが直接確認。レビュー・承認ワークフローで炎上を未然に防止。</div>
+    <div style="display:grid; grid-template-columns:55% 45%; gap:16px;">
+      <!-- Left column -->
+      <div>
+        <h3 style="margin:0 0 6px;">3つの柱</h3>
+        <div style="display:flex; gap:8px; margin-bottom:12px;">
+          <div style="flex:1; padding:10px 12px; border:1px solid var(--border); border-top:3px solid var(--primary); border-radius:0 0 4px 4px;">
+            <div style="font-size:9px; font-weight:700; color:var(--accent); letter-spacing:.1em;">PILLAR 01</div>
+            <div style="font-size:13px; font-weight:700; color:var(--primary); margin:2px 0;">解約阻止</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">コンテンツ進捗をクライアントが直接確認。レビュー・承認で炎上防止。</div>
+          </div>
+          <div style="flex:1; padding:10px 12px; border:1px solid var(--border); border-top:3px solid var(--primary); border-radius:0 0 4px 4px;">
+            <div style="font-size:9px; font-weight:700; color:var(--accent); letter-spacing:.1em;">PILLAR 02</div>
+            <div style="font-size:13px; font-weight:700; color:var(--primary); margin:2px 0;">効率化</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">レポート自動生成、データ収集ゼロ化。担当可能案件数を30%増加。</div>
+          </div>
+          <div style="flex:1; padding:10px 12px; border:1px solid var(--border); border-top:3px solid var(--primary); border-radius:0 0 4px 4px;">
+            <div style="font-size:9px; font-weight:700; color:var(--accent); letter-spacing:.1em;">PILLAR 03</div>
+            <div style="font-size:13px; font-weight:700; color:var(--primary); margin:2px 0;">ロックイン</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">データ蓄積で「やめたらもったいない」構造。保守プランで継続課金。</div>
+          </div>
+        </div>
+
+        <h3 style="margin:0 0 6px;">主要機能</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
+          <div style="padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:1px;">全案件ダッシュボード</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.4;">120案件を1画面で俯瞰。ヘルススコアで要対応を瞬時に把握。</div>
+          </div>
+          <div style="padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:1px;">クライアント概要</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.4;">KPI推移をワンクリック確認。セッション・CV・順位の月次変動。</div>
+          </div>
+          <div style="padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:1px;">コンテンツ管理</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.4;">カンバンで制作進捗を可視化。クライアント直接承認。</div>
+          </div>
+          <div style="padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:1px;">レポート自動生成</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.4;">Looker Studioグラフ＋AI所感。PDF出力対応。</div>
+          </div>
+          <div style="padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:1px;">アップデート分析</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.4;">アルゴリズム変動を自動検知。全案件横断で影響分析。</div>
+          </div>
+          <div style="padding:8px 10px; border:1px solid var(--border); border-radius:4px;">
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:1px;">チャット一元化</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.4;">連絡手段を統合。Chatworkから段階的に移行。</div>
+          </div>
+        </div>
       </div>
-      <div class="pillar">
-        <div class="pillar-num">PILLAR 02</div>
-        <div class="pillar-title">効率化</div>
-        <div class="pillar-desc">レポート自動生成、データ収集ゼロ化。担当可能案件数を30%増加。</div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-num">PILLAR 03</div>
-        <div class="pillar-title">ロックイン</div>
-        <div class="pillar-desc">データ蓄積で「やめたらもったいない」構造を構築。保守プランで継続課金。</div>
+
+      <!-- Right column -->
+      <div>
+        <h3 style="margin:0 0 6px;">ユーザーロール</h3>
+        <div class="tbl-wrap" style="margin-bottom:12px;">
+          <table style="font-size:11px;">
+            <thead>
+              <tr><th style="padding:7px 10px;">ロール</th><th style="padding:7px 10px;">人数</th><th style="padding:7px 10px;">できること</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-bold" style="padding:6px 10px;">管理者<br><span class="td-muted" style="font-size:10px;">事業部長</span></td>
+                <td style="padding:6px 10px;">1名</td>
+                <td style="padding:6px 10px; font-size:10px;">全案件閲覧・ユーザー管理・設定変更</td>
+              </tr>
+              <tr>
+                <td class="td-bold" style="padding:6px 10px;">メンバー<br><span class="td-muted" style="font-size:10px;">セールス・PS・Dir</span></td>
+                <td style="padding:6px 10px;">13-16名</td>
+                <td style="padding:6px 10px; font-size:10px;">データ閲覧・編集、レポート生成、タスク管理</td>
+              </tr>
+              <tr>
+                <td class="td-bold" style="padding:6px 10px;">コンテンツ担当</td>
+                <td style="padding:6px 10px;">5名</td>
+                <td style="padding:6px 10px; font-size:10px;">カンバン管理、ライターアサイン、KW選定</td>
+              </tr>
+              <tr>
+                <td class="td-bold" style="padding:6px 10px;">クライアント</td>
+                <td style="padding:6px 10px;">各社1-3名</td>
+                <td style="padding:6px 10px; font-size:10px;">自社データ閲覧・コンテンツ承認・チャット</td>
+              </tr>
+              <tr>
+                <td class="td-bold" style="padding:6px 10px;">外部ライター</td>
+                <td style="padding:6px 10px;">案件ごと</td>
+                <td style="padding:6px 10px; font-size:10px;">アサイン記事閲覧・原稿提出・FB確認</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <a class="demo-btn" href="https://itakura-t-hue.github.io/claude/tools/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89_%E3%83%87%E3%83%A2.html#/dashboard" target="_blank" style="margin-top:8px;">&#9654;&ensp;デモを見る</a>
       </div>
     </div>
   </div>
 
-  <!-- ===== 3. ユーザー ===== -->
+  <!-- ===== 3. サービスパッケージ + データロックイン ===== -->
   <div class="slide" data-page="03">
     <div class="sec-num">Section 03</div>
-    <h2>誰が使うのか</h2>
-
-    <div class="tbl-wrap">
-      <table>
-        <thead>
-          <tr><th>ロール</th><th>人数</th><th>できること</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="td-bold">管理者<br><span class="td-muted">事業部長</span></td>
-            <td>1名</td>
-            <td>全案件の閲覧・ユーザー管理・設定変更</td>
-          </tr>
-          <tr>
-            <td class="td-bold">メンバー<br><span class="td-muted">セールス・プリセールス・ディレクター</span></td>
-            <td>13-16名</td>
-            <td>担当案件のデータ閲覧・編集、レポート生成、タスク管理、チャット</td>
-          </tr>
-          <tr>
-            <td class="td-bold">コンテンツ担当</td>
-            <td>5名</td>
-            <td>コンテンツカンバン管理、ライターアサイン・連絡、KW選定支援</td>
-          </tr>
-          <tr>
-            <td class="td-bold">クライアント</td>
-            <td>各社1-3名</td>
-            <td>自社データ閲覧・コンテンツ承認・チャット</td>
-          </tr>
-          <tr>
-            <td class="td-bold">外部ライター</td>
-            <td>案件ごと</td>
-            <td>アサイン記事の閲覧・原稿提出・フィードバック確認</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- ===== 4. 主要機能 ===== -->
-  <div class="slide" data-page="04">
-    <div class="sec-num">Section 04</div>
-    <h2>主要機能</h2>
-
-    <div class="features">
-      <div class="feat">
-        <div class="feat-dot"></div>
-        <div>
-          <div class="feat-title">全案件ダッシュボード</div>
-          <div class="feat-desc">120案件を1画面で俯瞰。ヘルススコアで要対応を瞬時に把握。</div>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-dot"></div>
-        <div>
-          <div class="feat-title">クライアント概要</div>
-          <div class="feat-desc">KPI推移をワンクリックで確認。セッション・CV・順位の月次変動を可視化。</div>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-dot"></div>
-        <div>
-          <div class="feat-title">コンテンツ管理</div>
-          <div class="feat-desc">カンバンで制作進捗を可視化。クライアント直接承認でレビュー工程を効率化。</div>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-dot"></div>
-        <div>
-          <div class="feat-title">レポート自動生成</div>
-          <div class="feat-desc">Looker Studioグラフ＋AI所感をセクション形式で表示。PDF出力。</div>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-dot"></div>
-        <div>
-          <div class="feat-title">アップデート分析</div>
-          <div class="feat-desc">アルゴリズム変動を自動検知。全案件横断で影響を分析。</div>
-        </div>
-      </div>
-      <div class="feat">
-        <div class="feat-dot"></div>
-        <div>
-          <div class="feat-title">チャット一元化</div>
-          <div class="feat-desc">連絡手段を統合。Chatworkからの段階的な移行を想定。</div>
-        </div>
-      </div>
-    </div>
-
-    <a class="demo-btn" href="https://itakura-t-hue.github.io/claude/tools/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89/SEO%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89_%E3%83%87%E3%83%A2.html#/dashboard" target="_blank">&#9654;&ensp;デモを見る</a>
-  </div>
-
-  <!-- ===== 5. パッケージ ===== -->
-  <div class="slide" data-page="05">
-    <div class="sec-num">Section 05</div>
     <h2>サービスパッケージ</h2>
 
-    <h3>コンサルティングプラン</h3>
-    <div class="tbl-wrap">
-      <table>
+    <h3 style="margin:6px 0 4px;">コンサルティングプラン</h3>
+    <div class="tbl-wrap" style="margin-bottom:8px;">
+      <table style="font-size:11px;">
         <thead>
-          <tr><th></th><th>ミニマム</th><th>ミドル</th><th>LLMO付き</th><th>大型</th></tr>
+          <tr><th style="padding:7px 10px;"></th><th style="padding:7px 10px;">ミニマム</th><th style="padding:7px 10px;">ミドル</th><th style="padding:7px 10px;">LLMO付き</th><th style="padding:7px 10px;">大型</th></tr>
         </thead>
         <tbody>
-          <tr><td class="td-bold">月額</td><td>¥300,000</td><td>¥500,000</td><td>¥700,000</td><td>¥800,000〜</td></tr>
-          <tr><td class="td-bold">コンテンツ量</td><td>標準</td><td>中規模</td><td>中規模</td><td>大規模</td></tr>
-          <tr><td class="td-bold">対応優先度</td><td>通常</td><td>優先</td><td>優先</td><td>最優先</td></tr>
-          <tr><td class="td-bold">ダッシュボード</td><td colspan="4" class="td-center"><span class="badge-common">全プラン共通：全機能利用可能</span></td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">月額</td><td style="padding:6px 10px;">¥300,000</td><td style="padding:6px 10px;">¥500,000</td><td style="padding:6px 10px;">¥700,000</td><td style="padding:6px 10px;">¥800,000〜</td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">コンテンツ量</td><td style="padding:6px 10px;">標準</td><td style="padding:6px 10px;">中規模</td><td style="padding:6px 10px;">中規模</td><td style="padding:6px 10px;">大規模</td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">対応優先度</td><td style="padding:6px 10px;">通常</td><td style="padding:6px 10px;">優先</td><td style="padding:6px 10px;">優先</td><td style="padding:6px 10px;">最優先</td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">ダッシュボード</td><td colspan="4" class="td-center" style="padding:6px 10px;"><span class="badge-common">全プラン共通：全機能利用可能</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>保守プラン（解約抑止用）</h3>
-    <div class="tbl-wrap">
-      <table>
+    <h3 style="margin:8px 0 4px;">保守プラン（解約抑止用）</h3>
+    <div class="tbl-wrap" style="margin-bottom:8px;">
+      <table style="font-size:11px;">
         <thead>
-          <tr><th></th><th>保守ライト</th><th>保守プロ</th><th>解約</th></tr>
+          <tr><th style="padding:7px 10px;"></th><th style="padding:7px 10px;">保守ライト</th><th style="padding:7px 10px;">保守プロ</th><th style="padding:7px 10px;">解約</th></tr>
         </thead>
         <tbody>
-          <tr><td class="td-bold">月額</td><td>¥50,000</td><td>¥80,000</td><td>¥0</td></tr>
-          <tr><td class="td-bold">ダッシュボード</td><td>閲覧可</td><td>閲覧可</td><td class="td-red">アクセス不可</td></tr>
-          <tr><td class="td-bold">データ同期</td><td>集計データ継続</td><td>集計＋ローデータ継続</td><td class="td-red">全停止</td></tr>
-          <tr><td class="td-bold">蓄積データ</td><td>永久保持</td><td>永久保持</td><td class="td-red">全データ消失</td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">月額</td><td style="padding:6px 10px;">¥50,000</td><td style="padding:6px 10px;">¥80,000</td><td style="padding:6px 10px;">¥0</td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">ダッシュボード</td><td style="padding:6px 10px;">閲覧可</td><td style="padding:6px 10px;">閲覧可</td><td class="td-red" style="padding:6px 10px;">アクセス不可</td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">データ同期</td><td style="padding:6px 10px;">集計データ継続</td><td style="padding:6px 10px;">集計＋ローデータ継続</td><td class="td-red" style="padding:6px 10px;">全停止</td></tr>
+          <tr><td class="td-bold" style="padding:6px 10px;">蓄積データ</td><td style="padding:6px 10px;">永久保持</td><td style="padding:6px 10px;">永久保持</td><td class="td-red" style="padding:6px 10px;">全データ消失</td></tr>
         </tbody>
       </table>
     </div>
 
-    <p class="muted mt-8">ダッシュボード機能は全コンサルティングプランで共通。保守プランは月額5-8万でも年間60-96万の売上維持に貢献。</p>
+    <h3 style="margin:10px 0 6px;">データロックイン効果</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+      <div style="background:var(--red-bg); border:1px solid var(--border); border-left:3px solid var(--red); border-radius:0 4px 4px 0; padding:10px 12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:3px;">順位履歴</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">GSCは<span style="color:var(--red); font-weight:600;">16ヶ月で消える</span> → BQなら永久保持</div>
+      </div>
+      <div style="background:var(--red-bg); border:1px solid var(--border); border-left:3px solid var(--red); border-radius:0 4px 4px 0; padding:10px 12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:3px;">GA4ローデータ</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">デフォルト<span style="color:var(--red); font-weight:600;">2ヶ月で消える</span> → BQなら永久保持</div>
+      </div>
+      <div style="background:var(--red-bg); border:1px solid var(--border); border-left:3px solid var(--red); border-radius:0 4px 4px 0; padding:10px 12px;">
+        <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:3px;">競合分析・施策記録・レポート</div>
+        <div style="font-size:10px; color:var(--text-sub); line-height:1.5;">解約すると<span style="color:var(--red); font-weight:600;">すべて消失</span></div>
+      </div>
+    </div>
+
+    <p class="muted" style="margin-top:6px; font-size:10px;">保守プランは月額5-8万でも年間60-96万の売上維持に貢献。データ蓄積が進むほど解約コストが上昇する構造。</p>
   </div>
 
-  <!-- ===== 6. ロードマップ ===== -->
-  <div class="slide" data-page="06">
-    <div class="sec-num">Section 06</div>
+  <!-- ===== 4. 開発ロードマップ + 技術構成 ===== -->
+  <div class="slide" data-page="04">
+    <div class="sec-num">Section 04</div>
     <h2>開発ロードマップ</h2>
 
     <div class="timeline">
@@ -904,88 +917,124 @@
       </div>
     </div>
 
-    <div class="tl-total">合計：180人日 / 約8.5ヶ月</div>
+    <div class="tl-total" style="margin-top:10px;">合計：180人日 / 約8.5ヶ月</div>
+
+    <h3 style="margin:14px 0 8px;">技術構成</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div style="border:1px solid var(--border); border-radius:4px; padding:12px 14px;">
+        <div style="font-size:10px; font-weight:700; color:var(--accent); letter-spacing:.08em; margin-bottom:6px;">FRONTEND / BACKEND</div>
+        <div style="display:flex; gap:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:2px;">フロントエンド</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.6;">Next.js / TypeScript / TailwindCSS</div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:2px;">バックエンド</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.6;">Prisma / BullMQ / NextAuth</div>
+          </div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--border); border-radius:4px; padding:12px 14px;">
+        <div style="font-size:10px; font-weight:700; color:var(--accent); letter-spacing:.08em; margin-bottom:6px;">INFRA / API</div>
+        <div style="display:flex; gap:16px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:2px;">インフラ</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.6;">GCP Cloud Run / Cloud SQL<br>BigQuery / Redis</div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:var(--primary); margin-bottom:2px;">外部連携</div>
+            <div style="font-size:10px; color:var(--text-sub); line-height:1.6;">GSC API / GA4 API<br>Ahrefs API / Looker Studio</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- ===== 7. 費用と効果 ===== -->
-  <div class="slide" data-page="07">
-    <div class="sec-num">Section 07</div>
+  <!-- ===== 5. 費用と効果 + 前提条件 ===== -->
+  <div class="slide" data-page="05">
+    <div class="sec-num">Section 05</div>
     <h2>費用と効果</h2>
 
-    <div class="two-col">
-      <div class="col-box">
-        <div class="col-title">Cost</div>
-        <div class="cost-item">
+    <div class="two-col" style="gap:12px;">
+      <div class="col-box" style="padding:14px;">
+        <div class="col-title" style="margin-bottom:10px; padding-bottom:6px;">Cost</div>
+        <div class="cost-item" style="margin-bottom:8px;">
           <div class="cost-label">開発費（一時費用）</div>
-          <div class="cost-value">920〜1,120万円</div>
+          <div class="cost-value" style="font-size:20px;">920〜1,120万円</div>
         </div>
-        <div class="cost-item">
+        <div class="cost-item" style="margin-bottom:6px;">
           <div class="cost-label">インフラ月額</div>
-          <div class="cost-value">約12.5〜15.6万円</div>
+          <div class="cost-value" style="font-size:20px;">約12.5〜15.6万円</div>
         </div>
-        <ul class="cost-list">
-          <li>GCP（Cloud Run + SQL + Redis）4-6万</li>
-          <li>BigQuery　0.3-1万</li>
-          <li>Ahrefs専用アカウント　6.7万（$449）</li>
-          <li>AI API（モデル選定中）　0.1-0.5万</li>
-          <li>Pusher / Sentry 等　1.4万</li>
+        <ul class="cost-list" style="margin-top:6px;">
+          <li style="padding:2px 0;">GCP（Cloud Run + SQL + Redis）4-6万</li>
+          <li style="padding:2px 0;">BigQuery　0.3-1万</li>
+          <li style="padding:2px 0;">Ahrefs専用アカウント　6.7万（$449）</li>
+          <li style="padding:2px 0;">AI API（モデル選定中）　0.1-0.5万</li>
+          <li style="padding:2px 0;">Pusher / Sentry 等　1.4万</li>
         </ul>
       </div>
-      <div class="col-box">
-        <div class="col-title">Annual Effect</div>
-        <div class="effect-row">
+      <div class="col-box" style="padding:14px;">
+        <div class="col-title" style="margin-bottom:10px; padding-bottom:6px;">Annual Effect</div>
+        <div class="effect-row" style="padding:5px 0;">
           <span class="effect-label">解約防止</span>
           <span class="effect-value">1,800万円</span>
         </div>
         <div class="effect-note">5件 × 月30万 × 12ヶ月</div>
-        <div class="effect-row">
+        <div class="effect-row" style="padding:5px 0;">
           <span class="effect-label">保守プラン転換</span>
           <span class="effect-value">372万円</span>
         </div>
         <div class="effect-note">ライト3件 + プロ2件</div>
-        <div class="effect-row">
+        <div class="effect-row" style="padding:5px 0;">
           <span class="effect-label">レポート工数削減</span>
           <span class="effect-value">864万円</span>
         </div>
         <div class="effect-note">120社 × 月2h削減</div>
-        <div class="effect-row">
+        <div class="effect-row" style="padding:5px 0;">
           <span class="effect-label">BPO削減</span>
           <span class="effect-value">60万円</span>
         </div>
-        <div class="effect-row total">
+        <div class="effect-row total" style="padding-top:8px; margin-top:2px;">
           <span class="effect-label" style="font-weight:700;">合計</span>
           <span class="effect-value" style="font-size:16px;">約3,096万円/年</span>
         </div>
       </div>
     </div>
 
-    <div class="kpi-bar">
-      <div class="kpi-cell">
-        <div class="kpi-num">159%</div>
+    <div class="kpi-bar" style="margin-top:10px;">
+      <div class="kpi-cell" style="padding:12px 8px;">
+        <div class="kpi-num" style="font-size:22px;">159%</div>
         <div class="kpi-label">初年度ROI</div>
       </div>
-      <div class="kpi-cell">
-        <div class="kpi-num">4-5ヶ月</div>
+      <div class="kpi-cell" style="padding:12px 8px;">
+        <div class="kpi-num" style="font-size:22px;">4-5ヶ月</div>
         <div class="kpi-label">投資回収期間</div>
       </div>
-      <div class="kpi-cell">
-        <div class="kpi-num">2,900万円+</div>
+      <div class="kpi-cell" style="padding:12px 8px;">
+        <div class="kpi-num" style="font-size:22px;">2,900万円+</div>
         <div class="kpi-label">2年目以降の年間純効果</div>
       </div>
     </div>
-  </div>
 
-  <!-- ===== 8. Next Steps ===== -->
-  <div class="slide" data-page="08">
-    <div class="sec-num">Section 08</div>
-    <h2>前提条件と次のステップ</h2>
-
-    <ul class="checks">
-      <li><div class="check-box"></div>Ahrefs Advancedプラン（$449/月）の新規契約</li>
-      <li><div class="check-box"></div>GCPプロジェクトの作成</li>
-      <li><div class="check-box"></div>GA4管理者権限の昇格依頼（上位20社から順次）</li>
-      <li><div class="check-box"></div>本提案書の承認</li>
-    </ul>
+    <div style="display:flex; gap:10px; margin-top:12px;">
+      <div style="flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:4px;">
+        <div style="width:16px; height:16px; border:2px solid var(--border); border-radius:3px; flex-shrink:0;"></div>
+        <span style="font-size:11px;">Ahrefs Advancedプラン（$449/月）の新規契約</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:4px;">
+        <div style="width:16px; height:16px; border:2px solid var(--border); border-radius:3px; flex-shrink:0;"></div>
+        <span style="font-size:11px;">GCPプロジェクトの作成</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:4px;">
+        <div style="width:16px; height:16px; border:2px solid var(--border); border-radius:3px; flex-shrink:0;"></div>
+        <span style="font-size:11px;">GA4管理者権限の昇格依頼（上位20社から順次）</span>
+      </div>
+      <div style="flex:1; display:flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:4px;">
+        <div style="width:16px; height:16px; border:2px solid var(--border); border-radius:3px; flex-shrink:0;"></div>
+        <span style="font-size:11px;">本提案書の承認</span>
+      </div>
+    </div>
   </div>
 
   <!-- ===== Footer ===== -->
