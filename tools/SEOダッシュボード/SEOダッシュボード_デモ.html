@@ -1336,6 +1336,117 @@ body.writer-mode .btn-primary:hover { background: #059669; }
   padding: 16px 20px; margin-bottom: 16px;
   font-size: 13px; color: #1e40af;
 }
+
+/* ============ V3 NEW SCREENS ============ */
+
+/* Health score mini ring */
+.hs-ring { display:inline-flex; align-items:center; gap:6px; }
+.hs-ring svg { transform:rotate(-90deg); }
+.hs-ring .hs-num { font-weight:700; font-size:13px; }
+
+/* Plan badges extended */
+.plan-badge.maintenance-lite { background: rgba(16,185,129,0.12); color: #10b981; }
+.plan-badge.maintenance-pro { background: rgba(139,92,246,0.12); color: #8b5cf6; }
+
+/* Renewal warning */
+.renewal-warn { font-size:12px; font-weight:600; }
+.renewal-warn.red { color:#ef4444; }
+.renewal-warn.yellow { color:#f59e0b; }
+
+/* Backlinks screen */
+.backlinks-kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+.ref-domain-table { width:100%; border-collapse:collapse; }
+.ref-domain-table th { background:#f1f5f9; padding:10px 14px; text-align:left; font-size:11px; font-weight:600; color:#64748b; border-bottom:1px solid #e2e8f0; }
+.ref-domain-table td { padding:10px 14px; font-size:13px; border-bottom:1px solid #f1f5f9; }
+.new-link-item { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f1f5f9; font-size:13px; }
+.new-link-item:last-child { border-bottom:none; }
+.new-link-date { color:#94a3b8; font-size:11px; min-width:70px; }
+.new-link-domain { color:#3b82f6; font-weight:500; }
+
+/* Task management (Kanban full) */
+.task-kanban { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.task-kanban-col { min-width:0; }
+.task-kanban-col-header { padding:10px 14px; background:#f1f5f9; border-radius:10px 10px 0 0; font-size:12px; font-weight:600; color:#64748b; display:flex; align-items:center; gap:8px; border:1px solid #e2e8f0; border-bottom:none; }
+.task-kanban-col-body { background:#f8fafc; border:1px solid #e2e8f0; border-top:none; border-radius:0 0 10px 10px; padding:8px; min-height:120px; }
+.task-kanban-card { background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:8px; }
+.task-kanban-card:last-child { margin-bottom:0; }
+.task-kanban-card-title { font-size:13px; font-weight:500; margin-bottom:6px; }
+.task-kanban-card-meta { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:4px; }
+.task-kanban-badge { font-size:10px; padding:2px 6px; border-radius:4px; font-weight:600; }
+.task-kanban-badge.cat-tech { background:rgba(59,130,246,0.1); color:#3b82f6; }
+.task-kanban-badge.cat-content { background:rgba(16,185,129,0.1); color:#10b981; }
+.task-kanban-badge.cat-link { background:rgba(139,92,246,0.1); color:#8b5cf6; }
+.task-kanban-badge.cat-other { background:rgba(148,163,184,0.1); color:#64748b; }
+.task-kanban-badge.pri-low { background:rgba(148,163,184,0.1); color:#94a3b8; }
+.task-kanban-badge.pri-mid { background:rgba(59,130,246,0.1); color:#3b82f6; }
+.task-kanban-badge.pri-high { background:rgba(245,158,11,0.1); color:#f59e0b; }
+.task-kanban-badge.pri-urgent { background:rgba(239,68,68,0.1); color:#ef4444; }
+.task-kanban-card-footer { font-size:11px; color:#94a3b8; display:flex; justify-content:space-between; }
+
+/* Settings screen */
+.settings-tabs { display:flex; gap:0; margin-bottom:20px; border-bottom:2px solid #e2e8f0; }
+.settings-tab { padding:10px 20px; font-size:13px; font-weight:500; color:#64748b; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all 0.15s; background:none; border-top:none; border-left:none; border-right:none; }
+.settings-tab:hover { color:#1e293b; }
+.settings-tab.active { color:#3b82f6; border-bottom-color:#3b82f6; font-weight:600; }
+.settings-table { width:100%; border-collapse:collapse; }
+.settings-table th { background:#f1f5f9; padding:10px 14px; text-align:left; font-size:11px; font-weight:600; color:#64748b; border-bottom:1px solid #e2e8f0; }
+.settings-table td { padding:10px 14px; font-size:13px; border-bottom:1px solid #f1f5f9; }
+.toggle-switch { position:relative; width:40px; height:22px; display:inline-block; }
+.toggle-switch input { display:none; }
+.toggle-switch .slider { position:absolute; top:0; left:0; right:0; bottom:0; background:#cbd5e1; border-radius:11px; cursor:pointer; transition:0.2s; }
+.toggle-switch .slider::before { content:''; position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; left:3px; top:3px; transition:0.2s; }
+.toggle-switch input:checked + .slider { background:#3b82f6; }
+.toggle-switch input:checked + .slider::before { transform:translateX(18px); }
+.sync-status { display:inline-block; padding:3px 8px; border-radius:4px; font-size:11px; font-weight:600; }
+.sync-status.success { background:rgba(16,185,129,0.1); color:#10b981; }
+.sync-status.error { background:rgba(239,68,68,0.1); color:#ef4444; }
+.sync-status.pending { background:rgba(245,158,11,0.1); color:#f59e0b; }
+
+/* Update analysis */
+.update-timeline { margin-bottom:24px; }
+.update-tl-item { display:flex; gap:16px; padding:16px 0; border-bottom:1px solid #f1f5f9; align-items:flex-start; }
+.update-tl-item:last-child { border-bottom:none; }
+.update-tl-date { min-width:100px; font-size:12px; color:#94a3b8; font-weight:500; }
+.update-tl-badge { display:inline-block; font-size:10px; padding:2px 8px; border-radius:4px; font-weight:600; margin-right:8px; }
+.update-tl-badge.official { background:rgba(59,130,246,0.1); color:#3b82f6; }
+.update-tl-badge.detected { background:rgba(245,158,11,0.1); color:#f59e0b; }
+.update-tl-desc { font-size:13px; color:#1e293b; flex:1; }
+.impact-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; margin-bottom:24px; }
+.impact-cell { padding:12px; border-radius:8px; text-align:center; font-size:11px; font-weight:500; }
+.impact-cell.positive { background:rgba(16,185,129,0.1); color:#10b981; border:1px solid rgba(16,185,129,0.2); }
+.impact-cell.negative { background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.2); }
+.impact-cell.neutral { background:#f8fafc; color:#94a3b8; border:1px solid #e2e8f0; }
+
+/* Content list & gantt views */
+.content-list-table { width:100%; border-collapse:collapse; min-width:700px; }
+.content-list-table th { background:#f1f5f9; padding:10px 14px; text-align:left; font-size:11px; font-weight:600; color:#64748b; border-bottom:1px solid #e2e8f0; }
+.content-list-table td { padding:10px 14px; font-size:13px; border-bottom:1px solid #f1f5f9; }
+.gantt-container { overflow-x:auto; }
+.gantt-row { display:flex; align-items:center; border-bottom:1px solid #f1f5f9; min-height:36px; }
+.gantt-label { min-width:180px; font-size:12px; padding:8px 12px; flex-shrink:0; }
+.gantt-bar-area { flex:1; display:flex; position:relative; min-width:400px; }
+.gantt-bar { height:20px; border-radius:4px; position:absolute; top:8px; }
+.gantt-month-header { display:flex; min-width:400px; }
+.gantt-month-cell { flex:1; text-align:center; font-size:10px; color:#94a3b8; padding:6px 0; border-bottom:1px solid #e2e8f0; }
+.rewrite-score-bar { height:6px; border-radius:3px; background:#f1f5f9; overflow:hidden; margin-top:4px; }
+.rewrite-score-fill { height:100%; border-radius:3px; }
+
+/* Modal */
+.modal-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; display:flex; align-items:center; justify-content:center; }
+.modal-box { background:#fff; border-radius:12px; padding:24px; max-width:500px; width:90%; max-height:80vh; overflow-y:auto; }
+.modal-title { font-size:16px; font-weight:700; margin-bottom:16px; }
+.modal-close { background:none; border:none; font-size:20px; color:#64748b; cursor:pointer; float:right; }
+
+@media (max-width:768px) {
+  .task-kanban { grid-template-columns:1fr 1fr; }
+  .backlinks-kpi-row { grid-template-columns:1fr; }
+  .settings-tabs { overflow-x:auto; flex-wrap:nowrap; }
+  .settings-tab { white-space:nowrap; font-size:11px; padding:8px 12px; }
+  .impact-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:480px) {
+  .task-kanban { grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
@@ -1526,6 +1637,9 @@ function renderSidebar() {
       <div class="nav-item ${currentHash === '#/dashboard' ? 'active' : ''}" data-route="#/dashboard">
         <span class="nav-icon">📊</span> ダッシュボード
       </div>
+      <div class="nav-item ${currentHash === '#/updates' ? 'active' : ''}" data-route="#/updates">
+        <span class="nav-icon">🔄</span> アップデート分析
+      </div>
       <div class="nav-client-header">クライアント</div>
       ${renderClientNav(1, 'クライアントA 様')}
       ${renderClientNav(2, 'クライアントB社 様')}
@@ -1535,6 +1649,10 @@ function renderSidebar() {
       ${renderClientNav(6, 'クライアントF社 様')}
       ${renderClientNav(7, 'クライアントG社 様')}
       ${renderClientNav(8, 'クライアントH社 様')}
+      <div class="nav-client-header" style="margin-top:12px;">管理</div>
+      <div class="nav-item ${currentHash === '#/settings' ? 'active' : ''}" data-route="#/settings">
+        <span class="nav-icon">⚙️</span> 設定
+      </div>
     `;
   } else if (currentMode === 'writer') {
     nav.innerHTML = `
@@ -1590,8 +1708,10 @@ function renderClientNav(id, name) {
     { hash: `#/clients/${id}/keywords`, label: 'キーワード管理', icon: '🔑' },
     { hash: `#/clients/${id}/contents`, label: 'コンテンツ管理', icon: '📝' },
     { hash: `#/clients/${id}/technical`, label: '技術SEO', icon: '⚙️' },
+    { hash: `#/clients/${id}/backlinks`, label: '外部リンク', icon: '🔗' },
     { hash: `#/clients/${id}/chat`, label: 'チャット', icon: '💬' },
     { hash: `#/clients/${id}/reports`, label: 'レポート', icon: '📄' },
+    { hash: `#/clients/${id}/tasks`, label: '施策タスク', icon: '📋' },
   ];
   return `
     <div class="nav-client-toggle ${isActive ? 'active' : ''} ${expanded ? 'expanded' : ''}" data-client="${id}">
@@ -1621,7 +1741,7 @@ function renderBreadcrumbs() {
   const clientNames = { 1: 'クライアントA 様', 2: 'クライアントB社 様', 3: 'クライアントC社 様', 4: 'クライアントD社 様', 5: 'クライアントE社 様', 6: 'クライアントF社 様', 7: 'クライアントG社 様', 8: 'クライアントH社 様' };
   const subNames = {
     keywords: 'キーワード管理', contents: 'コンテンツ管理', technical: '技術SEO',
-    chat: 'チャット', reports: 'レポート'
+    backlinks: '外部リンク', chat: 'チャット', reports: 'レポート', tasks: '施策タスク'
   };
 
   if (currentMode === 'writer') {
@@ -1636,6 +1756,11 @@ function renderBreadcrumbs() {
     else parts.push({ label: 'ダッシュボード' });
   } else {
     parts.push({ label: 'ダッシュボード', hash: '#/dashboard' });
+    if (currentHash === '#/settings') {
+      parts.push({ label: '設定' });
+    } else if (currentHash === '#/updates') {
+      parts.push({ label: 'アップデート分析' });
+    }
     const clientMatch = currentHash.match(/#\/clients\/(\d+)/);
     if (clientMatch) {
       const cid = parseInt(clientMatch[1]);
@@ -1676,35 +1801,35 @@ function setDashFilter(f) {
 
 function renderDashboard() {
   const clients = [
-    { id:1, name:'クライアントA社', person:'担当T', hs:92, plan:'フル', ss:'40,600', cv:157, renewal:'2026-09-15', unread:3, flag:'none' },
-    { id:2, name:'クライアントB社', person:'担当U', hs:77, plan:'フル', ss:'18,200', cv:42, renewal:'2026-08-20', unread:0, flag:'none' },
-    { id:3, name:'クライアントC社', person:'担当T', hs:51, plan:'フル', ss:'5,830', cv:23, renewal:'2026-04-30', unread:1, flag:'critical' },
-    { id:4, name:'クライアントD社', person:'担当V', hs:88, plan:'フル', ss:'32,100', cv:98, renewal:'2026-11-01', unread:0, flag:'none' },
-    { id:5, name:'クライアントE社', person:'担当W', hs:84, plan:'フル', ss:'25,400', cv:76, renewal:'2026-07-15', unread:2, flag:'none' },
-    { id:6, name:'クライアントF社', person:'担当X', hs:79, plan:'フル', ss:'21,300', cv:55, renewal:'2026-06-30', unread:0, flag:'none' },
-    { id:7, name:'クライアントG社', person:'担当U', hs:73, plan:'保守', ss:'8,900', cv:18, renewal:'2026-12-01', unread:0, flag:'none' },
-    { id:8, name:'クライアントH社', person:'担当Y', hs:69, plan:'保守', ss:'6,200', cv:14, renewal:'2026-10-15', unread:0, flag:'warning' },
-    { id:1, name:'グローバルケア株式会社', person:'担当V', hs:67, plan:'フル', ss:'15,800', cv:38, renewal:'2026-05-10', unread:0, flag:'none' },
-    { id:1, name:'テクノロジーズ合同会社', person:'担当X', hs:64, plan:'保守', ss:'4,500', cv:11, renewal:'2026-04-18', unread:4, flag:'critical' },
-    { id:1, name:'ライフサポート株式会社', person:'担当W', hs:61, plan:'フル', ss:'12,300', cv:29, renewal:'2027-01-20', unread:0, flag:'none' },
-    { id:1, name:'株式会社メディアプロ', person:'担当T', hs:58, plan:'保守', ss:'3,800', cv:8, renewal:'2026-06-05', unread:0, flag:'warning' },
-    { id:1, name:'サンライズ工業', person:'担当Y', hs:55, plan:'保守', ss:'7,100', cv:15, renewal:'2026-08-30', unread:0, flag:'none' },
-    { id:1, name:'ネクストビジョン株式会社', person:'担当U', hs:48, plan:'フル', ss:'9,600', cv:20, renewal:'2026-04-12', unread:0, flag:'critical' },
-    { id:1, name:'ヘルスケアジャパン', person:'担当V', hs:45, plan:'保守', ss:'2,900', cv:6, renewal:'2026-09-25', unread:0, flag:'none' },
-    { id:1, name:'デジタルマーケティングPro', person:'担当X', hs:42, plan:'保守', ss:'5,100', cv:12, renewal:'2026-07-01', unread:0, flag:'warning' },
-    { id:1, name:'フューチャーリンク', person:'担当W', hs:38, plan:'保守', ss:'3,200', cv:5, renewal:'2026-11-15', unread:0, flag:'none' },
-    { id:1, name:'アドバンスト・ソリューションズ', person:'担当T', hs:35, plan:'保守', ss:'1,800', cv:3, renewal:'2026-05-20', unread:0, flag:'critical' },
+    { id:1, name:'クライアントA社', person:'担当T', hs:92, plan:'フル', ss:'40,600', ssMom:'+1%', cv:157, cvMom:'+115%', renewal:'2026-09-15', unread:3, flag:'none' },
+    { id:2, name:'クライアントB社', person:'担当U', hs:77, plan:'フル', ss:'18,200', ssMom:'+3%', cv:42, cvMom:'+8%', renewal:'2026-08-20', unread:0, flag:'none' },
+    { id:3, name:'クライアントC社', person:'担当T', hs:51, plan:'フル', ss:'5,830', ssMom:'-8%', cv:23, cvMom:'-12%', renewal:'2026-04-30', unread:1, flag:'critical' },
+    { id:4, name:'クライアントD社', person:'担当V', hs:88, plan:'フル', ss:'32,100', ssMom:'+5%', cv:98, cvMom:'+12%', renewal:'2026-11-01', unread:0, flag:'none' },
+    { id:5, name:'クライアントE社', person:'担当W', hs:84, plan:'フル', ss:'25,400', ssMom:'+2%', cv:76, cvMom:'+6%', renewal:'2026-07-15', unread:2, flag:'none' },
+    { id:6, name:'クライアントF社', person:'担当X', hs:79, plan:'保守プロ', ss:'21,300', ssMom:'+4%', cv:55, cvMom:'+3%', renewal:'2026-06-30', unread:0, flag:'none' },
+    { id:7, name:'クライアントG社', person:'担当U', hs:73, plan:'保守ライト', ss:'8,900', ssMom:'+1%', cv:18, cvMom:'+5%', renewal:'2026-12-01', unread:0, flag:'none' },
+    { id:8, name:'クライアントH社', person:'担当Y', hs:69, plan:'保守ライト', ss:'6,200', ssMom:'-2%', cv:14, cvMom:'-3%', renewal:'2026-10-15', unread:0, flag:'warning' },
+    { id:1, name:'グローバルケア株式会社', person:'担当V', hs:67, plan:'フル', ss:'15,800', ssMom:'+2%', cv:38, cvMom:'+10%', renewal:'2026-05-10', unread:0, flag:'none' },
+    { id:1, name:'テクノロジーズ合同会社', person:'担当X', hs:64, plan:'保守プロ', ss:'4,500', ssMom:'-5%', cv:11, cvMom:'-8%', renewal:'2026-04-18', unread:4, flag:'critical' },
+    { id:1, name:'ライフサポート株式会社', person:'担当W', hs:61, plan:'フル', ss:'12,300', ssMom:'+3%', cv:29, cvMom:'+7%', renewal:'2027-01-20', unread:0, flag:'none' },
+    { id:1, name:'株式会社メディアプロ', person:'担当T', hs:58, plan:'保守ライト', ss:'3,800', ssMom:'-1%', cv:8, cvMom:'+2%', renewal:'2026-06-05', unread:0, flag:'warning' },
+    { id:1, name:'サンライズ工業', person:'担当Y', hs:55, plan:'保守プロ', ss:'7,100', ssMom:'+1%', cv:15, cvMom:'+4%', renewal:'2026-08-30', unread:0, flag:'none' },
+    { id:1, name:'ネクストビジョン株式会社', person:'担当U', hs:48, plan:'フル', ss:'9,600', ssMom:'-10%', cv:20, cvMom:'-15%', renewal:'2026-04-12', unread:0, flag:'critical' },
+    { id:1, name:'ヘルスケアジャパン', person:'担当V', hs:45, plan:'保守ライト', ss:'2,900', ssMom:'-3%', cv:6, cvMom:'-5%', renewal:'2026-09-25', unread:0, flag:'none' },
+    { id:1, name:'デジタルマーケティングPro', person:'担当X', hs:42, plan:'保守プロ', ss:'5,100', ssMom:'-4%', cv:12, cvMom:'-6%', renewal:'2026-07-01', unread:0, flag:'warning' },
+    { id:1, name:'フューチャーリンク', person:'担当W', hs:38, plan:'保守ライト', ss:'3,200', ssMom:'-2%', cv:5, cvMom:'-1%', renewal:'2026-11-15', unread:0, flag:'none' },
+    { id:1, name:'アドバンスト・ソリューションズ', person:'担当T', hs:35, plan:'保守ライト', ss:'1,800', ssMom:'-7%', cv:3, cvMom:'-10%', renewal:'2026-05-20', unread:0, flag:'critical' },
   ];
 
   // Sort: flag critical first, then warning, then none; within same flag, by hs desc
   const flagOrder = { critical: 0, warning: 1, none: 2 };
   let filtered = [...clients];
   if (dashFilter === 'action') filtered = clients.filter(c => c.flag !== 'none');
-  else if (dashFilter === 'maintenance') filtered = clients.filter(c => c.plan === '保守');
+  else if (dashFilter === 'maintenance') filtered = clients.filter(c => c.plan === '保守' || c.plan === '保守ライト' || c.plan === '保守プロ');
   else if (dashFilter === 'renewal') filtered = clients.filter(c => {
-    const d = new Date(c.renewal); const now = new Date('2026-03-23');
+    const d = new Date(c.renewal); const now = new Date('2026-03-25');
     const diff = (d - now) / (1000*60*60*24);
-    return diff <= 30 && diff >= 0;
+    return diff <= 60 && diff >= 0;
   });
   filtered.sort((a, b) => (flagOrder[a.flag] - flagOrder[b.flag]) || (b.hs - a.hs));
 
@@ -1713,8 +1838,27 @@ function renderDashboard() {
   function flagIcon(f) { return f === 'critical' ? '🔴' : f === 'warning' ? '🟡' : '-'; }
   function planBadge(p) {
     if (p === 'フル') return '<span class="plan-badge full">フル</span>';
+    if (p === '保守ライト') return '<span class="plan-badge maintenance-lite">保守ライト</span>';
+    if (p === '保守プロ') return '<span class="plan-badge maintenance-pro">保守プロ</span>';
     if (p === '保守') return '<span class="plan-badge maintenance">保守</span>';
     return '<span class="plan-badge none">-</span>';
+  }
+  function renewalWarning(dateStr) {
+    const d = new Date(dateStr); const now = new Date('2026-03-25');
+    const diff = Math.floor((d - now) / (1000*60*60*24));
+    const cls = diff <= 30 ? 'red' : diff <= 60 ? 'yellow' : '';
+    return '<span class="renewal-warn ' + cls + '">' + dateStr + (diff <= 30 ? ' ('+diff+'日)' : diff <= 60 ? ' ('+diff+'日)' : '') + '</span>';
+  }
+  function hsRing(score) {
+    const color = score >= 80 ? '#10b981' : score >= 50 ? '#3b82f6' : '#ef4444';
+    const r = 10, c = 2 * Math.PI * r;
+    const offset = c - (score / 100) * c;
+    return '<span class="hs-ring"><svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="'+r+'" fill="none" stroke="#e2e8f0" stroke-width="3"/><circle cx="12" cy="12" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="3" stroke-dasharray="'+c+'" stroke-dashoffset="'+offset+'" stroke-linecap="round"/></svg><span class="hs-num" style="color:'+color+'">'+score+'</span></span>';
+  }
+  function momBadge(val) {
+    const isUp = val.startsWith('+');
+    const isDown = val.startsWith('-');
+    return '<span class="change-pill '+(isUp?'up':isDown?'down':'flat')+'">'+val+'</span>';
   }
 
   return `
@@ -1760,11 +1904,11 @@ function renderDashboard() {
               <tr onclick="navigate('#/clients/${c.id}')">
                 <td style="font-weight:600;">${c.name}</td>
                 <td data-label="担当者">${c.person}</td>
-                <td data-label="HS"><span class="hs-badge" style="background:${hsBg(c.hs)};color:${hsColor(c.hs)}">${c.hs}</span></td>
+                <td data-label="HS">${hsRing(c.hs)}</td>
                 <td data-label="プラン">${planBadge(c.plan)}</td>
-                <td data-label="オーガニックSS">${c.ss}</td>
-                <td data-label="CV">${c.cv}</td>
-                <td data-label="更新日">${c.renewal}</td>
+                <td data-label="オーガニックSS">${c.ss} ${momBadge(c.ssMom)}</td>
+                <td data-label="CV">${c.cv} ${momBadge(c.cvMom)}</td>
+                <td data-label="更新日">${renewalWarning(c.renewal)}</td>
                 <td data-label="未読">${c.unread > 0 ? '<span class="badge-count">'+c.unread+'</span>' : '-'}</td>
                 <td data-label="要対応">${flagIcon(c.flag)}</td>
               </tr>
@@ -2282,16 +2426,102 @@ function renderContents(id) {
 
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
       <div class="view-toggle">
-        <button class="view-toggle-btn active" onclick="this.parentElement.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('kanbanView').style.display='block';document.getElementById('placeholderView').style.display='none';">カンバン</button>
-        <button class="view-toggle-btn" onclick="this.parentElement.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('kanbanView').style.display='none';document.getElementById('placeholderView').style.display='block';document.getElementById('placeholderView').textContent='リスト表示 (準備中)';">リスト</button>
-        <button class="view-toggle-btn" onclick="this.parentElement.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('kanbanView').style.display='none';document.getElementById('placeholderView').style.display='block';document.getElementById('placeholderView').textContent='ガントチャート (準備中)';">ガントチャート</button>
+        <button class="view-toggle-btn active" onclick="this.parentElement.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('kanbanView').style.display='block';document.getElementById('listView').style.display='none';document.getElementById('ganttView').style.display='none';document.getElementById('rewriteView').style.display='none';">カンバン</button>
+        <button class="view-toggle-btn" onclick="this.parentElement.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('kanbanView').style.display='none';document.getElementById('listView').style.display='block';document.getElementById('ganttView').style.display='none';document.getElementById('rewriteView').style.display='none';">リスト</button>
+        <button class="view-toggle-btn" onclick="this.parentElement.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('kanbanView').style.display='none';document.getElementById('listView').style.display='none';document.getElementById('ganttView').style.display='block';document.getElementById('rewriteView').style.display='none';">ガントチャート</button>
+        <button class="view-toggle-btn" onclick="this.parentElement.querySelectorAll('.view-toggle-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');document.getElementById('kanbanView').style.display='none';document.getElementById('listView').style.display='none';document.getElementById('ganttView').style.display='none';document.getElementById('rewriteView').style.display='block';">リライト提案</button>
       </div>
-      <button class="btn-disabled">一括操作</button>
+      <button class="btn-secondary" onclick="document.getElementById('bulkModal').style.display='flex';">一括操作</button>
     </div>
 
     <div class="bottleneck-bar">⚠ 1件の記事が校正中で3日以上滞留しています</div>
 
-    <div id="placeholderView" style="display:none;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:40px;text-align:center;color:#94a3b8;font-size:14px;margin-bottom:24px;"></div>
+    <!-- List View -->
+    <div id="listView" style="display:none;margin-bottom:24px;">
+      <div class="data-table-wrap"><div class="data-table-scroll">
+        <table class="content-list-table">
+          <thead><tr><th>タイトル</th><th>ステータス</th><th>担当者</th><th>〆切</th><th>KW</th><th>Vol</th></tr></thead>
+          <tbody>
+            ${contents.map(c => `<tr onclick="navigate('#/clients/${id}/contents/${c.id}')" style="cursor:pointer;">
+              <td style="font-weight:500;">${c.title}</td>
+              <td><span class="cd-badge cd-badge-status ${c.statusCls || ''}">${c.statusLabel}</span></td>
+              <td>${c.writer || '未アサイン'}</td>
+              <td style="color:${c.deadline && new Date(c.deadline) < new Date('2026-03-25') ? '#ef4444' : '#1e293b'}">${c.deadline || c.publishedAt || '-'}</td>
+              <td style="font-size:12px;color:#64748b;">${c.kw}</td>
+              <td>${formatNum(c.vol)}</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+
+    <!-- Gantt View -->
+    <div id="ganttView" style="display:none;margin-bottom:24px;">
+      <div class="chart-container">
+        <div class="chart-title">コンテンツ制作スケジュール（2026年）</div>
+        <div class="gantt-container">
+          <div style="display:flex;">
+            <div style="min-width:180px;"></div>
+            <div class="gantt-month-header">
+              ${['1月','2月','3月','4月','5月','6月'].map(m => `<div class="gantt-month-cell">${m}</div>`).join('')}
+            </div>
+          </div>
+          ${contents.filter(c => c.deadline || c.publishedAt).map(c => {
+            const colors = { planning:'#3b82f6', kw_selected:'#8b5cf6', writing_requested:'#f59e0b', writing:'#f59e0b', reviewing:'#f59e0b', ready_to_publish:'#10b981', published:'#10b981', rewrite:'#ef4444' };
+            const month = c.deadline ? parseInt(c.deadline.split('-')[1]) : c.publishedAt ? parseInt(c.publishedAt.split('/')[1]) : 3;
+            const left = ((month - 1) / 6) * 100;
+            const width = (1 / 6) * 100;
+            return `<div class="gantt-row">
+              <div class="gantt-label" style="font-weight:500;">${c.title}</div>
+              <div class="gantt-bar-area" style="position:relative;height:36px;">
+                <div class="gantt-bar" style="left:${left}%;width:${width}%;background:${colors[c.status] || '#94a3b8'};opacity:0.8;"></div>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Rewrite Proposals View -->
+    <div id="rewriteView" style="display:none;margin-bottom:24px;">
+      <div class="chart-container">
+        <div class="chart-title">リライト提案一覧</div>
+        <div class="data-table-scroll">
+          <table class="content-list-table">
+            <thead><tr><th>記事タイトル</th><th>現在順位</th><th>月間SS</th><th>SS変化</th><th>リライトスコア</th><th>推奨アクション</th></tr></thead>
+            <tbody>
+              ${contents.filter(c => c.rewriteScore || (c.ssChange && c.ssChange < 0)).map(c => `<tr>
+                <td style="font-weight:500;">${c.title}</td>
+                <td>${c.rank ? '<span class="rank-badge '+(c.rank<=3?'green':c.rank<=10?'blue':c.rank<=20?'orange':'red')+'">'+c.rank+'位</span>' : '-'}</td>
+                <td>${c.ss ? formatNum(c.ss) : '-'}</td>
+                <td>${c.ssChange ? '<span class="change-pill '+(c.ssChange>0?'up':'down')+'">'+(c.ssChange>0?'+':'')+c.ssChange+'</span>' : '-'}</td>
+                <td>${c.rewriteScore ? '<div style="display:flex;align-items:center;gap:6px;"><strong style="color:'+(c.rewriteScore>=80?'#ef4444':c.rewriteScore>=50?'#f59e0b':'#64748b')+'">'+c.rewriteScore+'</strong><div class="rewrite-score-bar" style="width:60px;"><div class="rewrite-score-fill" style="width:'+c.rewriteScore+'%;background:'+(c.rewriteScore>=80?'#ef4444':c.rewriteScore>=50?'#f59e0b':'#94a3b8')+';"></div></div></div>' : '-'}</td>
+                <td style="font-size:12px;color:#64748b;">${c.rewriteScore >= 80 ? 'タイトル改善 + コンテンツ更新' : c.rewriteScore >= 50 ? 'コンテンツ部分更新' : 'SS低下の継続監視'}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bulk Operation Modal -->
+    <div id="bulkModal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)this.style.display='none';">
+      <div class="modal-box">
+        <button class="modal-close" onclick="document.getElementById('bulkModal').style.display='none';">&times;</button>
+        <div class="modal-title">一括操作</div>
+        <div style="margin-bottom:16px;">
+          ${contents.map(c => `<label style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:13px;cursor:pointer;">
+            <input type="checkbox" style="width:16px;height:16px;">
+            <span>${c.title}</span>
+            <span class="cd-badge cd-badge-status ${c.statusCls || ''}" style="margin-left:auto;">${c.statusLabel}</span>
+          </label>`).join('')}
+        </div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="alert('デモ版では一括操作は利用できません');document.getElementById('bulkModal').style.display='none';">ステータス変更</button>
+          <button class="btn-secondary" onclick="document.getElementById('bulkModal').style.display='none';">キャンセル</button>
+        </div>
+      </div>
+    </div>
     <div id="kanbanView" style="overflow-x:auto;">
       <div class="kanban-board">
         ${statusGroups.map(group => {
@@ -2973,7 +3203,16 @@ const REPORT_SLIDES = [
       <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">4</td><td>サンプルKW_B</td><td style="text-align:right;font-weight:600;">749</td><td style="text-align:right;color:#64748b;">-</td></tr>
       <tr><td style="padding:4px 6px;font-weight:600;">5</td><td>採用情報</td><td style="text-align:right;font-weight:600;">680</td><td style="text-align:right;color:#10b981;">+8.2%</td></tr>
     </table>` },
-  { id:'s15', num:10, title:'CV数推移', short:'CV推移', type:'chart',
+  { id:'s14', num:10, title:'アクセスランキングTOP20', short:'アクセスTOP20', type:'table',
+    comment:'アクセス数ランキングでは、TOPページ（15,230PV）が引き続き1位を維持。コラム記事「サンプル記事タイトルA」（4,120PV）、「サンプルKW_B」（3,890PV）が2位・3位と安定した集客力を発揮しております。',
+    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">1</td><td>TOPページ</td><td style="text-align:right;font-weight:600;">15,230 PV</td><td style="text-align:right;color:#10b981;">+5.2%</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">2</td><td>サンプル記事タイトルA</td><td style="text-align:right;font-weight:600;">4,120 PV</td><td style="text-align:right;color:#64748b;">-1.2%</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">3</td><td>サンプルKW_B</td><td style="text-align:right;font-weight:600;">3,890 PV</td><td style="text-align:right;color:#10b981;">+3.8%</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:4px 6px;font-weight:600;">4</td><td>企業情報</td><td style="text-align:right;font-weight:600;">2,340 PV</td><td style="text-align:right;color:#10b981;">+18.5%</td></tr>
+      <tr><td style="padding:4px 6px;font-weight:600;">5</td><td>採用情報</td><td style="text-align:right;font-weight:600;">1,890 PV</td><td style="text-align:right;color:#10b981;">+12.1%</td></tr>
+    </table>` },
+  { id:'s15', num:11, title:'CV数推移', short:'CV推移', type:'chart',
     comment:'2月のオーガニックCV総数は157件（昨月73件から大幅増、昨年同月146件対比でも増加）となりました。特にsample_cv_event_1が133件と、昨月（65件）から倍増しております。季節性による就職需要の高まりが大きな要因ですが、SEO施策による自然検索流入の底上げが、CV数の伸びにしっかり結びついている結果です。',
     content:`<div style="text-align:center;padding:8px;"><div style="font-size:11px;color:#64748b;">オーガニックCV合計</div><div style="font-size:28px;font-weight:800;color:#059669;">157件</div><div style="font-size:12px;color:#10b981;">前月比 215%</div></div>
     <div style="font-size:11px;margin-top:8px;">
@@ -2981,7 +3220,7 @@ const REPORT_SLIDES = [
       <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f1f5f9;"><span>問い合わせフォーム</span><span style="font-weight:700;">15件</span></div>
       <div style="display:flex;justify-content:space-between;padding:4px 0;"><span>資料ダウンロード</span><span style="font-weight:700;">9件</span></div>
     </div>` },
-  { id:'s17', num:11, title:'KWフォーカス（前年プラス）', short:'KW前年+', type:'table',
+  { id:'s18', num:12, title:'KWフォーカス（前年プラス）', short:'KW前年+', type:'table',
     comment:'「クライアントA社」（+297）、「クライアントA社アンドパートナーズ」（+290）など指名検索ワードが大きく伸長。「サンプルKW_A」（+174）、「サンプルKW_B（ロングテール）」（+95）など、コラム施策で新規に獲得した記事系KWも堅調に推移しております。',
     content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
       <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">クライアントA社</td><td style="text-align:right;color:#10b981;font-weight:700;">+297</td></tr>
@@ -2990,7 +3229,25 @@ const REPORT_SLIDES = [
       <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプル記事タイトルA</td><td style="text-align:right;color:#10b981;font-weight:700;">+151</td></tr>
       <tr><td style="padding:3px 6px;">サンプルKW_B（ロングテール）</td><td style="text-align:right;color:#10b981;font-weight:700;">+95</td></tr>
     </table>` },
-  { id:'s20', num:12, title:'KWフォーカス（前月マイナス）', short:'KW前月-', type:'table',
+  { id:'s19', num:13, title:'KWフォーカス（前年マイナス）', short:'KW前年-', type:'table',
+    comment:'前年比でマイナスとなったKWはごくわずかですが、「サンプルKW_C」（-180）は競合サイトの台頭により順位を落とした影響です。「サンプルKW_G」（-45）はAI Overviewの拡大による影響と推察されます。',
+    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_C</td><td style="text-align:right;color:#ef4444;font-weight:700;">-180</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_G <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-45</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_D</td><td style="text-align:right;color:#ef4444;font-weight:700;">-32</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_E</td><td style="text-align:right;color:#ef4444;font-weight:700;">-18</td></tr>
+      <tr><td style="padding:3px 6px;">サンプルKW_F</td><td style="text-align:right;color:#ef4444;font-weight:700;">-12</td></tr>
+    </table>` },
+  { id:'s20b', num:14, title:'KWフォーカス（前月プラス）', short:'KW前月+', type:'table',
+    comment:'前月比では「サンプルKW_K」（+89）が大きく伸長。新規公開記事の初月流入が好調です。「クライアントA社」（+45）は季節性による採用需要の増加が寄与しています。',
+    content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_K</td><td style="text-align:right;color:#10b981;font-weight:700;">+89</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">クライアントA社</td><td style="text-align:right;color:#10b981;font-weight:700;">+45</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_J</td><td style="text-align:right;color:#10b981;font-weight:700;">+38</td></tr>
+      <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_B（ロングテール）</td><td style="text-align:right;color:#10b981;font-weight:700;">+22</td></tr>
+      <tr><td style="padding:3px 6px;">サンプルKW_N</td><td style="text-align:right;color:#10b981;font-weight:700;">+15</td></tr>
+    </table>` },
+  { id:'s20', num:15, title:'KWフォーカス（前月マイナス）', short:'KW前月-', type:'table',
     comment:'「サンプル記事タイトルA」（-58）、「サンプルKW_A」（-47）は月間日数差の影響。「サンプルKW_D」や「サンプルKW_G」では順位上昇にもかかわらず表示回数が大幅減少しており、AIO（AI Overview）によるゼロクリック検索の影響が推察されます。今後のAIO対策の重要性を示唆するデータです。',
     content:`<table style="width:100%;font-size:11px;border-collapse:collapse;">
       <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプル記事タイトルA</td><td style="text-align:right;color:#ef4444;font-weight:700;">-58</td></tr>
@@ -2999,7 +3256,7 @@ const REPORT_SLIDES = [
       <tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:3px 6px;">サンプルKW_D <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-28</td></tr>
       <tr><td style="padding:3px 6px;">サンプルKW_G <span style="font-size:9px;background:#fef3c7;padding:1px 4px;border-radius:2px;color:#92400e;">AIO影響</span></td><td style="text-align:right;color:#ef4444;font-weight:700;">-22</td></tr>
     </table>` },
-  { id:'s22', num:13, title:'外部リンク数の推移', short:'被リンク', type:'chart',
+  { id:'s22', num:16, title:'外部リンク数の推移', short:'被リンク', type:'chart',
     comment:'2月の被リンク数は21,762と、直近で最大値を記録しました（昨月16,370から約33％増）。獲得元ドメインも計189サイトに達しており、example-referer-1.jp（4,847件）、example-referer-2.jp（3,163件）、example-referer-3.jp（2,385件）といった権威性の高いドメインからのリンクが安定しております。',
     content:`<div style="text-align:center;padding:8px;"><div style="font-size:11px;color:#64748b;">被リンク数</div><div style="font-size:28px;font-weight:800;color:#7c3aed;">21,762</div><div style="font-size:12px;color:#10b981;">前月比 +33%</div></div>
     <div style="font-size:11px;margin-top:8px;">
@@ -3007,10 +3264,26 @@ const REPORT_SLIDES = [
       <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #f1f5f9;"><span>example-referer-2.jp</span><span style="font-weight:600;">3,163件</span></div>
       <div style="display:flex;justify-content:space-between;padding:3px 0;"><span>example-referer-3.jp</span><span style="font-weight:600;">2,385件</span></div>
     </div>` },
-  { id:'s24', num:14, title:'改善施策の進捗', short:'施策進捗', type:'text',
-    comment:'改善施策の全体進捗率は38.5％となっております。テスト環境のログインURLとFTP情報のご共有をお願いしている状況です。情報をご共有いただき次第、残りの実装項目を順次進行してまいります。',
-    content:`<div style="margin-bottom:10px;"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span>進捗率</span><span style="font-weight:700;">38.5%</span></div><div style="height:8px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:38.5%;height:100%;background:#f59e0b;border-radius:4px;"></div></div></div>
-    <div style="font-size:11px;color:#94a3b8;"><strong style="color:#0f172a;">ブロッカー:</strong> テスト環境ログインURL・FTP情報の共有待ち</div>` },
+  { id:'s25', num:17, title:'次月アクションプラン', short:'次月計画', type:'text',
+    comment:'3月の重点施策として、以下の4項目を計画しております。特にコアアップデートへの対応として、E-E-A-Tシグナルの強化を優先的に進めてまいります。',
+    content:`<div style="font-size:12px;line-height:1.8;">
+      <div style="padding:10px;background:#eff6ff;border-radius:8px;margin-bottom:8px;">
+        <div style="font-weight:700;color:#2563eb;margin-bottom:4px;">1. コンテンツ施策</div>
+        <div style="color:#64748b;">・サンプルKW_H/サンプルKW_I 新規記事公開（4月）<br>・サンプルKW_C リライト実施（優先度スコア92）<br>・リライト候補3記事の企画策定</div>
+      </div>
+      <div style="padding:10px;background:#f0fdf4;border-radius:8px;margin-bottom:8px;">
+        <div style="font-weight:700;color:#059669;margin-bottom:4px;">2. テクニカルSEO</div>
+        <div style="color:#64748b;">・FAQスキーマ構造化データ実装<br>・CTA配置A/Bテスト実施<br>・内部リンク最適化</div>
+      </div>
+      <div style="padding:10px;background:#faf5ff;border-radius:8px;margin-bottom:8px;">
+        <div style="font-weight:700;color:#7c3aed;margin-bottom:4px;">3. 外部リンク施策</div>
+        <div style="color:#64748b;">・被リンク獲得キャンペーン企画立案<br>・業界メディアへの寄稿記事準備</div>
+      </div>
+      <div style="padding:10px;background:#fefce8;border-radius:8px;">
+        <div style="font-weight:700;color:#d97706;margin-bottom:4px;">4. モニタリング</div>
+        <div style="color:#64748b;">・3月コアアップデート影響の継続観察<br>・AI Overview対策の検討</div>
+      </div>
+    </div>` },
 ];
 
 function renderReports(id, isPortal) {
@@ -3255,6 +3528,372 @@ function renderWriterFeedback() {
   `;
 }
 
+// ============ BACKLINKS SCREEN (画面8) ============
+function renderBacklinks(id) {
+  const clientNames = { 1:'クライアントA社', 2:'クライアントB社', 3:'クライアントC社', 4:'クライアントD社', 5:'クライアントE社', 6:'クライアントF社', 7:'クライアントG社', 8:'クライアントH社' };
+  const blData = {
+    1: { total:21762, refDomains:1847, dr:42, trend:[11200,11800,12400,12800,13200,13500,14200,14800,15500,16370,19200,21762] },
+    2: { total:8450, refDomains:723, dr:35, trend:[6000,6200,6400,6600,6800,7000,7200,7400,7600,7800,8100,8450] },
+    3: { total:1245, refDomains:198, dr:22, trend:[1050,1070,1090,1100,1110,1120,1150,1170,1185,1200,1220,1245] },
+  };
+  const d = blData[id] || blData[1];
+  const name = clientNames[id] || 'Client';
+  const labels12m = ['4月','5月','6月','7月','8月','9月','10月','11月','12月','1月','2月','3月'];
+
+  const refDomains = [
+    { domain:'example-referer-1.jp', dr:78, links:4847, firstSeen:'2024/03/12' },
+    { domain:'example-referer-2.jp', dr:71, links:3163, firstSeen:'2024/05/08' },
+    { domain:'example-referer-3.jp', dr:65, links:2385, firstSeen:'2024/07/22' },
+    { domain:'example-referer-4.co.jp', dr:58, links:1892, firstSeen:'2024/09/15' },
+    { domain:'example-referer-5.com', dr:52, links:1456, firstSeen:'2024/11/03' },
+    { domain:'example-referer-6.org', dr:48, links:987, firstSeen:'2025/01/18' },
+    { domain:'example-referer-7.jp', dr:44, links:745, firstSeen:'2025/03/05' },
+    { domain:'example-referer-8.net', dr:41, links:623, firstSeen:'2025/05/20' },
+  ];
+
+  const newLinks = [
+    { date:'3/22', domain:'example-new-1.jp', url:'/column/sample-article-a/', type:'dofollow' },
+    { date:'3/20', domain:'example-new-2.co.jp', url:'/column/sample-article-b/', type:'dofollow' },
+    { date:'3/18', domain:'example-new-3.org', url:'/', type:'nofollow' },
+    { date:'3/15', domain:'example-new-4.jp', url:'/column/sample-article-c/', type:'dofollow' },
+    { date:'3/12', domain:'example-new-5.com', url:'/service/training/', type:'dofollow' },
+    { date:'3/08', domain:'example-new-6.net', url:'/column/sample-article-d/', type:'nofollow' },
+  ];
+
+  return `
+    <h1 class="page-title">${name} - 外部リンク</h1>
+    <div class="backlinks-kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">被リンク数</div>
+        <div class="kpi-value">${formatNum(d.total)}</div>
+        <div class="kpi-change up">+33% 前月比</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">参照ドメイン数</div>
+        <div class="kpi-value">${formatNum(d.refDomains)}</div>
+        <div class="kpi-change up">+12% 前月比</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">ドメインレーティング (DR)</div>
+        <div class="kpi-value">${d.dr}</div>
+        <div class="kpi-change up">+2 前月比</div>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <div class="chart-title">被リンク数推移（12ヶ月）</div>
+      ${lineChartSVG(d.trend, 700, 250, '#f59e0b', '#f59e0b', labels12m)}
+    </div>
+
+    <div class="two-col">
+      <div class="data-table-wrap">
+        <div style="padding:14px 16px;font-size:14px;font-weight:600;color:#334155;border-bottom:1px solid #e2e8f0;">参照ドメイン TOP</div>
+        <div class="data-table-scroll">
+          <table class="ref-domain-table">
+            <thead><tr><th>ドメイン</th><th>DR</th><th>被リンク数</th><th>初回検出日</th></tr></thead>
+            <tbody>
+              ${refDomains.map(r => `<tr>
+                <td style="color:#3b82f6;font-weight:500;">${r.domain}</td>
+                <td><span class="rank-badge blue">${r.dr}</span></td>
+                <td>${formatNum(r.links)}</td>
+                <td style="color:#94a3b8;">${r.firstSeen}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-title">新規リンク（直近30日）</div>
+        ${newLinks.map(l => `
+          <div class="new-link-item">
+            <span class="new-link-date">${l.date}</span>
+            <span class="new-link-domain">${l.domain}</span>
+            <span style="flex:1;font-size:12px;color:#64748b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${l.url}</span>
+            <span class="rank-badge ${l.type === 'dofollow' ? 'green' : 'orange'}" style="font-size:10px;">${l.type}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ============ TASK MANAGEMENT SCREEN (画面10) ============
+function renderTasks(id) {
+  const clientNames = { 1:'クライアントA社', 2:'クライアントB社', 3:'クライアントC社', 4:'クライアントD社', 5:'クライアントE社', 6:'クライアントF社', 7:'クライアントG社', 8:'クライアントH社' };
+  const name = clientNames[id] || 'Client';
+
+  const tasks = [
+    { title:'FAQスキーマ構造化データ実装', cat:'技術', catCls:'cat-tech', pri:'高', priCls:'pri-high', assignee:'担当T', due:'2026-04-05', col:'todo' },
+    { title:'サンプルKW_C 記事リライト', cat:'コンテンツ', catCls:'cat-content', pri:'緊急', priCls:'pri-urgent', assignee:'担当U', due:'2026-04-01', col:'todo' },
+    { title:'被リンク獲得キャンペーン企画', cat:'外部リンク', catCls:'cat-link', pri:'中', priCls:'pri-mid', assignee:'担当T', due:'2026-04-15', col:'todo' },
+    { title:'サンプルKW_J 記事執筆', cat:'コンテンツ', catCls:'cat-content', pri:'高', priCls:'pri-high', assignee:'担当U', due:'2026-03-28', col:'in_progress' },
+    { title:'CTA配置テスト (A/Bテスト)', cat:'技術', catCls:'cat-tech', pri:'中', priCls:'pri-mid', assignee:'担当V', due:'2026-03-30', col:'in_progress' },
+    { title:'内部リンク最適化', cat:'技術', catCls:'cat-tech', pri:'低', priCls:'pri-low', assignee:'担当W', due:'2026-04-10', col:'in_progress' },
+    { title:'サンプル記事タイトルA タイトル改善', cat:'コンテンツ', catCls:'cat-content', pri:'中', priCls:'pri-mid', assignee:'担当U', due:'2026-03-20', col:'done' },
+    { title:'Core Web Vitals改善（LCP）', cat:'技術', catCls:'cat-tech', pri:'高', priCls:'pri-high', assignee:'担当V', due:'2026-03-15', col:'done' },
+    { title:'サイトマップ更新自動化', cat:'その他', catCls:'cat-other', pri:'低', priCls:'pri-low', assignee:'担当W', due:'2026-03-10', col:'done' },
+    { title:'テスト環境ログイン情報取得', cat:'その他', catCls:'cat-other', pri:'高', priCls:'pri-high', assignee:'担当T', due:'2026-03-25', col:'blocked' },
+  ];
+
+  const cols = [
+    { key:'todo', title:'TODO', color:'#64748b' },
+    { key:'in_progress', title:'進行中', color:'#3b82f6' },
+    { key:'done', title:'完了', color:'#10b981' },
+    { key:'blocked', title:'ブロック中', color:'#ef4444' },
+  ];
+
+  const totalTasks = tasks.length;
+  const doneTasks = tasks.filter(t => t.col === 'done').length;
+  const pct = Math.round((doneTasks / totalTasks) * 100);
+
+  return `
+    <h1 class="page-title">${name} - 施策タスク</h1>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <div style="flex:1;min-width:200px;">
+        <div class="task-progress-label">全体進捗: <strong>${doneTasks}/${totalTasks}</strong> タスク完了 (${pct}%)</div>
+        <div class="task-progress-bar"><div class="task-progress-fill" style="width:${pct}%"></div></div>
+      </div>
+      <button class="btn-primary" onclick="alert('デモ版ではタスク追加機能は利用できません')">+ タスク追加</button>
+    </div>
+
+    <div class="task-kanban">
+      ${cols.map(col => {
+        const colTasks = tasks.filter(t => t.col === col.key);
+        return `
+        <div class="task-kanban-col">
+          <div class="task-kanban-col-header">
+            <span style="width:8px;height:8px;border-radius:50%;background:${col.color};"></span>
+            ${col.title}
+            <span class="col-count">${colTasks.length}</span>
+          </div>
+          <div class="task-kanban-col-body">
+            ${colTasks.map(t => `
+              <div class="task-kanban-card">
+                <div class="task-kanban-card-title">${t.title}</div>
+                <div class="task-kanban-card-meta">
+                  <span class="task-kanban-badge ${t.catCls}">${t.cat}</span>
+                  <span class="task-kanban-badge ${t.priCls}">${t.pri}</span>
+                </div>
+                <div class="task-kanban-card-footer">
+                  <span>${t.assignee}</span>
+                  <span>${t.due}</span>
+                </div>
+              </div>
+            `).join('')}
+            ${colTasks.length === 0 ? '<div style="color:#cbd5e1;font-size:12px;text-align:center;padding:20px;">なし</div>' : ''}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+// ============ SETTINGS SCREEN (画面11) ============
+let settingsTab = 'clients';
+function setSettingsTab(tab) {
+  settingsTab = tab;
+  const main = $('#mainContent');
+  if (main) main.innerHTML = renderSettings();
+}
+
+function renderSettings() {
+  const tabs = [
+    { key:'clients', label:'クライアント管理' },
+    { key:'users', label:'ユーザー管理' },
+    { key:'notifications', label:'通知設定' },
+    { key:'sync', label:'同期ステータス' },
+  ];
+
+  let tabContent = '';
+
+  if (settingsTab === 'clients') {
+    const clients = [
+      { name:'クライアントA社', plan:'フル', status:'稼働中', start:'2024/04/01', renewal:'2026/09/15' },
+      { name:'クライアントB社', plan:'フル', status:'稼働中', start:'2024/06/01', renewal:'2026/08/20' },
+      { name:'クライアントC社', plan:'フル', status:'稼働中', start:'2024/03/01', renewal:'2026/04/30' },
+      { name:'クライアントD社', plan:'フル', status:'稼働中', start:'2024/08/01', renewal:'2026/11/01' },
+      { name:'クライアントE社', plan:'フル', status:'稼働中', start:'2024/05/01', renewal:'2026/07/15' },
+      { name:'クライアントF社', plan:'保守プロ', status:'稼働中', start:'2025/01/01', renewal:'2026/06/30' },
+      { name:'クライアントG社', plan:'保守ライト', status:'稼働中', start:'2025/03/01', renewal:'2026/12/01' },
+      { name:'クライアントH社', plan:'保守ライト', status:'稼働中', start:'2025/02/01', renewal:'2026/10/15' },
+    ];
+    tabContent = `
+      <div class="data-table-wrap"><div class="data-table-scroll">
+        <table class="settings-table">
+          <thead><tr><th>会社名</th><th>プラン</th><th>ステータス</th><th>契約開始日</th><th>契約更新日</th></tr></thead>
+          <tbody>${clients.map(c => `<tr>
+            <td style="font-weight:600;">${c.name}</td>
+            <td>${c.plan === 'フル' ? '<span class="plan-badge full">フル</span>' : c.plan === '保守プロ' ? '<span class="plan-badge maintenance-pro">保守プロ</span>' : '<span class="plan-badge maintenance-lite">保守ライト</span>'}</td>
+            <td><span class="sync-status success">${c.status}</span></td>
+            <td>${c.start}</td>
+            <td>${c.renewal}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div></div>`;
+  } else if (settingsTab === 'users') {
+    const users = [
+      { name:'担当T', role:'管理者', title:'SEOディレクター', email:'takura@example.com', lastLogin:'2026/03/25 09:30' },
+      { name:'担当U', role:'メンバー', title:'SEOコンサルタント', email:'tanaka@example.com', lastLogin:'2026/03/25 08:45' },
+      { name:'担当V', role:'メンバー', title:'テクニカルSEO', email:'sato@example.com', lastLogin:'2026/03/24 17:20' },
+      { name:'担当W', role:'外部ライター', title:'コンテンツライター', email:'writer-w@example.com', lastLogin:'2026/03/23 14:10' },
+      { name:'担当X', role:'メンバー', title:'SEOアナリスト', email:'suzuki@example.com', lastLogin:'2026/03/25 10:00' },
+      { name:'担当Y', role:'メンバー', title:'SEOコンサルタント', email:'yamada@example.com', lastLogin:'2026/03/24 16:30' },
+    ];
+    tabContent = `
+      <div class="data-table-wrap"><div class="data-table-scroll">
+        <table class="settings-table">
+          <thead><tr><th>名前</th><th>ロール</th><th>肩書</th><th>メール</th><th>最終ログイン</th></tr></thead>
+          <tbody>${users.map(u => `<tr>
+            <td style="font-weight:600;">${u.name}</td>
+            <td><span class="rank-badge ${u.role === '管理者' ? 'green' : u.role === '外部ライター' ? 'orange' : 'blue'}">${u.role}</span></td>
+            <td>${u.title}</td>
+            <td style="color:#3b82f6;">${u.email}</td>
+            <td style="color:#94a3b8;">${u.lastLogin}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div></div>`;
+  } else if (settingsTab === 'notifications') {
+    const prefs = [
+      { label:'順位急落アラート（5位以上の変動）', checked:true },
+      { label:'契約更新リマインダー（30日前/60日前）', checked:true },
+      { label:'タスク期限リマインダー', checked:true },
+      { label:'新規被リンク検出通知', checked:false },
+      { label:'月次レポート自動生成完了通知', checked:true },
+      { label:'クライアントからのチャット通知', checked:true },
+      { label:'Core Web Vitals異常検知', checked:true },
+      { label:'Googleアルゴリズムアップデート検知', checked:true },
+      { label:'クロールエラー検知', checked:false },
+      { label:'週次ダイジェストメール', checked:true },
+    ];
+    tabContent = `
+      <div class="chart-container">
+        <div class="chart-title">通知設定</div>
+        ${prefs.map(p => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f1f5f9;">
+            <span style="font-size:13px;">${p.label}</span>
+            <label class="toggle-switch">
+              <input type="checkbox" ${p.checked ? 'checked' : ''}>
+              <span class="slider"></span>
+            </label>
+          </div>
+        `).join('')}
+      </div>`;
+  } else if (settingsTab === 'sync') {
+    const syncs = [
+      { source:'Google Search Console', icon:'GSC', lastSync:'2026/03/25 06:00', status:'success', records:'1,247,832' },
+      { source:'Google Analytics 4', icon:'GA4', lastSync:'2026/03/25 06:15', status:'success', records:'892,451' },
+      { source:'Ahrefs', icon:'AHR', lastSync:'2026/03/25 03:00', status:'success', records:'21,762' },
+      { source:'CMS (WordPress)', icon:'CMS', lastSync:'2026/03/24 22:00', status:'error', records:'-' },
+      { source:'PageSpeed Insights', icon:'PSI', lastSync:'2026/03/24 18:00', status:'success', records:'156' },
+    ];
+    tabContent = `
+      <div class="data-table-wrap"><div class="data-table-scroll">
+        <table class="settings-table">
+          <thead><tr><th>データソース</th><th>最終同期</th><th>ステータス</th><th>レコード数</th></tr></thead>
+          <tbody>${syncs.map(s => `<tr>
+            <td style="font-weight:600;">${s.source}</td>
+            <td style="color:#94a3b8;">${s.lastSync}</td>
+            <td><span class="sync-status ${s.status}">${s.status === 'success' ? '成功' : s.status === 'error' ? 'エラー' : '保留'}</span></td>
+            <td>${s.records}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div></div>
+      ${syncs.some(s => s.status === 'error') ? '<div class="bottleneck-bar" style="margin-top:16px;">⚠ CMS (WordPress) との同期にエラーが発生しています。接続設定を確認してください。</div>' : ''}`;
+  }
+
+  return `
+    <h1 class="page-title">設定</h1>
+    <div class="settings-tabs">
+      ${tabs.map(t => `<button class="settings-tab ${settingsTab === t.key ? 'active' : ''}" onclick="setSettingsTab('${t.key}')">${t.label}</button>`).join('')}
+    </div>
+    ${tabContent}
+  `;
+}
+
+// ============ UPDATE ANALYSIS SCREEN (画面14) ============
+function renderUpdates() {
+  const updates = [
+    { date:'2026/03/12', title:'Core Update (March 2026)', badge:'official', desc:'Googleが公式に3月コアアップデートの展開を発表。品質評価とE-E-A-Tシグナルの強化が中心。展開完了まで2-3週間の見込み。' },
+    { date:'2026/02/28', title:'シークレットアップデート検知（自動）', badge:'detected', desc:'順位変動スコアが通常の3.2倍に上昇。医療・健康系クエリで大きな変動。YMYLカテゴリへの影響が顕著。' },
+    { date:'2026/02/15', title:'Spam Update (February 2026)', badge:'official', desc:'リンクスパム対策の強化。PBN（Private Blog Network）からのリンクの評価が大幅に低下。' },
+    { date:'2026/01/20', title:'AI Overview拡大', badge:'detected', desc:'AI Overview表示クエリが前月比25%増加。情報検索系クエリでのCTR低下が加速。' },
+  ];
+
+  const impactData = [
+    { name:'クライアントA社', impact:'positive', val:'+3.2%' },
+    { name:'クライアントB社', impact:'positive', val:'+1.8%' },
+    { name:'クライアントC社', impact:'negative', val:'-5.4%' },
+    { name:'クライアントD社', impact:'positive', val:'+2.1%' },
+    { name:'クライアントE社', impact:'neutral', val:'+0.1%' },
+    { name:'クライアントF社', impact:'negative', val:'-2.3%' },
+    { name:'クライアントG社', impact:'neutral', val:'-0.2%' },
+    { name:'クライアントH社', impact:'negative', val:'-3.1%' },
+  ];
+
+  const weeklyTrend = [102, 98, 95, 88, 82, 85, 90, 94, 97, 100, 103, 105];
+  const weekLabels = ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'];
+
+  return `
+    <h1 class="page-title">アップデート分析</h1>
+
+    <div class="chart-container">
+      <div class="chart-title">アルゴリズムアップデート タイムライン</div>
+      <div class="update-timeline">
+        ${updates.map(u => `
+          <div class="update-tl-item">
+            <div class="update-tl-date">${u.date}</div>
+            <div class="update-tl-desc">
+              <span class="update-tl-badge ${u.badge}">${u.badge === 'official' ? '公式' : '自動検知'}</span>
+              <strong>${u.title}</strong>
+              <div style="margin-top:4px;font-size:12px;color:#64748b;line-height:1.6;">${u.desc}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="chart-container">
+        <div class="chart-title">クライアント影響ヒートマップ（3月コアアップデート）</div>
+        <div class="impact-grid">
+          ${impactData.map(d => `
+            <div class="impact-cell ${d.impact}">
+              <div style="font-weight:600;margin-bottom:2px;">${d.name}</div>
+              <div style="font-size:14px;font-weight:700;">${d.val}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-title">全クライアント平均順位変動（週次）</div>
+        ${lineChartSVG(weeklyTrend, 400, 200, '#8b5cf6', '#8b5cf6', weekLabels)}
+      </div>
+    </div>
+
+    <div class="alert-section">
+      <div class="alert-section-title">アルゴリズム関連アラート</div>
+      <div class="alert-item">
+        <span class="alert-dot red">&#x1F534;</span>
+        <span class="alert-text"><strong>クライアントC社</strong>: 3月コアアップデートで主要KWが平均-5.4%の順位低下。YMYL対策の強化が必要。</span>
+        <span class="alert-time">3日前</span>
+      </div>
+      <div class="alert-item">
+        <span class="alert-dot yellow">&#x1F7E1;</span>
+        <span class="alert-text"><strong>クライアントF社</strong>: AI Overview表示率が増加。対象KWのCTRが-12%低下。</span>
+        <span class="alert-time">5日前</span>
+      </div>
+      <div class="alert-item">
+        <span class="alert-dot blue">&#x1F535;</span>
+        <span class="alert-text"><strong>全体</strong>: 3月コアアップデートの展開が完了。影響度レポートを更新しました。</span>
+        <span class="alert-time">1日前</span>
+      </div>
+    </div>
+  `;
+}
+
 // ============ ROUTER ============
 function route() {
   const hash = getHash();
@@ -3292,14 +3931,20 @@ function route() {
               case 'keywords': html = renderKeywords(cid); break;
               case 'contents': html = renderContents(cid); break;
               case 'technical': html = renderTechnical(cid); break;
+              case 'backlinks': html = renderBacklinks(cid); break;
               case 'chat': html = renderChat(cid, false); break;
               case 'reports': html = renderReports(cid, false); break;
+              case 'tasks': html = renderTasks(cid); break;
               default: html = renderClientDetail(cid);
             }
           } else {
             html = renderClientDetail(cid);
           }
         }
+      } else if (hash === '#/settings') {
+        html = renderSettings();
+      } else if (hash === '#/updates') {
+        html = renderUpdates();
       } else {
         html = renderDashboard();
       }
