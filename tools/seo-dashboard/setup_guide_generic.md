@@ -7,30 +7,46 @@ GA4のデータをBigQuery経由でGoogle Spreadsheetに自動反映する仕組
 
 ## はじめに：テンプレートの取得
 
-### 1. リポジトリをclone
+テンプレートファイル一式をGitHubからダウンロードする。2通りの方法がある。
+
+### 方法A：zipでダウンロード（Git不要・簡単）
+
+1. ブラウザで以下のURLを開く
+   https://github.com/itakura-t-hue/claude
+2. 緑色の「Code」ボタンをクリック
+3. 「Download ZIP」をクリック
+4. ダウンロードしたzipを解凍する
+5. 解凍したフォルダ内の `tools/seo-dashboard/template/` の中身をまるごとコピー
+6. 任意の場所にフォルダを作り、コピーした中身をそこに貼り付ける
+
+例：`C:\tools\min_example.com\` に配置
+
+### 方法B：gitコマンドでclone（Gitが使える人向け）
+
+コマンドプロンプトまたはPowerShellを開いて以下を実行：
 
 ```bash
+# 1. リポジトリをダウンロード
 git clone https://github.com/itakura-t-hue/claude.git
+
+# 2. テンプレートをコピー（例：C:\tools\min_example.com に配置する場合）
+xcopy /E /I claude\tools\seo-dashboard\template C:\tools\min_example.com
 ```
 
-### 2. テンプレートをコピー
+> `git clone` は「GitHubからファイルをダウンロードするコマンド」です。初回だけ実行すればOK。
 
-```bash
-cp -r claude/tools/seo-dashboard/template  {任意の配置先}/{サイト名}
+### 配置後のフォルダ構成
+
+```
+{配置先フォルダ}/
+├── 07_cv_user_journey_to_sheets.py  ← メインスクリプト
+├── daily_sync.ps1                   ← 定期実行用
+├── config_sample.json               ← 設定ファイルのひな形
+├── requirements.txt                 ← Python依存パッケージ
+└── .gitignore
 ```
 
-例：
-```bash
-cp -r claude/tools/seo-dashboard/template  C:\tools\min_example.com
-```
-
-> **配置パスは英数字のみにすること。** 日本語パスだと定期実行（タスクスケジューラ）が動かない。
-
-### 3. コピーしたフォルダに移動
-
-```bash
-cd {任意の配置先}/{サイト名}
-```
+> **重要：配置先のフォルダパスは英数字のみにすること。** 日本語が含まれると定期実行（タスクスケジューラ）が動かない。
 
 以降のSTEPはこのフォルダ内で作業する。
 
