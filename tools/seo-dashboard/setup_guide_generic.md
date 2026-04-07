@@ -5,6 +5,37 @@ GA4のデータをBigQuery経由でGoogle Spreadsheetに自動反映する仕組
 
 ---
 
+## はじめに：テンプレートの取得
+
+### 1. リポジトリをclone
+
+```bash
+git clone https://github.com/itakura-t-hue/claude.git
+```
+
+### 2. テンプレートをコピー
+
+```bash
+cp -r claude/tools/seo-dashboard/template  {任意の配置先}/{サイト名}
+```
+
+例：
+```bash
+cp -r claude/tools/seo-dashboard/template  C:\tools\min_example.com
+```
+
+> **配置パスは英数字のみにすること。** 日本語パスだと定期実行（タスクスケジューラ）が動かない。
+
+### 3. コピーしたフォルダに移動
+
+```bash
+cd {任意の配置先}/{サイト名}
+```
+
+以降のSTEPはこのフォルダ内で作業する。
+
+---
+
 ## 全体像
 
 ```
