@@ -1,0 +1,10 @@
+{
+  "gcp_project_id": "YOUR_GCP_PROJECT_ID",
+  "bigquery_dataset": "YOUR_DATASET_NAME",
+  "bigquery_location": "asia-northeast1",
+  "ga4": {
+    "property_id": "properties/YOUR_PROPERTY_ID",
+    "oauth_client_secret_path": "./client_secret.json",
+    "oauth_token_path": "./token_sheets.json"
+  }
+}

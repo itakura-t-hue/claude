@@ -2,10 +2,16 @@
 # 全て除外
 *
 
-# SEOダッシュボードだけ許可
+# SEOダッシュボード（企画書 + テンプレート）
 !tools/
-!tools/SEOダッシュボード/
-!tools/SEOダッシュボード/**
+!tools/seo-dashboard/
+!tools/seo-dashboard/*.html
+!tools/seo-dashboard/*.md
+!tools/seo-dashboard/template/
+!tools/seo-dashboard/template/**
+
+# min_dym.asia（実環境）は除外
+tools/seo-dashboard/min_dym.asia/
 
 # GitHub Pages用
 !index.html
