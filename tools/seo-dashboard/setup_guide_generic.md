@@ -123,10 +123,11 @@ xcopy /E /I claude\tools\seo-dashboard\template C:\tools\min_example.com
 
 ### 1.2 APIの有効化
 
-GCP Console →「APIとサービス」→「ライブラリ」で以下2つを検索して有効化：
+GCP Console →「APIとサービス」→「ライブラリ」で以下を検索して有効化：
 
 - **BigQuery API**
 - **Google Analytics Data API**（正式名: Google Analytics Data API (GA4)）
+- **Google Sheets API**（スプレッドシートへのデータ蓄積に必要）
 
 ### 1.3 BigQueryデータセットの作成
 
