@@ -1021,54 +1021,7 @@ flowchart TB
 
 #### システム構成図
 
-```mermaid
-flowchart TB
-    subgraph Accounts["🔀 複数の作業用Googleアカウント（クライアントからGA4権限を付与される窓口）"]
-        direction LR
-        AcctA["<b>アカウントA（例: search06）</b><br/>GA4: サイト1, サイト2, ...<br/>（担当20サイト分のGA4プロパティ）"]
-        AcctB["<b>アカウントB（例: search08）</b><br/>GA4: サイト21, サイト22, ...<br/>（担当20サイト分のGA4プロパティ）"]
-        AcctC["<b>アカウントC（将来・例: search09）</b><br/>GA4: サイト41〜<br/>（新規案件を順次紐付け）"]
-        AcctA ~~~ AcctB ~~~ AcctC
-    end
-
-    subgraph Master["🌟 マスターGCPプロジェクト（billing ON・一元管理）"]
-        direction TB
-        MSCHED["⏰ Cloud Scheduler<br/>毎朝10:30 cron"]
-        MCR["🚀 Cloud Run Jobs<br/>全サイトのPython処理"]
-        MSA["🔑 サービスアカウント<br/>各アカウントのGA4に閲覧者として招待される"]
-        subgraph MBQ["📊 BigQuery（全サイトのデータセット集約）"]
-            direction LR
-            DS1[(サイト1<br/>データセット)]
-            DS2[(サイト2<br/>データセット)]
-            DSN[(... 全サイト分<br/>データセット)]
-        end
-        MLOG["📝 Cloud Logging<br/>エラー通知 + 監視"]
-
-        MSCHED --> MCR
-        MCR -. "認証" .-> MSA
-        MCR --> MBQ
-        MCR --> MLOG
-    end
-
-    SHEET[("📊 Google Spreadsheet<br/>全サイト分のスプシ群")]
-
-    %% アカウント→BigQueryデータセット（BQ直接エクスポート）
-    AcctA == "BQエクスポート<br/>（担当20サイト）" ==> DS1
-    AcctA == "BQエクスポート" ==> DS2
-    AcctB == "BQエクスポート" ==> DSN
-    AcctC == "BQエクスポート" ==> DSN
-
-    %% アカウント→SA（SA招待）
-    AcctA -. "SA招待（閲覧者）" .-> MSA
-    AcctB -. "SA招待（閲覧者）" .-> MSA
-    AcctC -. "SA招待（閲覧者）" .-> MSA
-
-    Master == "書き込み（Sheets API）" ==> SHEET
-
-    style Master fill:#fff9db,stroke:#e67700,stroke-width:3px
-    style Accounts fill:#e7f5ff,stroke:#1864ab,stroke-width:2px
-    style SHEET fill:#ebfbee,stroke:#2b8a3e,stroke-width:2px
-```
+![パターンD マスターアカウント集約の構成図](images/d2_architecture.svg)
 
 #### パターンC vs パターンD（構造比較）
 
