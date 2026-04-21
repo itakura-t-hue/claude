@@ -1022,6 +1022,7 @@ flowchart TB
 #### システム構成図
 
 ```mermaid
+%%{init: {"flowchart": {"defaultRenderer": "elk"}} }%%
 flowchart TB
     subgraph Accounts["🔀 複数の作業用Googleアカウント（クライアントからGA4権限を付与される窓口）"]
         direction LR
