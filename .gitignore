@@ -9,6 +9,8 @@
 !tools/seo-dashboard/*.md
 !tools/seo-dashboard/template/
 !tools/seo-dashboard/template/**
+!tools/seo-dashboard/images/
+!tools/seo-dashboard/images/**
 
 # min_dym.asia（実環境）は除外
 tools/seo-dashboard/min_dym.asia/
