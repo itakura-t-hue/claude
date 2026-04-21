@@ -1025,17 +1025,35 @@ flowchart TB
 flowchart TB
     subgraph Accounts["🔀 複数の作業用Googleアカウント（クライアントからGA4権限を付与される窓口）"]
         direction LR
-        AcctA["アカウントA<br/>例: search06<br/>(サイト1〜20のGA4)"]
-        AcctB["アカウントB<br/>例: search08<br/>(サイト21〜40のGA4)"]
-        AcctC["アカウントC（将来）<br/>例: search09<br/>(サイト41〜...のGA4)"]
+        subgraph AcctA["アカウントA（例: search06）"]
+            direction TB
+            GA4_A1[GA4: サイト1]
+            GA4_A2[GA4: サイト2]
+            GA4_A3[GA4: ...サイト20]
+        end
+        subgraph AcctB["アカウントB（例: search08）"]
+            direction TB
+            GA4_B1[GA4: サイト21]
+            GA4_B2[GA4: サイト22]
+            GA4_B3[GA4: ...サイト40]
+        end
+        subgraph AcctC["アカウントC（将来・例: search09）"]
+            direction TB
+            GA4_C1[GA4: サイト41〜]
+        end
     end
 
     subgraph Master["🌟 マスターGCPプロジェクト（billing ON・一元管理）"]
-        direction LR
+        direction TB
         MSCHED["⏰ Cloud Scheduler"]
         MCR["🚀 Cloud Run Jobs<br/>全サイトのPython処理"]
-        MSA["🔑 サービスアカウント<br/>（各アカウントのGA4に閲覧者として招待）"]
-        MBQ[("📊 BigQuery<br/>全サイトのデータセット集約")]
+        MSA["🔑 サービスアカウント<br/>（各アカウントのGA4に閲覧者として招待される）"]
+        subgraph MBQ["📊 BigQuery（全サイト集約）"]
+            direction LR
+            DS1[(サイト1 データセット)]
+            DS2[(サイト2 データセット)]
+            DSN[(...全サイト分...)]
+        end
         MLOG["📝 Cloud Logging"]
 
         MSCHED --> MCR
