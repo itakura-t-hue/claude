@@ -1024,31 +1024,29 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph Accounts["🔀 複数の作業用Googleアカウント（クライアントからGA4権限を付与される窓口）"]
-        direction TB
+        direction LR
         subgraph AcctA["アカウントA（例: search06）"]
-            direction LR
             GA4_A1[GA4: サイト1]
             GA4_A2[GA4: サイト2]
             GA4_A3[GA4: ...]
         end
         subgraph AcctB["アカウントB（例: search08）"]
-            direction LR
             GA4_B1[GA4: サイト21]
             GA4_B2[GA4: サイト22]
             GA4_B3[GA4: ...]
         end
         subgraph AcctC["アカウントC（将来・例: search09）"]
-            direction LR
             GA4_C1[GA4: ...]
         end
     end
 
     subgraph Master["🌟 マスターGCPプロジェクト（billing ON・一元管理）"]
-        direction TB
+        direction LR
         MSCHED["⏰ Cloud Scheduler"]
         MCR["🚀 Cloud Run Jobs<br/>全サイトのPython"]
         MSA["🔑 サービスアカウント<br/>（各アカウントのGA4に閲覧者として招待される）"]
         subgraph MBQ["📊 BigQuery（全サイト集約）"]
+            direction TB
             DS1[(サイト1 データセット)]
             DS2[(サイト2 データセット)]
             DSN[(...全サイト分...)]
