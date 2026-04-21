@@ -58,14 +58,81 @@ xcopy /E /I claude\tools\seo-dashboard\template C:\tools\min_example.com
 
 ## 全体像
 
+STEP 1〜7 を完遂すると、以下のシステムが構築される。
+
+### システム構成図
+
+```mermaid
+flowchart LR
+    subgraph Client["🏢 クライアント環境"]
+        CGA4["GA4プロパティ<br/>(管理者権限を自社アカウントに付与)"]
+    end
+
+    subgraph GCP["☁️ 自社GCPプロジェクト (STEP 1)"]
+        direction TB
+        OAUTH["OAuth同意画面<br/>+ クライアントID<br/>(STEP 2)"]
+        DS_AGG[("集計用データセット<br/>{サイト名}_com")]
+        DS_RAW[("GA4ローデータ<br/>analytics_XXX.events_*<br/>(STEP 3で自動生成)")]
+    end
+
+    subgraph Local["💻 作業者ローカルPC (STEP 4〜7)"]
+        direction TB
+        SCHED["Windowsタスクスケジューラ<br/>毎朝10:30"]
+        BAT["daily_sync.bat"]
+        PY["07_cv_user_journey_to_sheets.py"]
+        FILES["config.json<br/>client_secret.json<br/>token_sheets.json(7日失効)"]
+    end
+
+    SHEET[("📊 Google Spreadsheet<br/>User Journeyタブ")]
+
+    CGA4 -- "GA4→BQリンク<br/>毎日自動エクスポート" --> DS_RAW
+    CGA4 -.- OAUTH
+    OAUTH -.認証.- FILES
+
+    SCHED --> BAT
+    BAT --> PY
+    PY -.設定読込.- FILES
+    PY -- "CV遷移クエリ<br/>(BigQuery)" --> DS_RAW
+    PY -- "書き込み<br/>(Sheets API)" --> SHEET
+
+    style Client fill:#fff4e6,stroke:#e67700
+    style GCP fill:#e7f5ff,stroke:#1864ab
+    style Local fill:#f3f0ff,stroke:#5f3dc4
+    style SHEET fill:#ebfbee,stroke:#2b8a3e
 ```
-┌─────────┐     ┌───────────────┐     ┌──────────────┐
-│  GA4    │────▶│ BigQuery      │────▶│  Google      │
-│(BQエクスポート)│  │ events_*      │     │  Spreadsheet │
-│         │     │ (ローデータ)    │     │              │
-└─────────┘     └───────────────┘     └──────────────┘
-  毎日自動蓄積       CVセッションを           CVユーザーの
-                   抽出・集計              遷移経路を蓄積
+
+### 各STEPで作られるもの
+
+| STEP | 作るもの | 役割 |
+|------|---------|------|
+| STEP 1 | GCPプロジェクト + BQデータセット | データの置き場所 |
+| STEP 2 | OAuth同意画面 + クライアントID + トークン | 認証の仕組み |
+| STEP 3 | GA4→BQリンク | ローデータ自動蓄積の開通 |
+| STEP 4 | config.json | サイト固有の設定 |
+| STEP 5 | CVイベント名の書き換え | サイト固有のCV定義 |
+| STEP 6 | 初回手動実行 | 動作確認 + スプシ自動生成 |
+| STEP 7 | タスクスケジューラ登録 | 毎日自動実行 |
+
+### 日次実行の流れ（タスクスケジューラ起動後）
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant TS as タスクスケジューラ<br/>(毎朝10:30)
+    participant BAT as daily_sync.bat
+    participant PY as Pythonスクリプト
+    participant BQ as BigQuery<br/>events_*
+    participant SH as Google Spreadsheet
+
+    TS->>BAT: 起動
+    BAT->>PY: python 07_cv_user_journey_to_sheets.py
+    PY->>BQ: CVユーザー全セッションをクエリ
+    BQ-->>PY: CV遷移データ返却
+    PY->>PY: ユーザー単位に集計・整形
+    PY->>SH: User Journeyタブを全消去→書き込み
+    SH-->>PY: 完了
+    PY-->>BAT: 終了
+    BAT-->>TS: 完了
 ```
 
 ### スプレッドシートに蓄積されるデータ
@@ -73,6 +140,8 @@ xcopy /E /I claude\tools\seo-dashboard\template C:\tools\min_example.com
 | タブ名          | 内容                | 更新方式     |
 | ------------ | ----------------- | -------- |
 | User Journey | CVユーザーの全セッション遷移経路 | 毎日フルリビルド |
+
+> **注**: GA4→BQエクスポート（STEP 3）を設定した翌日から `events_YYYYMMDD` テーブルが毎日自動生成される。Pythonスクリプトはこのローデータを毎日読み込んで集計するだけなので、スクリプトは「参照」のみで、データの一次蓄積はGA4が行う。
 
 ---
 
