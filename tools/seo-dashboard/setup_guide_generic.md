@@ -1025,15 +1025,10 @@ flowchart TB
 flowchart TB
     subgraph Accounts["🔀 複数の作業用Googleアカウント（クライアントからGA4権限を付与される窓口）"]
         direction LR
-        subgraph AcctA["アカウントA（例: search06）"]
-            GA4_A["GA4: サイト1〜20<br/>（担当20サイト分の<br/>GA4プロパティ）"]
-        end
-        subgraph AcctB["アカウントB（例: search08）"]
-            GA4_B["GA4: サイト21〜40<br/>（担当20サイト分の<br/>GA4プロパティ）"]
-        end
-        subgraph AcctC["アカウントC（将来・例: search09）"]
-            GA4_C["GA4: サイト41〜<br/>（新規案件を順次紐付け）"]
-        end
+        AcctA["<b>アカウントA（例: search06）</b><br/>GA4: サイト1, サイト2, ...<br/>（担当20サイト分のGA4プロパティ）"]
+        AcctB["<b>アカウントB（例: search08）</b><br/>GA4: サイト21, サイト22, ...<br/>（担当20サイト分のGA4プロパティ）"]
+        AcctC["<b>アカウントC（将来・例: search09）</b><br/>GA4: サイト41〜<br/>（新規案件を順次紐付け）"]
+        AcctA ~~~ AcctB ~~~ AcctC
     end
 
     subgraph Master["🌟 マスターGCPプロジェクト（billing ON・一元管理）"]
