@@ -1052,7 +1052,17 @@ flowchart TB
 
     SHEET[("📊 Google Spreadsheet<br/>全サイト分のスプシ群")]
 
-    Accounts == "① 各GA4 → BQ直接エクスポート（毎日自動）<br/>② 各アカウントのGA4にSA招待（閲覧者権限）" ==> Master
+    %% アカウント→BigQueryデータセット（BQ直接エクスポート）
+    AcctA == "BQエクスポート<br/>（担当20サイト）" ==> DS1
+    AcctA == "BQエクスポート" ==> DS2
+    AcctB == "BQエクスポート" ==> DSN
+    AcctC == "BQエクスポート" ==> DSN
+
+    %% アカウント→SA（SA招待）
+    AcctA -. "SA招待（閲覧者）" .-> MSA
+    AcctB -. "SA招待（閲覧者）" .-> MSA
+    AcctC -. "SA招待（閲覧者）" .-> MSA
+
     Master == "書き込み（Sheets API）" ==> SHEET
 
     style Master fill:#fff9db,stroke:#e67700,stroke-width:3px
