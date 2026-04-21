@@ -1065,9 +1065,9 @@ flowchart TB
     GA4_B2 == "BQエクスポート" ==> DSN
     GA4_C1 == "BQエクスポート" ==> DSN
 
-    MSA -. "閲覧者として招待" .- AcctA
-    MSA -. "閲覧者として招待" .- AcctB
-    MSA -. "閲覧者として招待" .- AcctC
+    AcctA -. "SA招待（閲覧者）" .-> MSA
+    AcctB -. "SA招待（閲覧者）" .-> MSA
+    AcctC -. "SA招待（閲覧者）" .-> MSA
 
     MSCHED --> MCR
     MCR -. "認証" .- MSA
