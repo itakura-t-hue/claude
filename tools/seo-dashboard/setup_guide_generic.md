@@ -1021,7 +1021,49 @@ flowchart TB
 
 #### システム構成図
 
-![パターンD マスターアカウント集約の構成図](images/d2_architecture.jpeg)
+```mermaid
+flowchart TB
+    subgraph Accounts["🔀 複数の作業用Googleアカウント（クライアントからGA4権限を付与される窓口）"]
+        direction LR
+        subgraph AcctA["アカウントA（例: search06）"]
+            GA4_A["GA4: サイト1〜20<br/>（担当20サイト分の<br/>GA4プロパティ）"]
+        end
+        subgraph AcctB["アカウントB（例: search08）"]
+            GA4_B["GA4: サイト21〜40<br/>（担当20サイト分の<br/>GA4プロパティ）"]
+        end
+        subgraph AcctC["アカウントC（将来・例: search09）"]
+            GA4_C["GA4: サイト41〜<br/>（新規案件を順次紐付け）"]
+        end
+    end
+
+    subgraph Master["🌟 マスターGCPプロジェクト（billing ON・一元管理）"]
+        direction TB
+        MSCHED["⏰ Cloud Scheduler<br/>毎朝10:30 cron"]
+        MCR["🚀 Cloud Run Jobs<br/>全サイトのPython処理"]
+        MSA["🔑 サービスアカウント<br/>各アカウントのGA4に閲覧者として招待される"]
+        subgraph MBQ["📊 BigQuery（全サイトのデータセット集約）"]
+            direction LR
+            DS1[(サイト1<br/>データセット)]
+            DS2[(サイト2<br/>データセット)]
+            DSN[(... 全サイト分<br/>データセット)]
+        end
+        MLOG["📝 Cloud Logging<br/>エラー通知 + 監視"]
+
+        MSCHED --> MCR
+        MCR -. "認証" .-> MSA
+        MCR --> MBQ
+        MCR --> MLOG
+    end
+
+    SHEET[("📊 Google Spreadsheet<br/>全サイト分のスプシ群")]
+
+    Accounts == "① 各GA4 → BQ直接エクスポート（毎日自動）<br/>② 各アカウントのGA4にSA招待（閲覧者権限）" ==> Master
+    Master == "書き込み（Sheets API）" ==> SHEET
+
+    style Master fill:#fff9db,stroke:#e67700,stroke-width:3px
+    style Accounts fill:#e7f5ff,stroke:#1864ab,stroke-width:2px
+    style SHEET fill:#ebfbee,stroke:#2b8a3e,stroke-width:2px
+```
 
 #### パターンC vs パターンD（構造比較）
 
