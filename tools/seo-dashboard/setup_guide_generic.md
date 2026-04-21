@@ -70,14 +70,18 @@ flowchart LR
 
     subgraph GCP["☁️ 自社GCPプロジェクト (STEP 1)"]
         direction TB
-        OAUTH["OAuth同意画面<br/>+ クライアントID<br/>(STEP 2)"]
-        DS_AGG[("集計用データセット<br/>{サイト名}_com")]
-        DS_RAW[("GA4ローデータ<br/>analytics_XXX.events_*<br/>(STEP 3で自動生成)")]
+        OAUTH["🔐 OAuth同意画面<br/>+ クライアントID<br/>(STEP 2)"]
+
+        subgraph BQ["🗄️ BigQuery（データ置き場）"]
+            direction TB
+            DS_RAW[("GA4ローデータ<br/>analytics_XXX.events_*<br/>(STEP 3で自動生成)")]
+            DS_AGG[("集計用データセット<br/>{サイト名}_com")]
+        end
     end
 
     subgraph Local["💻 作業者ローカルPC (STEP 4〜7)"]
         direction TB
-        SCHED["Windowsタスクスケジューラ<br/>毎朝10:30"]
+        SCHED["⏰ Windowsタスクスケジューラ<br/>毎朝10:30"]
         BAT["daily_sync.bat"]
         PY["07_cv_user_journey_to_sheets.py"]
         FILES["config.json<br/>client_secret.json<br/>token_sheets.json(7日失効)"]
@@ -85,21 +89,24 @@ flowchart LR
 
     SHEET[("📊 Google Spreadsheet<br/>User Journeyタブ")]
 
-    CGA4 -- "GA4→BQリンク<br/>毎日自動エクスポート" --> DS_RAW
+    CGA4 == "GA4→BQリンク<br/>毎日自動エクスポート" ==> DS_RAW
     CGA4 -.- OAUTH
     OAUTH -.認証.- FILES
 
     SCHED --> BAT
     BAT --> PY
     PY -.設定読込.- FILES
-    PY -- "CV遷移クエリ<br/>(BigQuery)" --> DS_RAW
-    PY -- "書き込み<br/>(Sheets API)" --> SHEET
+    PY == "BigQueryクエリ<br/>CV遷移を抽出" ==> DS_RAW
+    PY == "Sheets API<br/>書き込み" ==> SHEET
 
     style Client fill:#fff4e6,stroke:#e67700
     style GCP fill:#e7f5ff,stroke:#1864ab
+    style BQ fill:#d0ebff,stroke:#1864ab,stroke-width:2px
     style Local fill:#f3f0ff,stroke:#5f3dc4
     style SHEET fill:#ebfbee,stroke:#2b8a3e
 ```
+
+> **図の見方**: BigQuery は GCP プロジェクト内の「データ置き場」サービス。STEP 3 で設定する GA4 → BQ リンクによって、GA4のローデータが BigQuery 内の `events_*` テーブルに毎日自動で流れ込む。Pythonスクリプトはその BigQuery にクエリを投げて CV 遷移を抽出し、Sheets API で Google Spreadsheet に書き込む。
 
 ### 各STEPで作られるもの
 
